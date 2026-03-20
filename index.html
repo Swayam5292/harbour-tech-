@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Harbour Tech Solutions</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="index.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="main-nav" id="main-nav">
+  <a class="nav-brand" href="index.html">
+    <div class="logo-icon">⚓</div>
+    <div>
+      <div class="brand-name">Harbour Tech</div>
+      <div class="brand-tag">Solutions</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <span id="userDisplay" style="color:white; font-weight:bold;"></span>
+    <button id="logoutBtn" onclick="logout()" class="btn btn-sm btn-light" style="display:none;">Logout</button>
+    <a href="login.html">Login</a>
+    <div class="nav-divider"></div>
+    <button id="theme-btn" onclick="toggleTheme()">
+      <span class="theme-icon">🌙</span>
+      <span id="theme-label">Dark Mode</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO STRIP -->
+<div class="hero-strip">
+  <h1>Harbour Tech Solutions</h1>
+  <p>Building modern digital solutions for businesses that want to lead, not follow.</p>
+  <div class="badge-strip">
+    <span>💻 Software Development</span>
+    <span>☁️ Cloud Infrastructure</span>
+    <span>🤖 AI & Analytics</span>
+    <span>🔒 Cybersecurity</span>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="page-wrapper">
+
+  <!-- NOTICE -->
+  <div class="notice-bar">
+    <span>🟢</span>
+    <span><strong>Available 24/7:</strong> Our support team is ready for consultations and critical issues at any time.</span>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="pro-card mb-section">
+    <div class="card-header-bar"></div>
+    <div class="card-inner">
+      <div class="section-label">Who We Are</div>
+      <h2 class="text-center mb-3" style="color:var(--accent)">About Us</h2>
+      <p class="about-text">
+        Harbour Tech Solutions is a technology consulting company helping businesses build modern digital solutions.
+        We specialize in custom software development, cloud computing, and AI-powered analytics designed to improve
+        operational efficiency and support data-driven decision making.
+        <br><br>
+        Our team works closely with clients to understand their unique requirements and deliver tailored solutions —
+        from scalable web and mobile applications to secure cloud infrastructure. By combining innovation, expertise,
+        and reliable support, we help organizations adopt technology that keeps them competitive.
+      </p>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="pro-card mb-section">
+    <div class="card-header-bar"></div>
+    <div class="card-inner">
+      <div class="section-label">What We Offer</div>
+      <h2 class="text-center mb-4" style="color:var(--accent)">Our Services</h2>
+      <div class="services-grid">
+        <div class="service-item">
+          <span class="service-icon">💻</span>
+          <h5>Web Development</h5>
+          <p>Responsive and scalable web applications built with modern frameworks and best practices.</p>
+        </div>
+        <div class="service-item">
+          <span class="service-icon">☁️</span>
+          <h5>Cloud Solutions</h5>
+          <p>Deploy and manage applications on AWS, Azure, and GCP with enterprise-grade reliability.</p>
+        </div>
+        <div class="service-item">
+          <span class="service-icon">🤖</span>
+          <h5>AI & Analytics</h5>
+          <p>AI-driven insights and machine learning models to power smarter business decisions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS TABLE -->
+  <div class="pro-card mb-section">
+    <div class="card-header-bar"></div>
+    <div class="card-inner">
+      <div class="section-label">Portfolio</div>
+      <h2 class="text-center mb-4" style="color:var(--accent)">Ongoing Projects</h2>
+      <div style="overflow-x:auto;">
+        <table class="pro-table">
+          <thead>
+            <tr>
+              <th>Project ID</th>
+              <th>Project Name</th>
+              <th>Technology</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>P101</td>
+              <td>Cloud Migration System</td>
+              <td>AWS, Docker</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td><button class="btn-view">View</button></td>
+            </tr>
+            <tr>
+              <td>P102</td>
+              <td>AI Sales Analytics</td>
+              <td>Python, TensorFlow</td>
+              <td><span class="status-badge in-progress">In Progress</span></td>
+              <td><button class="btn-view">View</button></td>
+            </tr>
+            <tr>
+              <td>P103</td>
+              <td>Business ERP System</td>
+              <td>React, Node.js</td>
+              <td><span class="status-badge planning">Planning</span></td>
+              <td><button class="btn-view">View</button></td>
+            </tr>
+            <tr>
+              <td>P104</td>
+              <td>Cyber Security Audit</td>
+              <td>Security Tools</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td><button class="btn-view">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT SECTION -->
+  <div class="pro-card mb-section">
+    <div class="card-header-bar"></div>
+    <div class="contact-section">
+
+      <!-- LEFT: Info Panel -->
+      <div class="contact-info">
+        <div class="section-label" style="color:rgba(255,255,255,0.60);">Get In Touch</div>
+        <h3>Let's Work Together</h3>
+        <p>Have a project in mind or need expert advice? We'd love to hear from you. Our team typically responds within 2 business hours.</p>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📧</div>
+          <div class="contact-detail-text">
+            <strong>Email</strong>
+            <span>support@harbourtech.com</span>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📞</div>
+          <div class="contact-detail-text">
+            <strong>Phone</strong>
+            <span>+91 9876543210</span>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📍</div>
+          <div class="contact-detail-text">
+            <strong>Location</strong>
+            <span>Mumbai, India</span>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon">🕐</div>
+          <div class="contact-detail-text">
+            <strong>Hours</strong>
+            <span>24/7 Support Available</span>
+          </div>
+        </div>
+
+        <div class="contact-social">
+          <a class="social-btn" href="#" title="LinkedIn">💼</a>
+          <a class="social-btn" href="#" title="Twitter">🐦</a>
+          <a class="social-btn" href="#" title="GitHub">🐙</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Form -->
+      <div class="contact-form-area">
+        <div class="section-label">Send a Message</div>
+        <h3 style="color:var(--accent); margin-bottom:24px;">How Can We Help?</h3>
+
+        <form id="contactForm" onsubmit="handleContact(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="cName" placeholder="John Smith" required>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" id="cEmail" placeholder="john@company.com" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" id="cPhone" placeholder="+91 9000000000">
+            </div>
+            <div class="form-group">
+              <label>Service Needed</label>
+              <select id="cService">
+                <option value="">Select a service...</option>
+                <option>Web Development</option>
+                <option>Cloud Solutions</option>
+                <option>AI & Analytics</option>
+                <option>Cybersecurity</option>
+                <option>General Inquiry</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Message</label>
+            <textarea id="cMessage" placeholder="Tell us about your project or question..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-send">Send Message →</button>
+
+          <p id="contactSuccess" style="display:none; color:var(--accent); text-align:center; margin-top:14px; font-weight:600;">
+            ✅ Message sent! We'll get back to you shortly.
+          </p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="nav-brand" style="text-decoration:none; margin-bottom:0;">
+        <div class="logo-icon" style="background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.12);">⚓</div>
+        <div>
+          <div class="brand-name">Harbour Tech</div>
+          <div class="brand-tag">Solutions</div>
+        </div>
+      </div>
+      <p>Building modern, scalable, and intelligent digital solutions for businesses worldwide.</p>
+    </div>
+    <div class="footer-col">
+      <h6>Services</h6>
+      <a href="#">Web Development</a>
+      <a href="#">Cloud Solutions</a>
+      <a href="#">AI & Analytics</a>
+      <a href="#">Cybersecurity</a>
+    </div>
+    <div class="footer-col">
+      <h6>Company</h6>
+      <a href="#">About Us</a>
+      <a href="#">Projects</a>
+      <a href="login.html">Login</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 Harbour Tech Solutions · All Rights Reserved
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
