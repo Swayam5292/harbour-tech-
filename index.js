@@ -5,7 +5,7 @@ let darkMode = false;
 function toggleTheme() {
   darkMode = !darkMode;
   document.body.classList.toggle("dark-mode", darkMode);
-  document.getElementById("theme-btn").innerText = darkMode ? '☀️ Theme' : '🌙 Theme';
+  document.querySelector('.theme-icon').innerText = darkMode ? '☀' : '☾';
   localStorage.setItem("darkMode", darkMode);
 }
 
@@ -13,14 +13,14 @@ function updateNavbar() {
   const user = localStorage.getItem("loggedInUser");
   const userDisplay = document.getElementById("userDisplay");
   const logoutBtn = document.getElementById("logoutBtn");
-  const loginLink = document.querySelector('a[href="login.html"]');
+  const loginLink = document.getElementById("loginLink");
   if (user) {
-    userDisplay.innerText = "👤 " + user;
-    logoutBtn.style.display = "inline-block";
+    if (userDisplay) userDisplay.innerText = "👤 " + user;
+    if (logoutBtn) logoutBtn.style.display = "inline-block";
     if (loginLink) loginLink.style.display = "none";
   } else {
-    userDisplay.innerText = "";
-    logoutBtn.style.display = "none";
+    if (userDisplay) userDisplay.innerText = "";
+    if (logoutBtn) logoutBtn.style.display = "none";
     if (loginLink) loginLink.style.display = "inline-block";
   }
 }
@@ -32,26 +32,23 @@ function logout() {
 
 function handleContact(e) {
   e.preventDefault();
-  const btn = document.querySelector('.btn-send');
+  const btn = e.target.querySelector('button[type="submit"]');
   btn.innerText = 'Sending...';
   btn.disabled = true;
   setTimeout(() => {
-    document.getElementById("contactForm").reset();
+    e.target.reset();
     btn.innerText = 'Send Message →';
     btn.disabled = false;
     document.getElementById("contactSuccess").style.display = "block";
-    setTimeout(() => {
-      document.getElementById("contactSuccess").style.display = "none";
-    }, 5000);
+    setTimeout(() => { document.getElementById("contactSuccess").style.display = "none"; }, 5000);
   }, 1000);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
   updateNavbar();
   const saved = localStorage.getItem("darkMode");
-  if (saved === "true") { toggleTheme(); }
+  if (saved === "true") toggleTheme();
 });
-
 
 // ================================
 // PROJECT DATA & MODALS
@@ -64,7 +61,7 @@ const projects = {
     tech: ['AWS EC2', 'Docker', 'Kubernetes', 'Terraform', 'CI/CD'],
     start: 'Jan 2025', end: 'Jun 2025', team: '5 Engineers', client: 'LogiTrack Ltd.',
     progress: 100, progressLabel: 'All milestones completed',
-    deliverables: ['Cloud architecture design and planning','Data migration with zero downtime','Containerization of 12 microservices','Auto-scaling and load balancer setup','Full monitoring and alerting dashboard']
+    deliverables: ['Cloud architecture design and planning', 'Data migration with zero downtime', 'Containerization of 12 microservices', 'Auto-scaling and load balancer setup', 'Full monitoring and alerting dashboard']
   },
   P102: {
     id: 'P102', title: 'AI Sales Analytics',
@@ -73,7 +70,7 @@ const projects = {
     tech: ['Python', 'TensorFlow', 'Pandas', 'FastAPI', 'React', 'PostgreSQL'],
     start: 'Mar 2025', end: 'Dec 2025', team: '4 Engineers + 1 Data Scientist', client: 'RetailMax Inc.',
     progress: 65, progressLabel: 'Model training phase',
-    deliverables: ['Data pipeline and ETL setup','Sales forecasting ML model','Customer segmentation module (in progress)','Analytics dashboard (in progress)','Automated reporting system (pending)']
+    deliverables: ['Data pipeline and ETL setup', 'Sales forecasting ML model', 'Customer segmentation module (in progress)', 'Analytics dashboard (in progress)', 'Automated reporting system (pending)']
   },
   P103: {
     id: 'P103', title: 'Business ERP System',
@@ -82,16 +79,16 @@ const projects = {
     tech: ['React', 'Node.js', 'Express', 'MySQL', 'Redis', 'Docker'],
     start: 'Aug 2025', end: 'Mar 2026', team: '7 Engineers', client: 'ManuCorp Industries',
     progress: 12, progressLabel: 'Planning and architecture',
-    deliverables: ['Requirements and scope documentation (in progress)','System architecture design (pending)','Inventory management module (pending)','HR and payroll module (pending)','Financial reporting dashboard (pending)']
+    deliverables: ['Requirements and scope documentation (in progress)', 'System architecture design (pending)', 'Inventory management module (pending)', 'HR and payroll module (pending)', 'Financial reporting dashboard (pending)']
   },
   P104: {
     id: 'P104', title: 'Cyber Security Audit',
     status: 'completed', statusLabel: 'Completed', statusNote: 'Report delivered',
-    description: 'Comprehensive security audit for a fintech startup including penetration testing, vulnerability assessment, and compliance review against ISO 27001 standards. Identified and resolved 23 critical vulnerabilities.',
+    description: 'Comprehensive security audit for a fintech startup including penetration testing, vulnerability assessment, and compliance review against ISO 27001. Identified and resolved 23 critical vulnerabilities.',
     tech: ['Kali Linux', 'Metasploit', 'Nessus', 'Wireshark', 'Burp Suite'],
     start: 'Feb 2025', end: 'Apr 2025', team: '3 Security Specialists', client: 'FinSecure Pvt. Ltd.',
     progress: 100, progressLabel: 'Audit completed and certified',
-    deliverables: ['Full penetration testing report','Vulnerability assessment (23 issues resolved)','ISO 27001 compliance review','Security policy recommendations','Staff security awareness training']
+    deliverables: ['Full penetration testing report', 'Vulnerability assessment (23 issues resolved)', 'ISO 27001 compliance review', 'Security policy recommendations', 'Staff security awareness training']
   }
 };
 
