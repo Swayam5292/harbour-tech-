@@ -4,20 +4,23 @@
   <title>Login – Harbour Tech Solutions</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="login.css" rel="stylesheet">
 </head>
 <body>
 
 <!-- NAVBAR -->
 <nav class="main-nav">
-  <a class="nav-brand" href="index.html">⚓ Harbour Tech Solutions</a>
+  <a class="nav-brand" href="index.html">
+    <div class="nav-logo">HT</div>
+    Harbour Tech
+  </a>
   <div class="nav-links">
-    <span id="userDisplay" style="color:white; font-weight:bold;"></span>
-    <button id="logoutBtn" onclick="logout()" style="display:none; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:white; padding:6px 14px; border-radius:8px; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:13px;">Logout</button>
+    <span id="userDisplay" style="color:rgba(255,255,255,0.80); font-size:13px; font-weight:600;"></span>
+    <button id="logoutBtn" onclick="logout()" style="display:none; background:rgba(255,255,255,0.12); border:1.5px solid rgba(255,255,255,0.20); color:white; padding:6px 14px; border-radius:8px; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600;">Logout</button>
     <a href="index.html">Home</a>
     <a href="login.html">Login</a>
-    <button id="theme-btn" onclick="toggleTheme()">🌙 Theme</button>
+    <button id="theme-btn" onclick="toggleTheme()">&#9790;</button>
   </div>
 </nav>
 
@@ -27,72 +30,64 @@
     <div class="auth-top-bar"></div>
     <div class="auth-body">
 
-      <h2>Account Access</h2>
+      <h2>Welcome Back</h2>
+      <p class="auth-subtitle">Sign in to your Harbour Tech account</p>
 
       <!-- TABS -->
       <div class="auth-tabs">
-        <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+        <button class="tab-btn active" onclick="switchTab('login')">Log In</button>
         <button class="tab-btn" onclick="switchTab('register')">Register</button>
       </div>
 
       <!-- LOGIN PANEL -->
       <div class="tab-panel active" id="loginPanel">
         <form id="loginForm">
-
           <div class="form-group">
             <label>Email Address</label>
-            <input type="email" id="loginEmail" placeholder="Enter your email" required>
+            <input type="email" id="loginEmail" placeholder="you@company.com" required>
           </div>
-
           <div class="form-group">
             <label>Password</label>
             <div class="input-wrap">
               <input type="password" id="loginPassword" placeholder="Enter your password" required>
-              <button type="button" class="toggle-pw" onclick="togglePw('loginPassword', this)">👁️</button>
+              <button type="button" class="toggle-pw" onclick="togglePw('loginPassword', this)">&#128065;&#65039;</button>
             </div>
           </div>
-
           <div class="remember-row">
             <input type="checkbox" id="rememberMe">
             <label for="rememberMe">Remember me</label>
           </div>
-
-          <button type="submit" class="btn-primary-pro">Login →</button>
+          <button type="submit" class="btn-primary-pro">Log In &#8594;</button>
         </form>
       </div>
 
       <!-- REGISTER PANEL -->
       <div class="tab-panel" id="registerPanel">
         <form id="registerForm">
-
           <div class="form-group">
             <label>Full Name</label>
-            <input type="text" id="regName" placeholder="Enter your full name" required>
+            <input type="text" id="regName" placeholder="John Smith" required>
           </div>
-
           <div class="form-group">
             <label>Email Address</label>
-            <input type="email" id="regEmail" placeholder="Enter your email" required>
+            <input type="email" id="regEmail" placeholder="you@company.com" required>
           </div>
-
           <div class="form-group">
             <label>Password</label>
             <div class="input-wrap">
-              <input type="password" id="regPassword" placeholder="Create a password" required>
-              <button type="button" class="toggle-pw" onclick="togglePw('regPassword', this)">👁️</button>
+              <input type="password" id="regPassword" placeholder="Create a strong password" required>
+              <button type="button" class="toggle-pw" onclick="togglePw('regPassword', this)">&#128065;&#65039;</button>
             </div>
             <div class="pw-strength" id="pwStrength"></div>
           </div>
-
           <div class="form-group">
             <label>Confirm Password</label>
             <div class="input-wrap">
               <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
-              <button type="button" class="toggle-pw" onclick="togglePw('confirmPassword', this)">👁️</button>
+              <button type="button" class="toggle-pw" onclick="togglePw('confirmPassword', this)">&#128065;&#65039;</button>
             </div>
           </div>
-
-          <button type="submit" class="btn-success-pro">Create Account →</button>
+          <button type="submit" class="btn-success-pro">Create Account &#8594;</button>
         </form>
       </div>
 
@@ -101,7 +96,7 @@
 </div>
 
 <!-- FOOTER -->
-<footer>© 2026 Harbour Tech Solutions · All Rights Reserved</footer>
+<footer>&#169; 2026 Harbour Tech Solutions &middot; All Rights Reserved</footer>
 
 <script src="login.js"></script>
 </body>
