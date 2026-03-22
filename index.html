@@ -20,20 +20,20 @@
     </svg>
     <span style="color:white;font-family:'DM Sans',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.3px;">Harbour Tech</span>
   </a>
-  <div class="nav-links">
-    <a href="index.html" class="active">Home</a>
-    <a href="#services">Services</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-  </div>
+ <div class="nav-links">
+  <a href="index.html" class="active">Home</a>
+  <a href="#services">Services</a>
+  <a href="#projects">Projects</a>
+  <a href="#contact">Contact</a>
+  <a href="login.html" id="loginLink" class="btn-nav-outline">Log In</a>
+</div>
   <div class="nav-actions">
-    <span id="userDisplay"></span>
-    <button id="logoutBtn" onclick="logout()" style="display:none;" class="btn-nav-outline">Logout</button>
-    <a href="login.html" id="loginLink" class="btn-nav-outline">Log In</a>
-    <button id="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
-      <span class="theme-icon">&#9790;</span>
-    </button>
-  </div>
+  <span id="userDisplay"></span>
+  <button id="logoutBtn" onclick="logout()" style="display:none;" class="btn-nav-outline">Logout</button>
+  <button id="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+    <span class="theme-icon">&#9790;</span>
+  </button>
+</div>
 </nav>
 
 <!-- HERO -->
@@ -253,16 +253,12 @@
         <h2 class="section-heading">Let's build<br>something great.</h2>
         <p>Have a project in mind? We'd love to hear about it. Our team typically responds within 2 business hours.</p>
         <div class="contact-details">
-          <div class="contact-row"><span class="contact-icon">&#128231;</span><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1b686e6b6b74696f5b737a6979746e696f7e787335787476">[email&#160;protected]</a></span></div>
+          <div class="contact-row"><span class="contact-icon">&#128231;</span><span>support@harbourtech.com</span></div>
           <div class="contact-row"><span class="contact-icon">&#128222;</span><span>+91 9876543210</span></div>
           <div class="contact-row"><span class="contact-icon">&#128205;</span><span>Mumbai, India</span></div>
           <div class="contact-row"><span class="contact-icon">&#128336;</span><span>24/7 Support Available</span></div>
         </div>
-        <div class="contact-social">
-          <a class="social-btn" href="#">in</a>
-          <a class="social-btn" href="#">&#120143;</a>
-          <a class="social-btn" href="#">gh</a>
-        </div>
+
       </div>
       <div class="contact-form-wrap">
         <form id="contactForm" onsubmit="handleContact(event)">
@@ -299,26 +295,34 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="footer-logo">
-          <div class="logo-mark">HT</div>
+          <svg width="28" height="33" viewBox="0 0 36 42" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 8 L18 1 L34 8 L34 28 Q34 38 18 42 Q2 38 2 28 Z" fill="#2d3580" />
+            <path d="M2 8 L18 1 L34 8 L34 28 Q34 38 18 42 Q2 38 2 28 Z" fill="none" stroke="rgba(255,255,255,0.20)"
+              stroke-width="1.2" />
+            <path d="M8 13 L18 7 L28 13 L28 27 Q28 35 18 38 Q8 35 8 27 Z" fill="none" stroke="#818cf8" stroke-width="1.4"
+              opacity="0.75" />
+            <text x="18" y="27" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="800" fill="#ffffff"
+              font-size="13" letter-spacing="1">HT</text>
+          </svg>
           <span class="brand-name" style="color:#e2e8f0">Harbour Tech</span>
         </div>
         <p>Building modern, scalable digital solutions for businesses that want to lead.</p>
       </div>
       <div class="footer-col">
         <h6>Services</h6>
-        <a href="#">Web Development</a>
-        <a href="#">Cloud Solutions</a>
-        <a href="#">AI &amp; Analytics</a>
-        <a href="#">Cybersecurity</a>
+        <a href="#services">Web Development</a>
+        <a href="#services">Cloud Solutions</a>
+        <a href="#services">AI &amp; Analytics</a>
+        <a href="#services">Cybersecurity</a>
       </div>
       <div class="footer-col">
         <h6>Company</h6>
-        <a href="#">About Us</a>
-        <a href="#">Projects</a>
+        <a href="#about">About Us</a>
+        <a href="#projects">Projects</a>
         <a href="login.html">Login</a>
-        <a href="#">Privacy Policy</a>
+        <a href="privacy.html">Privacy Policy</a>
       </div>
-    </div>
+      </div>
     <div class="footer-bottom">
       <span>&#169; 2026 Harbour Tech Solutions &middot; All Rights Reserved</span>
     </div>
@@ -358,11 +362,4 @@
         <div class="progress-track"><div class="progress-fill" id="mProgressFill"></div></div>
       </div>
       <div class="modal-section-title">Key Deliverables</div>
-      <ul class="deliverables-list" id="mDeliverables"></ul>
-    </div>
-  </div>
-</div>
-
-<script src="index.js"></script>
-</body>
-</html>
+      <ul c
