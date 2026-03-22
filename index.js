@@ -47,7 +47,12 @@ function handleContact(e) {
 document.addEventListener("DOMContentLoaded", function () {
   updateNavbar();
   const saved = localStorage.getItem("darkMode");
-  if (saved === "true") toggleTheme();
+  if (saved === "true") {
+    darkMode = true;
+    document.body.classList.add("dark-mode");
+    const icon = document.querySelector('.theme-icon');
+    if (icon) icon.innerText = '☀';
+  }
 });
 
 // ================================
