@@ -13,7 +13,7 @@ function updateNavbar() {
   const user = localStorage.getItem("loggedInUser");
   const userDisplay = document.getElementById("userDisplay");
   const logoutBtn = document.getElementById("logoutBtn");
-  const loginLink = document.getElementById("loginLink");
+  const loginLink = document.querySelector('a[href="login.html"]');
   if (user) {
     if (userDisplay) userDisplay.innerText = "👤 " + user;
     if (logoutBtn) logoutBtn.style.display = "inline-block";
