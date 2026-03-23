@@ -541,7 +541,14 @@ body.dark-mode .metric-divider { background: rgba(255,255,255,0.08); }
 }
 
 .pro-table tbody tr:last-child { border-bottom: none; }
-.pro-table tbody tr:hover { background: var(--tbl-row-hover); }
+.pro-table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.pro-table tbody tr:hover {
+  background: rgba(92,106,196,0.06);
+  transform: translateX(6px);
+}
 
 .pro-table td {
   padding: 16px 20px; font-size: 14px;
@@ -790,3 +797,24 @@ body.dark-mode .status-badge.planning { background: #1e3a5f; color: #93c5fd; }
 }
 .deliverables-list li:last-child { border-bottom: none; }
 .deliverables-list li::before { content: '&#10003;'; color: var(--accent2); font-weight: 700; flex-shrink: 0; }
+
+/* jQuery effects */
+@keyframes cardShake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.card-clicked {
+  animation: cardShake 0.4s ease;
+}
+
+.nav-scrolled {
+  height: 52px !important;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.25) !important;
+  transition: all 0.3s ease;
+}
+
+.input-focused .form-group label {
+  color: var(--accent2) !important;
+}

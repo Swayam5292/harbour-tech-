@@ -132,3 +132,105 @@ function closeModalOutside(e) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeModal();
 });
+
+// ================================
+// jQuery Dynamic Features
+// ================================
+
+$(document).ready(function () {
+
+  // 1. CLICK EVENT (Button Animation)
+  $(".btn-primary").click(function () {
+    $(this).text("Loading...");
+    
+    $(this).fadeOut(200).fadeIn(200);
+
+    setTimeout(() => {
+      $(this).text("Start a Project");
+    }, 1000);
+  });
+
+
+  // 2. HOVER EFFECT (Service Cards)
+  $(".service-card").hover(
+    function () {
+      $(this).stop().animate({
+        marginTop: "-10px"
+      }, 200);
+    },
+    function () {
+      $(this).stop().animate({
+        marginTop: "0px"
+      }, 200);
+    }
+  );
+
+
+  // 3. TABLE ROW HIGHLIGHT (Hover)
+$(".pro-table tbody tr").hover(
+  function () {
+    $(this).stop().animate({
+      paddingLeft: "10px"
+    }, 150);
+    
+    $(this).css({
+      "background": "rgba(92,106,196,0.06)",
+      "transition": "all 0.2s ease"
+    });
+  },
+  function () {
+    $(this).stop().animate({
+      paddingLeft: "0px"
+    }, 150);
+
+    $(this).css("background", "");
+  }
+);
+
+
+  // 4. CONTACT FORM INPUT FOCUS
+  $("input, textarea, select").focus(function () {
+    $(this).css("border", "2px solid #5C6AC4");
+  });
+
+  $("input, textarea, select").blur(function () {
+    $(this).css("border", "");
+  });
+
+
+  // 5. FORM SUBMIT ANIMATION
+  $("#contactForm").submit(function () {
+    $("#contactSuccess").hide().fadeIn(800);
+  });
+
+
+  // 6. SMOOTH SCROLL (NAV LINKS)
+  $(".nav-links a").click(function (e) {
+    if (this.hash !== "") {
+      e.preventDefault();
+
+      let target = $(this.hash);
+
+      $("html, body").animate({
+        scrollTop: target.offset().top - 60
+      }, 600);
+    }
+  });
+
+
+  // 7. HERO TEXT FADE-IN ON LOAD
+  $(".hero-left").hide().fadeIn(1200);
+
+
+  // 8. PROJECT BUTTON CLICK EFFECT
+  $(".btn-view").click(function () {
+    $(this).text("Opening...");
+    
+    $(this).fadeOut(200).fadeIn(200);
+
+    setTimeout(() => {
+      $(this).text("View Details");
+    }, 800);
+  });
+
+});
