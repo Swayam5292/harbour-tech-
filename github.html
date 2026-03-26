@@ -1329,57 +1329,39 @@ async function fetchRepos() {
       const res = await fetch(`https://api.github.com/repos/${r.owner}/${r.repo}`);
       const data = await res.json();
 
-      // Cache the data
+      // Check if API returned an error (rate limit, not found, etc.)
+      if (data.message || !data.name) {
+        console.warn(`Skipping ${r.owner}/${r.repo}: ${data.message || 'Invalid response'}`);
+        
+        // Create card with fallback data
+        createCard(grid, r, {
+          name: r.repo,
+          description: `Official ${r.repo} repository`,
+          language: 'Multiple',
+          stargazers_count: 0,
+          forks_count: 0,
+          watchers_count: 0,
+          open_issues_count: 0,
+          created_at: null,
+          updated_at: null,
+          license: null,
+          html_url: `https://github.com/${r.owner}/${r.repo}`,
+          owner: { avatar_url: `https://github.com/${r.owner}.png` }
+        }, i);
+        continue;
+      }
+
+      // Cache the data with config merged
       dataCache[`${r.owner}/${r.repo}`] = { ...data, ...r };
 
-      // Create card
-      const card = document.createElement('div');
-      card.className = 'repo-card';
-      card.setAttribute('data-category', r.category);
-      card.onclick = () => openModal(r.owner, r.repo);
-
-      card.innerHTML = `
-        <div class="repo-card-header">
-          <div class="repo-icon">${r.icon}</div>
-          <div>
-            <h3 class="repo-title">${data.name}</h3>
-            <div class="repo-owner">${r.owner}</div>
-          </div>
-        </div>
-        <p class="repo-desc">${data.description || 'No description available'}</p>
-        <div class="repo-tags">
-          <span class="repo-tag">${data.language || 'Multi-language'}</span>
-          <span class="repo-category-tag">${capitalize(r.category)}</span>
-        </div>
-        <div class="repo-footer">
-          <span class="repo-stat">
-            <span class="repo-stat-icon">⭐</span>
-            ${formatNum(data.stargazers_count)}
-          </span>
-          <span class="repo-stat">
-            <span class="repo-stat-icon">🔱</span>
-            ${formatNum(data.forks_count)}
-          </span>
-          <span class="repo-stat">
-            <span class="repo-stat-icon">👁</span>
-            ${formatNum(data.watchers_count)}
-          </span>
-        </div>
-        <span class="click-hint">Click for details →</span>
-      `;
-
-      grid.appendChild(card);
-
-      // Staggered animation
-      setTimeout(() => {
-        card.style.opacity = '1';
-        card.style.transform = 'translateY(0)';
-      }, i * 80);
+      // Create card with API data
+      createCard(grid, r, data, i);
     }
 
     loading.style.display = 'none';
 
   } catch (err) {
+    console.error('Fetch error:', err);
     loading.innerHTML = `
       <div style="color: #ef4444;">
         <p style="font-size: 16px; margin-bottom: 12px;">⚠️ Failed to load repositories</p>
@@ -1387,6 +1369,67 @@ async function fetchRepos() {
       </div>
     `;
   }
+}
+
+// ================================
+// CREATE CARD FUNCTION
+// ================================
+function createCard(grid, config, data, index) {
+  const card = document.createElement('div');
+  card.className = 'repo-card';
+  card.setAttribute('data-category', config.category);
+  card.onclick = () => openModal(config.owner, config.repo);
+
+  // Safe values with fallbacks
+  const repoName = data.name || config.repo || 'Unknown';
+  const repoDesc = data.description || `Official ${config.repo} repository`;
+  const repoLang = data.language || 'Multi-language';
+  const stars = data.stargazers_count || 0;
+  const forks = data.forks_count || 0;
+  const watchers = data.watchers_count || 0;
+
+  card.innerHTML = `
+    <div class="repo-card-header">
+      <div class="repo-icon">${config.icon}</div>
+      <div>
+        <h3 class="repo-title">${repoName}</h3>
+        <div class="repo-owner">${config.owner}</div>
+      </div>
+    </div>
+    <p class="repo-desc">${repoDesc}</p>
+    <div class="repo-tags">
+      <span class="repo-tag">${repoLang}</span>
+      <span class="repo-category-tag">${capitalize(config.category)}</span>
+    </div>
+    <div class="repo-footer">
+      <span class="repo-stat">
+        <span class="repo-stat-icon">⭐</span>
+        ${formatNum(stars)}
+      </span>
+      <span class="repo-stat">
+        <span class="repo-stat-icon">🔱</span>
+        ${formatNum(forks)}
+      </span>
+      <span class="repo-stat">
+        <span class="repo-stat-icon">👁</span>
+        ${formatNum(watchers)}
+      </span>
+    </div>
+    <span class="click-hint">Click for details →</span>
+  `;
+
+  grid.appendChild(card);
+
+  // Cache this data for modal
+  if (!dataCache[`${config.owner}/${config.repo}`]) {
+    dataCache[`${config.owner}/${config.repo}`] = { ...data, ...config };
+  }
+
+  // Staggered animation
+  setTimeout(() => {
+    card.style.opacity = '1';
+    card.style.transform = 'translateY(0)';
+  }, index * 80);
 }
 
 // ================================
@@ -1415,23 +1458,41 @@ function filterRepos(category, btn) {
 // ================================
 function openModal(owner, repo) {
   const data = dataCache[`${owner}/${repo}`];
-  if (!data) return;
+  
+  if (!data) {
+    console.error('No data found for:', owner, repo);
+    return;
+  }
 
-  document.getElementById('modalAvatar').src = data.owner.avatar_url;
-  document.getElementById('modalName').textContent = data.name;
+  // Safe values with fallbacks
+  const avatarUrl = data.owner?.avatar_url || `https://github.com/${owner}.png`;
+  const repoName = data.name || repo;
+  const description = data.description || 'No description available';
+  const whyText = data.why || 'Core technology in our stack.';
+  const stars = data.stargazers_count || 0;
+  const forks = data.forks_count || 0;
+  const issues = data.open_issues_count || 0;
+  const language = data.language || 'Multiple';
+  const license = data.license?.name || 'Not specified';
+  const htmlUrl = data.html_url || `https://github.com/${owner}/${repo}`;
+
+  // Set modal content
+  document.getElementById('modalAvatar').src = avatarUrl;
+  document.getElementById('modalName').textContent = repoName;
   document.getElementById('modalOwner').textContent = `${owner} / ${repo}`;
-  document.getElementById('modalDesc').textContent = data.description || 'No description available';
-  document.getElementById('modalWhy').textContent = data.why || 'Core technology in our stack.';
-  document.getElementById('modalStars').textContent = formatNum(data.stargazers_count);
-  document.getElementById('modalForks').textContent = formatNum(data.forks_count);
-  document.getElementById('modalIssues').textContent = formatNum(data.open_issues_count);
-  document.getElementById('modalLang').textContent = data.language || 'Multiple';
-  document.getElementById('modalLicense').textContent = data.license?.name || 'Not specified';
-  document.getElementById('modalCreated').textContent = formatDate(data.created_at);
-  document.getElementById('modalUpdated').textContent = formatDate(data.updated_at);
-  document.getElementById('modalLink').href = data.html_url;
-  document.getElementById('modalIssuesLink').href = data.html_url + '/issues';
+  document.getElementById('modalDesc').textContent = description;
+  document.getElementById('modalWhy').textContent = whyText;
+  document.getElementById('modalStars').textContent = formatNum(stars);
+  document.getElementById('modalForks').textContent = formatNum(forks);
+  document.getElementById('modalIssues').textContent = formatNum(issues);
+  document.getElementById('modalLang').textContent = language;
+  document.getElementById('modalLicense').textContent = license;
+  document.getElementById('modalCreated').textContent = data.created_at ? formatDate(data.created_at) : 'N/A';
+  document.getElementById('modalUpdated').textContent = data.updated_at ? formatDate(data.updated_at) : 'N/A';
+  document.getElementById('modalLink').href = htmlUrl;
+  document.getElementById('modalIssuesLink').href = htmlUrl + '/issues';
 
+  // Show modal
   document.getElementById('repoModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1455,24 +1516,34 @@ document.addEventListener('keydown', function(e) {
 // UTILITY FUNCTIONS
 // ================================
 function formatNum(num) {
+  if (num === null || num === undefined) return '0';
   if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
   if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
-  return num;
+  return num.toString();
 }
 
 function formatDate(dateStr) {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  if (!dateStr) return 'N/A';
+  try {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  } catch (e) {
+    return 'N/A';
+  }
 }
 
 function capitalize(str) {
+  if (!str) return '';
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 // ================================
 // INITIALIZE
 // ================================
-fetchRepos();
+// Auto fetch on load
+document.addEventListener('DOMContentLoaded', function() {
+  fetchRepos();
+});
 </script>
 
 </body>
