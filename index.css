@@ -818,3 +818,22 @@ body.dark-mode .status-badge.planning { background: #1e3a5f; color: #93c5fd; }
 .input-focused .form-group label {
   color: var(--accent2) !important;
 }
+
+.team-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+}
+
+.team-card img {
+  width: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}

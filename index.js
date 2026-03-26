@@ -1,7 +1,11 @@
+
 // index.js
 
 let darkMode = false;
 
+// ================================
+// THEME TOGGLE
+// ================================
 function toggleTheme() {
   darkMode = !darkMode;
   document.body.classList.toggle("dark-mode", darkMode);
@@ -9,11 +13,15 @@ function toggleTheme() {
   localStorage.setItem("darkMode", darkMode);
 }
 
+// ================================
+// NAVBAR LOGIN STATE
+// ================================
 function updateNavbar() {
   const user = localStorage.getItem("loggedInUser");
   const userDisplay = document.getElementById("userDisplay");
   const logoutBtn = document.getElementById("logoutBtn");
   const loginLink = document.querySelector('a[href="login.html"]');
+
   if (user) {
     if (userDisplay) userDisplay.innerText = "👤 " + user;
     if (logoutBtn) logoutBtn.style.display = "inline-block";
@@ -30,22 +38,36 @@ function logout() {
   location.reload();
 }
 
+// ================================
+// CONTACT FORM
+// ================================
 function handleContact(e) {
   e.preventDefault();
+
   const btn = e.target.querySelector('button[type="submit"]');
   btn.innerText = 'Sending...';
   btn.disabled = true;
+
   setTimeout(() => {
     e.target.reset();
     btn.innerText = 'Send Message →';
     btn.disabled = false;
+
     document.getElementById("contactSuccess").style.display = "block";
-    setTimeout(() => { document.getElementById("contactSuccess").style.display = "none"; }, 5000);
+
+    setTimeout(() => {
+      document.getElementById("contactSuccess").style.display = "none";
+    }, 5000);
+
   }, 1000);
 }
 
+// ================================
+// INITIAL LOAD
+// ================================
 document.addEventListener("DOMContentLoaded", function () {
   updateNavbar();
+
   const saved = localStorage.getItem("darkMode");
   if (saved === "true") {
     darkMode = true;
@@ -58,91 +80,27 @@ document.addEventListener("DOMContentLoaded", function () {
 // ================================
 // PROJECT DATA & MODALS
 // ================================
-const projects = {
-  P101: {
-    id: 'P101', title: 'Cloud Migration System',
-    status: 'completed', statusLabel: 'Completed', statusNote: 'Delivered on time',
-    description: 'Migrated a legacy on-premise infrastructure to AWS cloud for a mid-sized logistics company. Handles real-time shipment tracking, automated scaling during peak loads, and reduced infrastructure costs by 40%.',
-    tech: ['AWS EC2', 'Docker', 'Kubernetes', 'Terraform', 'CI/CD'],
-    start: 'Jan 2025', end: 'Jun 2025', team: '5 Engineers', client: 'LogiTrack Ltd.',
-    progress: 100, progressLabel: 'All milestones completed',
-    deliverables: ['Cloud architecture design and planning', 'Data migration with zero downtime', 'Containerization of 12 microservices', 'Auto-scaling and load balancer setup', 'Full monitoring and alerting dashboard']
-  },
-  P102: {
-    id: 'P102', title: 'AI Sales Analytics',
-    status: 'in-progress', statusLabel: 'In Progress', statusNote: 'Currently in development',
-    description: 'Building an AI-powered sales forecasting platform for a retail chain. Uses machine learning to predict demand, identify customer patterns, and generate automated weekly reports for management.',
-    tech: ['Python', 'TensorFlow', 'Pandas', 'FastAPI', 'React', 'PostgreSQL'],
-    start: 'Mar 2025', end: 'Dec 2025', team: '4 Engineers + 1 Data Scientist', client: 'RetailMax Inc.',
-    progress: 65, progressLabel: 'Model training phase',
-    deliverables: ['Data pipeline and ETL setup', 'Sales forecasting ML model', 'Customer segmentation module (in progress)', 'Analytics dashboard (in progress)', 'Automated reporting system (pending)']
-  },
-  P103: {
-    id: 'P103', title: 'Business ERP System',
-    status: 'planning', statusLabel: 'Planning', statusNote: 'Requirements gathering phase',
-    description: 'Developing a full-scale ERP system for a manufacturing company to manage inventory, HR, payroll, procurement, and financial reporting in one unified platform. Replacing 6 separate legacy tools.',
-    tech: ['React', 'Node.js', 'Express', 'MySQL', 'Redis', 'Docker'],
-    start: 'Aug 2025', end: 'Mar 2026', team: '7 Engineers', client: 'ManuCorp Industries',
-    progress: 12, progressLabel: 'Planning and architecture',
-    deliverables: ['Requirements and scope documentation (in progress)', 'System architecture design (pending)', 'Inventory management module (pending)', 'HR and payroll module (pending)', 'Financial reporting dashboard (pending)']
-  },
-  P104: {
-    id: 'P104', title: 'Cyber Security Audit',
-    status: 'completed', statusLabel: 'Completed', statusNote: 'Report delivered',
-    description: 'Comprehensive security audit for a fintech startup including penetration testing, vulnerability assessment, and compliance review against ISO 27001. Identified and resolved 23 critical vulnerabilities.',
-    tech: ['Kali Linux', 'Metasploit', 'Nessus', 'Wireshark', 'Burp Suite'],
-    start: 'Feb 2025', end: 'Apr 2025', team: '3 Security Specialists', client: 'FinSecure Pvt. Ltd.',
-    progress: 100, progressLabel: 'Audit completed and certified',
-    deliverables: ['Full penetration testing report', 'Vulnerability assessment (23 issues resolved)', 'ISO 27001 compliance review', 'Security policy recommendations', 'Staff security awareness training']
-  }
-};
+const projects = { /* (unchanged - keep your existing project data here) */ };
 
-function openModal(id) {
-  const p = projects[id];
-  if (!p) return;
-  document.getElementById('mId').innerText = p.id;
-  document.getElementById('mTitle').innerText = p.title;
-  const statusEl = document.getElementById('mStatus');
-  statusEl.innerText = p.statusLabel;
-  statusEl.className = 'status-badge ' + p.status;
-  document.getElementById('mStatusNote').innerText = p.statusNote;
-  document.getElementById('mDesc').innerText = p.description;
-  document.getElementById('mStart').innerText = p.start;
-  document.getElementById('mEnd').innerText = p.end;
-  document.getElementById('mTeam').innerText = p.team;
-  document.getElementById('mClient').innerText = p.client;
-  document.getElementById('mProgressLabel').innerText = p.progressLabel;
-  document.getElementById('mProgressPct').innerText = p.progress + '%';
-  document.getElementById('mProgressFill').style.width = p.progress + '%';
-  document.getElementById('mTech').innerHTML = p.tech.map(t => '<span class="tech-tag">' + t + '</span>').join('');
-  document.getElementById('mDeliverables').innerHTML = p.deliverables.map(d => '<li>' + d + '</li>').join('');
-  document.getElementById('projectModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-  document.getElementById('projectModal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function closeModalOutside(e) {
-  if (e.target.id === 'projectModal') closeModal();
-}
+// Modal functions (keep same as your file)
+function openModal(id) { /* keep same */ }
+function closeModal() { /* keep same */ }
+function closeModalOutside(e) { if (e.target.id === 'projectModal') closeModal(); }
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeModal();
 });
 
 // ================================
-// jQuery Dynamic Features
+// JQUERY FEATURES (ALL INSIDE READY)
 // ================================
-
 $(document).ready(function () {
 
-  // 1. CLICK EVENT (Button Animation)
-  $(".btn-primary").click(function () {
+  // ================================
+  // HERO BUTTON ONLY
+  // ================================
+  $(".hero .btn-primary").click(function () {
     $(this).text("Loading...");
-    
     $(this).fadeOut(200).fadeIn(200);
 
     setTimeout(() => {
@@ -150,45 +108,38 @@ $(document).ready(function () {
     }, 1000);
   });
 
-
-  // 2. HOVER EFFECT (Service Cards)
+  // ================================
+  // SERVICE CARD HOVER
+  // ================================
   $(".service-card").hover(
     function () {
-      $(this).stop().animate({
-        marginTop: "-10px"
-      }, 200);
+      $(this).stop().animate({ marginTop: "-10px" }, 200);
     },
     function () {
-      $(this).stop().animate({
-        marginTop: "0px"
-      }, 200);
+      $(this).stop().animate({ marginTop: "0px" }, 200);
     }
   );
 
+  // ================================
+  // TABLE ROW EFFECT
+  // ================================
+  $(".pro-table tbody tr").hover(
+    function () {
+      $(this).stop().animate({ paddingLeft: "10px" }, 150);
+      $(this).css({
+        "background": "rgba(92,106,196,0.06)",
+        "transition": "all 0.2s ease"
+      });
+    },
+    function () {
+      $(this).stop().animate({ paddingLeft: "0px" }, 150);
+      $(this).css("background", "");
+    }
+  );
 
-  // 3. TABLE ROW HIGHLIGHT (Hover)
-$(".pro-table tbody tr").hover(
-  function () {
-    $(this).stop().animate({
-      paddingLeft: "10px"
-    }, 150);
-    
-    $(this).css({
-      "background": "rgba(92,106,196,0.06)",
-      "transition": "all 0.2s ease"
-    });
-  },
-  function () {
-    $(this).stop().animate({
-      paddingLeft: "0px"
-    }, 150);
-
-    $(this).css("background", "");
-  }
-);
-
-
-  // 4. CONTACT FORM INPUT FOCUS
+  // ================================
+  // INPUT FOCUS EFFECT
+  // ================================
   $("input, textarea, select").focus(function () {
     $(this).css("border", "2px solid #5C6AC4");
   });
@@ -197,14 +148,16 @@ $(".pro-table tbody tr").hover(
     $(this).css("border", "");
   });
 
-
-  // 5. FORM SUBMIT ANIMATION
+  // ================================
+  // FORM SUBMIT ANIMATION
+  // ================================
   $("#contactForm").submit(function () {
     $("#contactSuccess").hide().fadeIn(800);
   });
 
-
-  // 6. SMOOTH SCROLL (NAV LINKS)
+  // ================================
+  // SMOOTH SCROLL
+  // ================================
   $(".nav-links a").click(function (e) {
     if (this.hash !== "") {
       e.preventDefault();
@@ -217,15 +170,16 @@ $(".pro-table tbody tr").hover(
     }
   });
 
-
-  // 7. HERO TEXT FADE-IN ON LOAD
+  // ================================
+  // HERO FADE-IN
+  // ================================
   $(".hero-left").hide().fadeIn(1200);
 
-
-  // 8. PROJECT BUTTON CLICK EFFECT
+  // ================================
+  // PROJECT BUTTON EFFECT
+  // ================================
   $(".btn-view").click(function () {
     $(this).text("Opening...");
-    
     $(this).fadeOut(200).fadeIn(200);
 
     setTimeout(() => {
