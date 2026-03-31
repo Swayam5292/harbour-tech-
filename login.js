@@ -16,6 +16,8 @@ function toggleTheme() {
   darkMode = !darkMode;
   document.body.classList.toggle("dark-mode", darkMode);
   localStorage.setItem("darkMode", darkMode);
+  const tb = document.getElementById("theme-btn");
+  if(tb) tb.innerHTML = darkMode ? "&#9788;" : "&#9790;"; // Sun in dark mode, Moon in light mode
 }
 
 const savedTheme = localStorage.getItem("darkMode");
@@ -23,6 +25,8 @@ if (savedTheme === "true") {
   document.body.classList.add("dark-mode");
   darkMode = true;
 }
+const tb = document.getElementById("theme-btn");
+if(tb) tb.innerHTML = darkMode ? "&#9788;" : "&#9790;";
 
 // ================================
 // TAB SWITCHING

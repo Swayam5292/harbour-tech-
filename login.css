@@ -4,27 +4,37 @@
    DESIGN TOKENS
    ============================== */
 :root {
-  --bg: #0c0e1a;
+  --bg: #fafafa;
+  --text: #0f0f10;
+  --text-muted: #6b7280;
+  --card-bg: rgba(255, 255, 255, 0.75);
+  --card-border: rgba(0, 0, 0, 0.08);
+  --input-bg: rgba(0, 0, 0, 0.03);
+  --input-border: rgba(0, 0, 0, 0.10);
+  --input-focus-border: #5C6AC4;
+  --accent: #1a1f4e;
+  --accent-dim: #5C6AC4;
+  --accent-glow: rgba(92, 106, 196, 0.15);
+  --footer-bg: rgba(0, 0, 0, 0.05);
+  --footer-text: #64748b;
+  --nav-bg: rgba(250, 250, 250, 0.85);
+}
+
+body.dark-mode {
+  --bg: #050510;
   --text: #f0f0f5;
   --text-muted: #8891a5;
-  --card-bg: rgba(15, 17, 30, 0.65);
-  --card-border: rgba(255, 255, 255, 0.06);
-  --input-bg: rgba(255, 255, 255, 0.04);
-  --input-border: rgba(255, 255, 255, 0.10);
+  --card-bg: rgba(10, 10, 20, 0.70);
+  --card-border: rgba(255, 255, 255, 0.05);
+  --input-bg: rgba(255, 255, 255, 0.03);
+  --input-border: rgba(255, 255, 255, 0.07);
   --input-focus-border: #818cf8;
   --accent: #818cf8;
   --accent-dim: #5C6AC4;
   --accent-glow: rgba(129, 140, 248, 0.15);
   --footer-bg: rgba(0, 0, 0, 0.3);
   --footer-text: #4a5568;
-}
-
-body.dark-mode {
-  --bg: #050510;
-  --card-bg: rgba(10, 10, 20, 0.70);
-  --card-border: rgba(255, 255, 255, 0.05);
-  --input-bg: rgba(255, 255, 255, 0.03);
-  --input-border: rgba(255, 255, 255, 0.07);
+  --nav-bg: rgba(15, 17, 30, 0.60);
 }
 
 /* ==============================
@@ -74,7 +84,7 @@ body::before {
    NAVBAR
    ============================== */
 .main-nav {
-  background: rgba(15, 17, 30, 0.60);
+  background: var(--nav-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: 0 40px;
@@ -82,14 +92,14 @@ body::before {
   align-items: center;
   justify-content: space-between;
   height: 64px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--card-border);
   position: relative;
   z-index: 100;
 }
 
 .nav-brand {
   display: flex; align-items: center; gap: 10px;
-  text-decoration: none; color: white; font-weight: 700;
+  text-decoration: none; color: var(--text); font-weight: 700;
   font-family: 'DM Sans', sans-serif; font-size: 15px;
   letter-spacing: -0.3px;
 }
@@ -97,40 +107,40 @@ body::before {
 .nav-links { display: flex; align-items: center; gap: 4px; }
 
 .nav-links a {
-  color: rgba(255, 255, 255, 0.55); text-decoration: none;
+  color: var(--text-muted); text-decoration: none;
   font-size: 14px; font-weight: 500;
   padding: 6px 14px; border-radius: 8px; transition: all 0.2s;
 }
 
-.nav-links a:hover { color: white; background: rgba(255, 255, 255, 0.08); }
-.nav-links a.nav-active { color: white; background: rgba(129, 140, 248, 0.15); }
+.nav-links a:hover { color: var(--text); background: var(--input-bg); }
+.nav-links a.nav-active { color: var(--text); background: var(--accent-glow); }
 
 .nav-btn-logout {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: white; padding: 6px 14px; border-radius: 8px;
+  background: transparent;
+  border: 1px solid var(--card-border);
+  color: var(--text); padding: 6px 14px; border-radius: 8px;
   cursor: pointer; font-family: 'DM Sans', sans-serif;
   font-size: 13px; font-weight: 600; transition: all 0.2s;
 }
-.nav-btn-logout:hover { background: rgba(255, 255, 255, 0.14); }
+.nav-btn-logout:hover { background: var(--input-bg); border-color: var(--accent); color: var(--accent); }
 
 #userDisplay {
-  color: rgba(255, 255, 255, 0.80);
+  color: var(--text);
   font-size: 13px; font-weight: 600;
 }
 
 #theme-btn {
   width: 34px; height: 34px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
   border-radius: 8px; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   font-size: 15px; transition: all 0.2s;
-  color: rgba(255, 255, 255, 0.60);
+  color: var(--text-muted);
   margin-left: 8px;
 }
 
-#theme-btn:hover { background: rgba(255, 255, 255, 0.12); color: white; }
+#theme-btn:hover { background: var(--accent-glow); color: var(--accent); border-color: var(--accent); }
 
 /* ==============================
    AUTH WRAPPER
@@ -156,12 +166,12 @@ body::before {
   -webkit-backdrop-filter: blur(40px) saturate(1.5);
   border: 1px solid var(--card-border);
   border-radius: 24px;
-  box-shadow:
-    0 32px 64px rgba(0, 0, 0, 0.40),
-    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
-    0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   animation: cardSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+body.dark-mode .auth-card {
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.40);
 }
 
 @keyframes cardSlideUp {
@@ -228,8 +238,8 @@ body::before {
    ============================== */
 .auth-tabs {
   display: flex;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
   border-radius: 14px;
   padding: 4px;
   margin-bottom: 28px;
@@ -254,12 +264,12 @@ body::before {
   gap: 8px;
 }
 
-.tab-btn:hover { color: var(--text); background: rgba(255, 255, 255, 0.04); }
+.tab-btn:hover { color: var(--text); background: var(--input-bg); }
 
 .tab-btn.active {
-  background: rgba(129, 140, 248, 0.12);
+  background: var(--card-bg);
   color: var(--accent);
-  box-shadow: 0 2px 12px rgba(129, 140, 248, 0.10);
+  box-shadow: 0 2px 12px var(--accent-glow);
 }
 
 .tab-panel { display: none; }
