@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Tech Stack – Harbour Tech</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
 
   <style>
     /* ================================
@@ -17,12 +20,12 @@
       --text-muted: #6b7280;
       --text-light: #9ca3af;
       --card-bg: #ffffff;
-      --card-border: rgba(0,0,0,0.07);
-      --card-shadow: 0 2px 20px rgba(0,0,0,0.06);
+      --card-border: rgba(0, 0, 0, 0.07);
+      --card-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
       --accent: #1a1f4e;
       --accent2: #5C6AC4;
-      --accent-glow: rgba(92,106,196,0.12);
-      --nav-bg: rgba(250,250,250,0.88);
+      --accent-glow: rgba(92, 106, 196, 0.12);
+      --nav-bg: rgba(250, 250, 250, 0.88);
       --input-bg: #f7f7f8;
       --input-border: #e5e7eb;
       --footer-bg: #0f0f10;
@@ -36,12 +39,12 @@
       --text-muted: #94a3b8;
       --text-light: #64748b;
       --card-bg: #14141c;
-      --card-border: rgba(255,255,255,0.07);
-      --card-shadow: 0 2px 20px rgba(0,0,0,0.4);
+      --card-border: rgba(255, 255, 255, 0.07);
+      --card-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
       --accent: #818cf8;
       --accent2: #6366f1;
-      --accent-glow: rgba(129,140,248,0.12);
-      --nav-bg: rgba(10,10,15,0.88);
+      --accent-glow: rgba(129, 140, 248, 0.12);
+      --nav-bg: rgba(10, 10, 15, 0.88);
       --input-bg: #1a1a24;
       --input-border: #2a2a38;
       --footer-bg: #050508;
@@ -51,8 +54,17 @@
     /* ================================
        RESET & BASE
     ================================ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       background: var(--bg);
@@ -62,9 +74,47 @@
       line-height: 1.7;
       transition: background 0.4s, color 0.4s;
       -webkit-font-smoothing: antialiased;
+      position: relative;
     }
 
-    h1, h2, h3 {
+    /* LIVE PARTICLE CANVAS */
+    #particleCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(ellipse at 15% 50%, rgba(92, 106, 196, 0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 20%, rgba(79, 195, 247, 0.05) 0%, transparent 45%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Ensure all content sits above the canvas */
+    .main-nav,
+    .tech-hero,
+    .section,
+    .site-footer,
+    .modal-overlay {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1,
+    h2,
+    h3 {
       font-family: 'Cormorant Garamond', serif;
       line-height: 1.1;
       letter-spacing: -0.02em;
@@ -78,7 +128,7 @@
       top: 0;
       z-index: 999;
       background: #1a1f3e;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       padding: 0 40px;
       display: flex;
       align-items: center;
@@ -115,7 +165,7 @@
     }
 
     .nav-links a {
-      color: rgba(255,255,255,0.70);
+      color: rgba(255, 255, 255, 0.70);
       text-decoration: none;
       font-size: 14px;
       font-weight: 500;
@@ -127,7 +177,7 @@
     .nav-links a:hover,
     .nav-links a.active {
       color: #ffffff;
-      background: rgba(255,255,255,0.10);
+      background: rgba(255, 255, 255, 0.10);
     }
 
     .nav-actions {
@@ -140,9 +190,9 @@
       font-family: 'DM Sans', sans-serif;
       font-size: 13px;
       font-weight: 600;
-      color: rgba(255,255,255,0.85);
+      color: rgba(255, 255, 255, 0.85);
       background: transparent;
-      border: 1.5px solid rgba(255,255,255,0.25);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
       padding: 6px 16px;
       border-radius: 8px;
       cursor: pointer;
@@ -151,16 +201,16 @@
     }
 
     .btn-nav-outline:hover {
-      border-color: rgba(255,255,255,0.60);
+      border-color: rgba(255, 255, 255, 0.60);
       color: #ffffff;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     #theme-btn {
       width: 34px;
       height: 34px;
-      background: rgba(255,255,255,0.10);
-      border: 1.5px solid rgba(255,255,255,0.18);
+      background: rgba(255, 255, 255, 0.10);
+      border: 1.5px solid rgba(255, 255, 255, 0.18);
       border-radius: 8px;
       cursor: pointer;
       display: flex;
@@ -168,26 +218,26 @@
       justify-content: center;
       font-size: 15px;
       transition: all 0.2s;
-      color: rgba(255,255,255,0.80);
+      color: rgba(255, 255, 255, 0.80);
     }
 
     #theme-btn:hover {
-      background: rgba(255,255,255,0.18);
+      background: rgba(255, 255, 255, 0.18);
     }
 
     #userDisplay {
       font-size: 13px;
       font-weight: 600;
-      color: rgba(255,255,255,0.80);
+      color: rgba(255, 255, 255, 0.80);
     }
 
     #logoutBtn {
       font-family: 'DM Sans', sans-serif;
       font-size: 13px;
       font-weight: 600;
-      color: rgba(255,255,255,0.85);
+      color: rgba(255, 255, 255, 0.85);
       background: transparent;
-      border: 1.5px solid rgba(255,255,255,0.25);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
       padding: 6px 16px;
       border-radius: 8px;
       cursor: pointer;
@@ -195,9 +245,9 @@
     }
 
     #logoutBtn:hover {
-      border-color: rgba(255,255,255,0.60);
+      border-color: rgba(255, 255, 255, 0.60);
       color: #ffffff;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     /* ================================
@@ -220,7 +270,10 @@
         padding: 48px 24px;
         min-height: auto;
       }
-      .hero-visual { display: none; }
+
+      .hero-visual {
+        display: none;
+      }
     }
 
     .hero-tag {
@@ -233,7 +286,7 @@
       text-transform: uppercase;
       color: var(--accent2);
       background: var(--accent-glow);
-      border: 1px solid rgba(92,106,196,0.20);
+      border: 1px solid rgba(92, 106, 196, 0.20);
       padding: 5px 14px;
       border-radius: 20px;
       margin-bottom: 24px;
@@ -287,8 +340,15 @@
     }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Hero Visual (Code Card) */
@@ -306,15 +366,15 @@
       width: 320px;
       background: #0d1117;
       border-radius: 16px;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.25);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.25);
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .code-header {
       padding: 14px 18px;
       background: #161b22;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       display: flex;
       align-items: center;
       gap: 8px;
@@ -345,24 +405,41 @@
       line-height: 1.9;
     }
 
-    .ck { color: #ff7b72; }
-    .cv { color: #79c0ff; }
-    .cp { color: #e3b341; }
-    .cs { color: #a5d6ff; }
-    .cf { color: #d2a8ff; }
-    .cc { color: #3fb950; }
+    .ck {
+      color: #ff7b72;
+    }
+
+    .cv {
+      color: #79c0ff;
+    }
+
+    .cp {
+      color: #e3b341;
+    }
+
+    .cs {
+      color: #a5d6ff;
+    }
+
+    .cf {
+      color: #d2a8ff;
+    }
+
+    .cc {
+      color: #3fb950;
+    }
 
     /* Floating Badges */
     .float-badge {
       position: absolute;
       background: #1c2128;
-      border: 1px solid rgba(255,255,255,0.10);
+      border: 1px solid rgba(255, 255, 255, 0.10);
       border-radius: 14px;
       padding: 12px 18px;
       display: flex;
       align-items: center;
       gap: 12px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.30);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.30);
       color: white;
       white-space: nowrap;
     }
@@ -385,7 +462,9 @@
       animation: float3 4.5s ease-in-out infinite 0.8s;
     }
 
-    .badge-icon { font-size: 22px; }
+    .badge-icon {
+      font-size: 22px;
+    }
 
     .badge-num {
       font-family: 'Cormorant Garamond', serif;
@@ -396,23 +475,44 @@
 
     .badge-label {
       font-size: 11px;
-      color: rgba(255,255,255,0.55);
+      color: rgba(255, 255, 255, 0.55);
       margin-top: 2px;
     }
 
     @keyframes float1 {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
     }
 
     @keyframes float2 {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
     }
 
     @keyframes float3 {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
     }
 
     /* ================================
@@ -593,7 +693,7 @@
       font-weight: 600;
       color: var(--accent2);
       background: var(--accent-glow);
-      border: 1px solid rgba(92,106,196,0.18);
+      border: 1px solid rgba(92, 106, 196, 0.18);
       padding: 4px 12px;
       border-radius: 20px;
     }
@@ -660,7 +760,9 @@
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .loading-text {
@@ -669,8 +771,15 @@
     }
 
     @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
     }
 
     /* ================================
@@ -680,7 +789,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.65);
+      background: rgba(0, 0, 0, 0.65);
       backdrop-filter: blur(8px);
       z-index: 1000;
       align-items: center;
@@ -696,7 +805,7 @@
       background: var(--card-bg);
       border: 1.5px solid var(--card-border);
       border-radius: 20px;
-      box-shadow: 0 30px 100px rgba(0,0,0,0.25);
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.25);
       width: 100%;
       max-width: 580px;
       max-height: 90vh;
@@ -710,6 +819,7 @@
         opacity: 0;
         transform: translateY(30px) scale(0.96);
       }
+
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -829,7 +939,7 @@
 
     .stat-box:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
     }
 
     .stat-value {
@@ -979,7 +1089,7 @@
     }
 
     .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
       padding-top: 24px;
       font-size: 12px;
       color: #334155;
@@ -1018,432 +1128,442 @@
 
 <body>
 
-<!-- NAVBAR (SINGLE - FIXED) -->
-<nav class="main-nav">
-  <a class="nav-brand" href="index.html">
-    <svg width="34" height="40" viewBox="0 0 36 42" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2 8 L18 1 L34 8 L34 28 Q34 38 18 42 Q2 38 2 28 Z" fill="#2d3580"/>
-      <path d="M2 8 L18 1 L34 8 L34 28 Q34 38 18 42 Q2 38 2 28 Z" fill="none" stroke="rgba(255,255,255,0.20)" stroke-width="1.2"/>
-      <path d="M8 13 L18 7 L28 13 L28 27 Q28 35 18 38 Q8 35 8 27 Z" fill="none" stroke="#818cf8" stroke-width="1.4" opacity="0.75"/>
-      <text x="18" y="27" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="800" fill="#ffffff" font-size="13" letter-spacing="1">HT</text>
-    </svg>
-    <span class="brand-name">Harbour Tech</span>
-  </a>
+  <!-- LIVE PARTICLE CANVAS -->
+  <canvas id="particleCanvas"></canvas>
 
-  <div class="nav-right">
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="index.html#services">Services</a>
-      <a href="index.html#projects">Projects</a>
-      <a href="index.html#contact">Contact</a>
-      <a href="github.html" class="active">Tech Stack</a>
-      <a href="login.html" id="loginLink" class="btn-nav-outline">Log In</a>
+  <!-- NAVBAR (SINGLE - FIXED) -->
+  <nav class="main-nav">
+    <a class="nav-brand" href="index.html">
+      <svg width="34" height="40" viewBox="0 0 36 42" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 8 L18 1 L34 8 L34 28 Q34 38 18 42 Q2 38 2 28 Z" fill="#2d3580" />
+        <path d="M2 8 L18 1 L34 8 L34 28 Q34 38 18 42 Q2 38 2 28 Z" fill="none" stroke="rgba(255,255,255,0.20)"
+          stroke-width="1.2" />
+        <path d="M8 13 L18 7 L28 13 L28 27 Q28 35 18 38 Q8 35 8 27 Z" fill="none" stroke="#818cf8" stroke-width="1.4"
+          opacity="0.75" />
+        <text x="18" y="27" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="800" fill="#ffffff"
+          font-size="13" letter-spacing="1">HT</text>
+      </svg>
+      <span class="brand-name">Harbour Tech</span>
+    </a>
+
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="github.html" class="active">Tech Stack</a>
+        <a href="login.html" id="loginLink" class="btn-nav-outline">Log In</a>
+      </div>
+
+      <div class="nav-actions">
+        <span id="userDisplay"></span>
+        <button id="logoutBtn" onclick="logout()" style="display:none;" class="btn-nav-outline">Logout</button>
+        <button id="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-icon">☾</span>
+        </button>
+      </div>
     </div>
+  </nav>
 
-    <div class="nav-actions">
-      <span id="userDisplay"></span>
-      <button id="logoutBtn" onclick="logout()" style="display:none;" class="btn-nav-outline">Logout</button>
-      <button id="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
-        <span class="theme-icon">☾</span>
+  <!-- HERO SECTION -->
+  <section class="tech-hero">
+    <div class="hero-content">
+      <div class="hero-tag">⚡ Live from GitHub</div>
+      <h1 class="hero-heading">
+        Technologies<br>
+        <span class="hero-accent">We Master.</span>
+      </h1>
+      <p class="hero-sub">
+        Explore the core frameworks and tools that power our solutions. Each repository below displays real-time data
+        directly from GitHub — showcasing the technologies we actively use in production.
+      </p>
+      <button class="btn-primary" onclick="fetchRepos()">
+        ↻ Refresh Data
       </button>
     </div>
-  </div>
-</nav>
 
-<!-- HERO SECTION -->
-<section class="tech-hero">
-  <div class="hero-content">
-    <div class="hero-tag">⚡ Live from GitHub</div>
-    <h1 class="hero-heading">
-      Technologies<br>
-      <span class="hero-accent">We Master.</span>
-    </h1>
-    <p class="hero-sub">
-      Explore the core frameworks and tools that power our solutions. Each repository below displays real-time data directly from GitHub — showcasing the technologies we actively use in production.
-    </p>
-    <button class="btn-primary" onclick="fetchRepos()">
-      ↻ Refresh Data
-    </button>
-  </div>
-
-  <div class="hero-visual">
-    <!-- Floating Badges -->
-    <div class="float-badge float-badge--1">
-      <div class="badge-icon">⚡</div>
-      <div>
-        <div class="badge-num">10+</div>
-        <div class="badge-label">Technologies</div>
-      </div>
-    </div>
-
-    <div class="float-badge float-badge--2">
-      <div class="badge-icon">⭐</div>
-      <div>
-        <div class="badge-num">1M+</div>
-        <div class="badge-label">Combined Stars</div>
-      </div>
-    </div>
-
-    <div class="float-badge float-badge--3">
-      <div class="badge-icon">🚀</div>
-      <div>
-        <div class="badge-num">100%</div>
-        <div class="badge-label">Open Source</div>
-      </div>
-    </div>
-
-    <!-- Code Card -->
-    <div class="code-card">
-      <div class="code-header">
-        <div class="code-dots">
-          <span style="background:#ff5f57"></span>
-          <span style="background:#febc2e"></span>
-          <span style="background:#28c840"></span>
-        </div>
-        <span class="code-filename">stack.config.js</span>
-      </div>
-      <div class="code-body">
-        <div><span class="ck">const</span> <span class="cv">techStack</span> = {</div>
-        <div>&nbsp;&nbsp;<span class="cp">frontend</span>: <span class="cs">"React, Next.js"</span>,</div>
-        <div>&nbsp;&nbsp;<span class="cp">backend</span>: <span class="cs">"Node.js, Express"</span>,</div>
-        <div>&nbsp;&nbsp;<span class="cp">devops</span>: <span class="cs">"Docker, K8s"</span>,</div>
-        <div>&nbsp;&nbsp;<span class="cp">database</span>: <span class="cs">"PostgreSQL"</span>,</div>
-        <div>};</div>
-        <div>&nbsp;</div>
-        <div><span class="cc">// ✓ Production Ready</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MAIN CONTENT -->
-<section class="section section--alt">
-  <div class="page-wrapper">
-
-    <div class="section-header">
-      <div class="section-label">Our Stack</div>
-      <h2 class="section-heading">Built with the best.</h2>
-    </div>
-
-    <!-- Filter Tabs -->
-    <div class="filter-tabs">
-      <button class="filter-btn active" onclick="filterRepos('all', this)">All</button>
-      <button class="filter-btn" onclick="filterRepos('frontend', this)">Frontend</button>
-      <button class="filter-btn" onclick="filterRepos('backend', this)">Backend</button>
-      <button class="filter-btn" onclick="filterRepos('devops', this)">DevOps</button>
-      <button class="filter-btn" onclick="filterRepos('database', this)">Database</button>
-    </div>
-
-    <!-- Loading State -->
-    <div id="loadingState" class="loading-state">
-      <div class="spinner"></div>
-      <div class="loading-text">Fetching live repository data...</div>
-    </div>
-
-    <!-- Repo Grid -->
-    <div id="repoGrid" class="repo-grid"></div>
-
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="site-footer">
-  <div class="footer-content">
-    <div class="footer-logo">
-      <svg width="28" height="33" viewBox="0 0 36 42" xmlns="http://www.w3.org/2000/svg">
-        <path d="M2 8 L18 1 L34 8 L34 28 Q34 38 18 42 Q2 38 2 28 Z" fill="#2d3580"/>
-        <path d="M2 8 L18 1 L34 8 L34 28 Q34 38 18 42 Q2 38 2 28 Z" fill="none" stroke="rgba(255,255,255,0.20)" stroke-width="1.2"/>
-        <path d="M8 13 L18 7 L28 13 L28 27 Q28 35 18 38 Q8 35 8 27 Z" fill="none" stroke="#818cf8" stroke-width="1.4" opacity="0.75"/>
-        <text x="18" y="27" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="800" fill="#ffffff" font-size="13" letter-spacing="1">HT</text>
-      </svg>
-      <span style="color:#e2e8f0; font-weight: 700;">Harbour Tech</span>
-    </div>
-    <p class="footer-text">Building modern, scalable digital solutions for businesses that want to lead.</p>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="index.html#services">Services</a>
-      <a href="index.html#projects">Projects</a>
-      <a href="index.html#contact">Contact</a>
-    </div>
-    <div class="footer-bottom">
-      © 2025 Harbour Tech Solutions · All Rights Reserved
-    </div>
-  </div>
-</footer>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="repoModal">
-  <div class="modal-box">
-    <div class="modal-top-bar"></div>
-
-    <div class="modal-header">
-      <img src="" alt="" class="modal-avatar" id="modalAvatar">
-      <div class="modal-title-area">
-        <h3 class="modal-repo-name" id="modalName">Repository Name</h3>
-        <div class="modal-repo-owner" id="modalOwner">owner/repo</div>
-      </div>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="modal-body">
-      <p class="modal-desc" id="modalDesc">Description goes here...</p>
-
-      <div class="why-box">
-        <div class="why-box-title">🚀 Why We Use This</div>
-        <div class="why-box-text" id="modalWhy">Explanation here...</div>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-box">
-          <span class="stat-value" id="modalStars">0</span>
-          <span class="stat-label">Stars</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-value" id="modalForks">0</span>
-          <span class="stat-label">Forks</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-value" id="modalIssues">0</span>
-          <span class="stat-label">Issues</span>
+    <div class="hero-visual">
+      <!-- Floating Badges -->
+      <div class="float-badge float-badge--1">
+        <div class="badge-icon">⚡</div>
+        <div>
+          <div class="badge-num">10+</div>
+          <div class="badge-label">Technologies</div>
         </div>
       </div>
 
-      <div class="modal-section-title">Repository Details</div>
-      <div class="detail-grid">
-        <div class="detail-item">
-          <div class="detail-item-label">Language</div>
-          <div class="detail-item-value" id="modalLang">JavaScript</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-item-label">License</div>
-          <div class="detail-item-value" id="modalLicense">MIT</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-item-label">Created</div>
-          <div class="detail-item-value" id="modalCreated">Jan 2020</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-item-label">Last Updated</div>
-          <div class="detail-item-value" id="modalUpdated">2 days ago</div>
+      <div class="float-badge float-badge--2">
+        <div class="badge-icon">⭐</div>
+        <div>
+          <div class="badge-num">1M+</div>
+          <div class="badge-label">Combined Stars</div>
         </div>
       </div>
 
-      <div class="modal-actions">
-        <a href="#" target="_blank" class="action-btn action-btn--primary" id="modalLink">
-          View on GitHub →
-        </a>
-        <a href="#" target="_blank" class="action-btn action-btn--secondary" id="modalIssuesLink">
-          View Issues
-        </a>
+      <div class="float-badge float-badge--3">
+        <div class="badge-icon">🚀</div>
+        <div>
+          <div class="badge-num">100%</div>
+          <div class="badge-label">Open Source</div>
+        </div>
+      </div>
+
+      <!-- Code Card -->
+      <div class="code-card">
+        <div class="code-header">
+          <div class="code-dots">
+            <span style="background:#ff5f57"></span>
+            <span style="background:#febc2e"></span>
+            <span style="background:#28c840"></span>
+          </div>
+          <span class="code-filename">stack.config.js</span>
+        </div>
+        <div class="code-body">
+          <div><span class="ck">const</span> <span class="cv">techStack</span> = {</div>
+          <div>&nbsp;&nbsp;<span class="cp">frontend</span>: <span class="cs">"React, Next.js"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="cp">backend</span>: <span class="cs">"Node.js, Express"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="cp">devops</span>: <span class="cs">"Docker, K8s"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="cp">database</span>: <span class="cs">"PostgreSQL"</span>,</div>
+          <div>};</div>
+          <div>&nbsp;</div>
+          <div><span class="cc">// ✓ Production Ready</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <section class="section section--alt">
+    <div class="page-wrapper">
+
+      <div class="section-header">
+        <div class="section-label">Our Stack</div>
+        <h2 class="section-heading">Built with the best.</h2>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-tabs">
+        <button class="filter-btn active" onclick="filterRepos('all', this)">All</button>
+        <button class="filter-btn" onclick="filterRepos('frontend', this)">Frontend</button>
+        <button class="filter-btn" onclick="filterRepos('backend', this)">Backend</button>
+        <button class="filter-btn" onclick="filterRepos('devops', this)">DevOps</button>
+        <button class="filter-btn" onclick="filterRepos('database', this)">Database</button>
+      </div>
+
+      <!-- Loading State -->
+      <div id="loadingState" class="loading-state">
+        <div class="spinner"></div>
+        <div class="loading-text">Fetching live repository data...</div>
+      </div>
+
+      <!-- Repo Grid -->
+      <div id="repoGrid" class="repo-grid"></div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <svg width="28" height="33" viewBox="0 0 36 42" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 8 L18 1 L34 8 L34 28 Q34 38 18 42 Q2 38 2 28 Z" fill="#2d3580" />
+          <path d="M2 8 L18 1 L34 8 L34 28 Q34 38 18 42 Q2 38 2 28 Z" fill="none" stroke="rgba(255,255,255,0.20)"
+            stroke-width="1.2" />
+          <path d="M8 13 L18 7 L28 13 L28 27 Q28 35 18 38 Q8 35 8 27 Z" fill="none" stroke="#818cf8" stroke-width="1.4"
+            opacity="0.75" />
+          <text x="18" y="27" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="800" fill="#ffffff"
+            font-size="13" letter-spacing="1">HT</text>
+        </svg>
+        <span style="color:#e2e8f0; font-weight: 700;">Harbour Tech</span>
+      </div>
+      <p class="footer-text">Building modern, scalable digital solutions for businesses that want to lead.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <div class="footer-bottom">
+        © 2025 Harbour Tech Solutions · All Rights Reserved
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="repoModal">
+    <div class="modal-box">
+      <div class="modal-top-bar"></div>
+
+      <div class="modal-header">
+        <img src="" alt="" class="modal-avatar" id="modalAvatar">
+        <div class="modal-title-area">
+          <h3 class="modal-repo-name" id="modalName">Repository Name</h3>
+          <div class="modal-repo-owner" id="modalOwner">owner/repo</div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc" id="modalDesc">Description goes here...</p>
+
+        <div class="why-box">
+          <div class="why-box-title">🚀 Why We Use This</div>
+          <div class="why-box-text" id="modalWhy">Explanation here...</div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-value" id="modalStars">0</span>
+            <span class="stat-label">Stars</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value" id="modalForks">0</span>
+            <span class="stat-label">Forks</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value" id="modalIssues">0</span>
+            <span class="stat-label">Issues</span>
+          </div>
+        </div>
+
+        <div class="modal-section-title">Repository Details</div>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <div class="detail-item-label">Language</div>
+            <div class="detail-item-value" id="modalLang">JavaScript</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-item-label">License</div>
+            <div class="detail-item-value" id="modalLicense">MIT</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-item-label">Created</div>
+            <div class="detail-item-value" id="modalCreated">Jan 2020</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-item-label">Last Updated</div>
+            <div class="detail-item-value" id="modalUpdated">2 days ago</div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <a href="#" target="_blank" class="action-btn action-btn--primary" id="modalLink">
+            View on GitHub →
+          </a>
+          <a href="#" target="_blank" class="action-btn action-btn--secondary" id="modalIssuesLink">
+            View Issues
+          </a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-// ================================
-// REPOSITORY DATA
-// ================================
-const repos = [
-  {
-    owner: "microsoft",
-    repo: "TypeScript",
-    category: "frontend",
-    icon: "📘",
-    why: "TypeScript is our primary language for all large-scale applications. It provides type safety that catches bugs at compile-time, excellent IDE support, and makes refactoring much safer across our codebase."
-  },
-  {
-    owner: "facebook",
-    repo: "react",
-    category: "frontend",
-    icon: "⚛️",
-    why: "React's component-based architecture is the foundation of our UI development. It enables us to build reusable, testable interfaces that scale from simple widgets to complex enterprise dashboards."
-  },
-  {
-    owner: "vercel",
-    repo: "next.js",
-    category: "frontend",
-    icon: "▲",
-    why: "Next.js provides the perfect balance of developer experience and production performance. We use it for SSR, static generation, and API routes — all in one cohesive framework."
-  },
-  {
-    owner: "tailwindlabs",
-    repo: "tailwindcss",
-    category: "frontend",
-    icon: "🎨",
-    why: "Tailwind CSS revolutionized our styling workflow. Utility-first approach means faster development, smaller bundle sizes, and consistent design systems across all our projects."
-  },
-  {
-    owner: "nodejs",
-    repo: "node",
-    category: "backend",
-    icon: "💚",
-    why: "Node.js powers all our backend services. Its event-driven, non-blocking I/O model is perfect for building scalable APIs and real-time applications that handle thousands of concurrent connections."
-  },
-  {
-    owner: "expressjs",
-    repo: "express",
-    category: "backend",
-    icon: "🚂",
-    why: "Express remains our go-to framework for REST APIs. Its minimalist approach gives us full control while providing just enough structure to build robust, maintainable server applications."
-  },
-  {
-    owner: "docker",
-    repo: "compose",
-    category: "devops",
-    icon: "🐳",
-    why: "Docker Compose is essential to our development workflow. It ensures every team member runs identical environments and makes deploying multi-service applications straightforward."
-  },
-  {
-    owner: "kubernetes",
-    repo: "kubernetes",
-    category: "devops",
-    icon: "☸️",
-    why: "Kubernetes orchestrates our production workloads. Auto-scaling, self-healing, and declarative configuration make it indispensable for running mission-critical applications at scale."
-  },
-  {
-    owner: "postgres",
-    repo: "postgres",
-    category: "database",
-    icon: "🐘",
-    why: "PostgreSQL handles our relational data with enterprise-grade reliability. Its advanced features like JSONB, full-text search, and strong ACID compliance make it perfect for complex applications."
-  },
-  {
-    owner: "redis",
-    repo: "redis",
-    category: "database",
-    icon: "🔴",
-    why: "Redis provides lightning-fast caching and session storage. We use it to dramatically improve response times and reduce database load across all our applications."
-  }
-];
-
-let dataCache = {};
-let currentFilter = 'all';
-
-// ================================
-// THEME TOGGLE
-// ================================
-function toggleTheme() {
-  document.body.classList.toggle('dark-mode');
-  const icon = document.querySelector('.theme-icon');
-  icon.textContent = document.body.classList.contains('dark-mode') ? '☀' : '☾';
-  localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-}
-
-// Load saved theme
-if (localStorage.getItem('theme') === 'dark') {
-  document.body.classList.add('dark-mode');
-  document.querySelector('.theme-icon').textContent = '☀';
-}
-
-// ================================
-// USER LOGIN STATE
-// ================================
-function checkLoginState() {
-  const user = localStorage.getItem('loggedInUser');
-  const loginLink = document.getElementById('loginLink');
-  const userDisplay = document.getElementById('userDisplay');
-  const logoutBtn = document.getElementById('logoutBtn');
-
-  if (user) {
-    // User is logged in
-    if (loginLink) loginLink.style.display = 'none';
-    if (userDisplay) {
-      userDisplay.textContent = '👋 ' + user;
-      userDisplay.style.display = 'inline';
-    }
-    if (logoutBtn) logoutBtn.style.display = 'inline-block';
-  } else {
-    // User is not logged in
-    if (loginLink) loginLink.style.display = 'inline-block';
-    if (userDisplay) userDisplay.style.display = 'none';
-    if (logoutBtn) logoutBtn.style.display = 'none';
-  }
-}
-
-function logout() {
-  localStorage.removeItem('loggedInUser');
-  checkLoginState();
-}
-
-// ================================
-// FETCH REPOSITORIES
-// ================================
-async function fetchRepos() {
-  const grid = document.getElementById('repoGrid');
-  const loading = document.getElementById('loadingState');
-
-  loading.style.display = 'block';
-  grid.innerHTML = '';
-
-  try {
-    for (let i = 0; i < repos.length; i++) {
-      const r = repos[i];
-
-      // Fetch from GitHub API
-      const res = await fetch(`https://api.github.com/repos/${r.owner}/${r.repo}`);
-      const data = await res.json();
-
-      // Check if API returned an error
-      if (data.message || !data.name) {
-        console.warn(`Skipping ${r.owner}/${r.repo}: ${data.message || 'Invalid response'}`);
-        
-        // Create card with fallback data
-        createCard(grid, r, {
-          name: r.repo,
-          description: `Official ${r.repo} repository`,
-          language: 'Multiple',
-          stargazers_count: 0,
-          forks_count: 0,
-          watchers_count: 0,
-          open_issues_count: 0,
-          created_at: null,
-          updated_at: null,
-          license: null,
-          html_url: `https://github.com/${r.owner}/${r.repo}`,
-          owner: { avatar_url: `https://github.com/${r.owner}.png` }
-        }, i);
-        continue;
+  <script>
+    // ================================
+    // REPOSITORY DATA
+    // ================================
+    const repos = [
+      {
+        owner: "microsoft",
+        repo: "TypeScript",
+        category: "frontend",
+        icon: "📘",
+        why: "TypeScript is our primary language for all large-scale applications. It provides type safety that catches bugs at compile-time, excellent IDE support, and makes refactoring much safer across our codebase."
+      },
+      {
+        owner: "facebook",
+        repo: "react",
+        category: "frontend",
+        icon: "⚛️",
+        why: "React's component-based architecture is the foundation of our UI development. It enables us to build reusable, testable interfaces that scale from simple widgets to complex enterprise dashboards."
+      },
+      {
+        owner: "vercel",
+        repo: "next.js",
+        category: "frontend",
+        icon: "▲",
+        why: "Next.js provides the perfect balance of developer experience and production performance. We use it for SSR, static generation, and API routes — all in one cohesive framework."
+      },
+      {
+        owner: "tailwindlabs",
+        repo: "tailwindcss",
+        category: "frontend",
+        icon: "🎨",
+        why: "Tailwind CSS revolutionized our styling workflow. Utility-first approach means faster development, smaller bundle sizes, and consistent design systems across all our projects."
+      },
+      {
+        owner: "nodejs",
+        repo: "node",
+        category: "backend",
+        icon: "💚",
+        why: "Node.js powers all our backend services. Its event-driven, non-blocking I/O model is perfect for building scalable APIs and real-time applications that handle thousands of concurrent connections."
+      },
+      {
+        owner: "expressjs",
+        repo: "express",
+        category: "backend",
+        icon: "🚂",
+        why: "Express remains our go-to framework for REST APIs. Its minimalist approach gives us full control while providing just enough structure to build robust, maintainable server applications."
+      },
+      {
+        owner: "docker",
+        repo: "compose",
+        category: "devops",
+        icon: "🐳",
+        why: "Docker Compose is essential to our development workflow. It ensures every team member runs identical environments and makes deploying multi-service applications straightforward."
+      },
+      {
+        owner: "kubernetes",
+        repo: "kubernetes",
+        category: "devops",
+        icon: "☸️",
+        why: "Kubernetes orchestrates our production workloads. Auto-scaling, self-healing, and declarative configuration make it indispensable for running mission-critical applications at scale."
+      },
+      {
+        owner: "postgres",
+        repo: "postgres",
+        category: "database",
+        icon: "🐘",
+        why: "PostgreSQL handles our relational data with enterprise-grade reliability. Its advanced features like JSONB, full-text search, and strong ACID compliance make it perfect for complex applications."
+      },
+      {
+        owner: "redis",
+        repo: "redis",
+        category: "database",
+        icon: "🔴",
+        why: "Redis provides lightning-fast caching and session storage. We use it to dramatically improve response times and reduce database load across all our applications."
       }
+    ];
 
-      // Cache the data
-      dataCache[`${r.owner}/${r.repo}`] = { ...data, ...r };
+    let dataCache = {};
+    let currentFilter = 'all';
 
-      // Create card
-      createCard(grid, r, data, i);
+    // ================================
+    // THEME TOGGLE
+    // ================================
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const icon = document.querySelector('.theme-icon');
+      icon.textContent = document.body.classList.contains('dark-mode') ? '☀' : '☾';
+      localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
     }
 
-    loading.style.display = 'none';
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      document.querySelector('.theme-icon').textContent = '☀';
+    }
 
-  } catch (err) {
-    console.error('Fetch error:', err);
-    loading.innerHTML = `
+    // ================================
+    // USER LOGIN STATE
+    // ================================
+    function checkLoginState() {
+      const user = localStorage.getItem('loggedInUser');
+      const loginLink = document.getElementById('loginLink');
+      const userDisplay = document.getElementById('userDisplay');
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      if (user) {
+        // User is logged in
+        if (loginLink) loginLink.style.display = 'none';
+        if (userDisplay) {
+          userDisplay.textContent = '👋 ' + user;
+          userDisplay.style.display = 'inline';
+        }
+        if (logoutBtn) logoutBtn.style.display = 'inline-block';
+      } else {
+        // User is not logged in
+        if (loginLink) loginLink.style.display = 'inline-block';
+        if (userDisplay) userDisplay.style.display = 'none';
+        if (logoutBtn) logoutBtn.style.display = 'none';
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('loggedInUser');
+      checkLoginState();
+    }
+
+    // ================================
+    // FETCH REPOSITORIES
+    // ================================
+    async function fetchRepos() {
+      const grid = document.getElementById('repoGrid');
+      const loading = document.getElementById('loadingState');
+
+      loading.style.display = 'block';
+      grid.innerHTML = '';
+
+      try {
+        for (let i = 0; i < repos.length; i++) {
+          const r = repos[i];
+
+          // Fetch from GitHub API
+          const res = await fetch(`https://api.github.com/repos/${r.owner}/${r.repo}`);
+          const data = await res.json();
+
+          // Check if API returned an error
+          if (data.message || !data.name) {
+            console.warn(`Skipping ${r.owner}/${r.repo}: ${data.message || 'Invalid response'}`);
+
+            // Create card with fallback data
+            createCard(grid, r, {
+              name: r.repo,
+              description: `Official ${r.repo} repository`,
+              language: 'Multiple',
+              stargazers_count: 0,
+              forks_count: 0,
+              watchers_count: 0,
+              open_issues_count: 0,
+              created_at: null,
+              updated_at: null,
+              license: null,
+              html_url: `https://github.com/${r.owner}/${r.repo}`,
+              owner: { avatar_url: `https://github.com/${r.owner}.png` }
+            }, i);
+            continue;
+          }
+
+          // Cache the data
+          dataCache[`${r.owner}/${r.repo}`] = { ...data, ...r };
+
+          // Create card
+          createCard(grid, r, data, i);
+        }
+
+        loading.style.display = 'none';
+
+      } catch (err) {
+        console.error('Fetch error:', err);
+        loading.innerHTML = `
       <div style="color: #ef4444;">
         <p style="font-size: 16px; margin-bottom: 12px;">⚠️ Failed to load repositories</p>
         <button class="btn-primary" onclick="fetchRepos()">Try Again</button>
       </div>
     `;
-  }
-}
+      }
+    }
 
-// ================================
-// CREATE CARD FUNCTION
-// ================================
-function createCard(grid, config, data, index) {
-  const card = document.createElement('div');
-  card.className = 'repo-card';
-  card.setAttribute('data-category', config.category);
-  card.onclick = () => openModal(config.owner, config.repo);
+    // ================================
+    // CREATE CARD FUNCTION
+    // ================================
+    function createCard(grid, config, data, index) {
+      const card = document.createElement('div');
+      card.className = 'repo-card';
+      card.setAttribute('data-category', config.category);
+      card.onclick = () => openModal(config.owner, config.repo);
 
-  // Safe values with fallbacks
-  const repoName = data.name || config.repo || 'Unknown';
-  const repoDesc = data.description || `Official ${config.repo} repository`;
-  const repoLang = data.language || 'Multi-language';
-  const stars = data.stargazers_count || 0;
-  const forks = data.forks_count || 0;
-  const watchers = data.watchers_count || 0;
+      // Safe values with fallbacks
+      const repoName = data.name || config.repo || 'Unknown';
+      const repoDesc = data.description || `Official ${config.repo} repository`;
+      const repoLang = data.language || 'Multi-language';
+      const stars = data.stargazers_count || 0;
+      const forks = data.forks_count || 0;
+      const watchers = data.watchers_count || 0;
 
-  card.innerHTML = `
+      card.innerHTML = `
     <div class="repo-card-header">
       <div class="repo-icon">${config.icon}</div>
       <div>
@@ -1473,133 +1593,135 @@ function createCard(grid, config, data, index) {
     <span class="click-hint">Click for details →</span>
   `;
 
-  grid.appendChild(card);
+      grid.appendChild(card);
 
-  // Cache data for modal
-  if (!dataCache[`${config.owner}/${config.repo}`]) {
-    dataCache[`${config.owner}/${config.repo}`] = { ...data, ...config };
-  }
+      // Cache data for modal
+      if (!dataCache[`${config.owner}/${config.repo}`]) {
+        dataCache[`${config.owner}/${config.repo}`] = { ...data, ...config };
+      }
 
-  // Staggered animation
-  setTimeout(() => {
-    card.style.opacity = '1';
-    card.style.transform = 'translateY(0)';
-  }, index * 80);
-}
-
-// ================================
-// FILTER REPOS
-// ================================
-function filterRepos(category, btn) {
-  currentFilter = category;
-
-  // Update active button
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-
-  // Filter cards
-  document.querySelectorAll('.repo-card').forEach(card => {
-    const cardCategory = card.getAttribute('data-category');
-    if (category === 'all' || cardCategory === category) {
-      card.style.display = 'block';
-    } else {
-      card.style.display = 'none';
+      // Staggered animation
+      setTimeout(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, index * 80);
     }
-  });
-}
 
-// ================================
-// MODAL FUNCTIONS
-// ================================
-function openModal(owner, repo) {
-  const data = dataCache[`${owner}/${repo}`];
-  
-  if (!data) {
-    console.error('No data found for:', owner, repo);
-    return;
-  }
+    // ================================
+    // FILTER REPOS
+    // ================================
+    function filterRepos(category, btn) {
+      currentFilter = category;
 
-  // Safe values with fallbacks
-  const avatarUrl = data.owner?.avatar_url || `https://github.com/${owner}.png`;
-  const repoName = data.name || repo;
-  const description = data.description || 'No description available';
-  const whyText = data.why || 'Core technology in our stack.';
-  const stars = data.stargazers_count || 0;
-  const forks = data.forks_count || 0;
-  const issues = data.open_issues_count || 0;
-  const language = data.language || 'Multiple';
-  const license = data.license?.name || 'Not specified';
-  const htmlUrl = data.html_url || `https://github.com/${owner}/${repo}`;
+      // Update active button
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
 
-  // Set modal content
-  document.getElementById('modalAvatar').src = avatarUrl;
-  document.getElementById('modalName').textContent = repoName;
-  document.getElementById('modalOwner').textContent = `${owner} / ${repo}`;
-  document.getElementById('modalDesc').textContent = description;
-  document.getElementById('modalWhy').textContent = whyText;
-  document.getElementById('modalStars').textContent = formatNum(stars);
-  document.getElementById('modalForks').textContent = formatNum(forks);
-  document.getElementById('modalIssues').textContent = formatNum(issues);
-  document.getElementById('modalLang').textContent = language;
-  document.getElementById('modalLicense').textContent = license;
-  document.getElementById('modalCreated').textContent = data.created_at ? formatDate(data.created_at) : 'N/A';
-  document.getElementById('modalUpdated').textContent = data.updated_at ? formatDate(data.updated_at) : 'N/A';
-  document.getElementById('modalLink').href = htmlUrl;
-  document.getElementById('modalIssuesLink').href = htmlUrl + '/issues';
+      // Filter cards
+      document.querySelectorAll('.repo-card').forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        if (category === 'all' || cardCategory === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
 
-  // Show modal
-  document.getElementById('repoModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
+    // ================================
+    // MODAL FUNCTIONS
+    // ================================
+    function openModal(owner, repo) {
+      const data = dataCache[`${owner}/${repo}`];
 
-function closeModal() {
-  document.getElementById('repoModal').classList.remove('open');
-  document.body.style.overflow = 'auto';
-}
+      if (!data) {
+        console.error('No data found for:', owner, repo);
+        return;
+      }
 
-// Close on overlay click
-document.getElementById('repoModal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
+      // Safe values with fallbacks
+      const avatarUrl = data.owner?.avatar_url || `https://github.com/${owner}.png`;
+      const repoName = data.name || repo;
+      const description = data.description || 'No description available';
+      const whyText = data.why || 'Core technology in our stack.';
+      const stars = data.stargazers_count || 0;
+      const forks = data.forks_count || 0;
+      const issues = data.open_issues_count || 0;
+      const language = data.language || 'Multiple';
+      const license = data.license?.name || 'Not specified';
+      const htmlUrl = data.html_url || `https://github.com/${owner}/${repo}`;
 
-// Close on Escape key
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeModal();
-});
+      // Set modal content
+      document.getElementById('modalAvatar').src = avatarUrl;
+      document.getElementById('modalName').textContent = repoName;
+      document.getElementById('modalOwner').textContent = `${owner} / ${repo}`;
+      document.getElementById('modalDesc').textContent = description;
+      document.getElementById('modalWhy').textContent = whyText;
+      document.getElementById('modalStars').textContent = formatNum(stars);
+      document.getElementById('modalForks').textContent = formatNum(forks);
+      document.getElementById('modalIssues').textContent = formatNum(issues);
+      document.getElementById('modalLang').textContent = language;
+      document.getElementById('modalLicense').textContent = license;
+      document.getElementById('modalCreated').textContent = data.created_at ? formatDate(data.created_at) : 'N/A';
+      document.getElementById('modalUpdated').textContent = data.updated_at ? formatDate(data.updated_at) : 'N/A';
+      document.getElementById('modalLink').href = htmlUrl;
+      document.getElementById('modalIssuesLink').href = htmlUrl + '/issues';
 
-// ================================
-// UTILITY FUNCTIONS
-// ================================
-function formatNum(num) {
-  if (num === null || num === undefined) return '0';
-  if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-  if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
-  return num.toString();
-}
+      // Show modal
+      document.getElementById('repoModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
 
-function formatDate(dateStr) {
-  if (!dateStr) return 'N/A';
-  try {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-  } catch (e) {
-    return 'N/A';
-  }
-}
+    function closeModal() {
+      document.getElementById('repoModal').classList.remove('open');
+      document.body.style.overflow = 'auto';
+    }
 
-function capitalize(str) {
-  if (!str) return '';
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
+    // Close on overlay click
+    document.getElementById('repoModal').addEventListener('click', function (e) {
+      if (e.target === this) closeModal();
+    });
 
-// ================================
-// INITIALIZE
-// ================================
-document.addEventListener('DOMContentLoaded', function() {
-  checkLoginState();
-  fetchRepos();
-});
-</script>
+    // Close on Escape key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // ================================
+    // UTILITY FUNCTIONS
+    // ================================
+    function formatNum(num) {
+      if (num === null || num === undefined) return '0';
+      if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+      if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
+      return num.toString();
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return 'N/A';
+      try {
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      } catch (e) {
+        return 'N/A';
+      }
+    }
+
+    function capitalize(str) {
+      if (!str) return '';
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    // ================================
+    // INITIALIZE
+    // ================================
+    document.addEventListener('DOMContentLoaded', function () {
+      checkLoginState();
+      fetchRepos();
+    });
+  </script>
+  <script src="particles.js"></script>
 
 </body>
+
 </html>

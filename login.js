@@ -1,11 +1,15 @@
 // login.js
 
-// Redirect if already logged in
+// ================================
+// REDIRECT IF ALREADY LOGGED IN
+// ================================
 if (localStorage.getItem("loggedInUser")) {
   window.location.href = "index.html";
 }
 
-// Theme
+// ================================
+// THEME TOGGLE
+// ================================
 let darkMode = false;
 
 function toggleTheme() {
@@ -20,40 +24,59 @@ if (savedTheme === "true") {
   darkMode = true;
 }
 
-// Tab switching
+// ================================
+// TAB SWITCHING
+// ================================
 function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach((btn, i) => {
     btn.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'register'));
   });
   document.getElementById('loginPanel').classList.toggle('active', tab === 'login');
   document.getElementById('registerPanel').classList.toggle('active', tab === 'register');
+
+  // Update header text
+  const h2 = document.querySelector('.auth-brand h2');
+  const sub = document.querySelector('.auth-subtitle');
+  if (tab === 'login') {
+    h2.textContent = 'Welcome Back';
+    sub.textContent = 'Sign in to access your dashboard and projects';
+  } else {
+    h2.textContent = 'Get Started';
+    sub.textContent = 'Create your account and start building today';
+  }
 }
 
-// Show/hide password
+// ================================
+// SHOW/HIDE PASSWORD
+// ================================
 function togglePw(id, btn) {
   const input = document.getElementById(id);
   if (input.type === "password") {
     input.type = "text";
-    btn.innerText = "🙈";
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
   } else {
     input.type = "password";
-    btn.innerText = "👁️";
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
   }
 }
 
-// Password strength
+// ================================
+// PASSWORD STRENGTH
+// ================================
 document.getElementById("regPassword").addEventListener("input", function () {
   const val = this.value;
   const el = document.getElementById("pwStrength");
   if (!val) { el.innerText = ""; return; }
   const strong = /[A-Z]/.test(val) && /[0-9]/.test(val) && /[@$!%*?&]/.test(val) && val.length >= 8;
   const medium = /[A-Z]/.test(val) && /[0-9]/.test(val) && val.length >= 6;
-  if (strong) { el.innerText = "✅ Strong password"; el.style.color = "#16a34a"; }
-  else if (medium) { el.innerText = "⚠️ Medium password"; el.style.color = "#d97706"; }
-  else { el.innerText = "❌ Weak password"; el.style.color = "#dc2626"; }
+  if (strong) { el.innerText = "✦ Strong password"; el.style.color = "#22c55e"; }
+  else if (medium) { el.innerText = "◆ Medium password"; el.style.color = "#f59e0b"; }
+  else { el.innerText = "✧ Weak password"; el.style.color = "#ef4444"; }
 });
 
-// Register
+// ================================
+// REGISTER
+// ================================
 document.getElementById("registerForm").addEventListener("submit", function (e) {
   e.preventDefault();
   const name = document.getElementById("regName").value.trim();
@@ -75,7 +98,9 @@ document.getElementById("registerForm").addEventListener("submit", function (e) 
   window.location.href = "index.html";
 });
 
-// Login
+// ================================
+// LOGIN
+// ================================
 document.getElementById("loginForm").addEventListener("submit", function (e) {
   e.preventDefault();
   const email = document.getElementById("loginEmail").value.toLowerCase().trim();
@@ -91,7 +116,9 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   }
 });
 
-// Navbar
+// ================================
+// NAVBAR STATE
+// ================================
 function updateNavbar() {
   const user = localStorage.getItem("loggedInUser");
   const display = document.getElementById("userDisplay");

@@ -223,6 +223,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const icon = document.querySelector('.theme-icon');
     if (icon) icon.innerText = '☀';
   }
+
+  // Initialize AOS
+  if (typeof AOS !== 'undefined') {
+    AOS.init({
+      once: true,
+      offset: 50,
+      duration: 800,
+      easing: 'ease-out-cubic'
+    });
+  }
 });
 
 // ================================
