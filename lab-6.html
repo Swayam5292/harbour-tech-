@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #expression {
+            font-size: 18px;
+            color: gray;
+            height: 25px;
+        }
+
+        #result {
+            width: 220px;
+            height: 40px;
+            font-size: 22px;
+            text-align: right;
+        }
+
+        button {
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Smart Calculator</h2>
+
+    <!-- Shows full expression -->
+    <div id="expression"></div>
+
+    <!-- Shows result -->
+    <input type="text" id="result" readonly><br>
+
+    <button onclick="append('1')">1</button>
+    <button onclick="append('2')">2</button>
+    <button onclick="append('3')">3</button>
+    <button onclick="append('+')">+</button><br>
+
+    <button onclick="append('4')">4</button>
+    <button onclick="append('5')">5</button>
+    <button onclick="append('6')">6</button>
+    <button onclick="append('-')">-</button><br>
+
+    <button onclick="append('7')">7</button>
+    <button onclick="append('8')">8</button>
+    <button onclick="append('9')">9</button>
+    <button onclick="append('*')">*</button><br>
+
+    <button onclick="append('0')">0</button>
+    <button onclick="calculate()">=</button>
+    <button onclick="clearScreen()">C</button>
+    <button onclick="append('/')">/</button>
+
+    <script>
+        let expression = "";
+
+        function append(value) {
+            expression += value;
+            document.getElementById("expression").innerText = expression;
+            document.getElementById("result").value = expression;
+        }
+
+        function calculate() {
+            try {
+                let result = eval(expression);
+
+                // Show full expression above
+                document.getElementById("expression").innerText =
+                    expression + " =";
+
+                // Show final answer
+                document.getElementById("result").value = result;
+
+                // Store result for next calculation
+                expression = result.toString();
+
+            } catch {
+                alert("Invalid Expression");
+            }
+        }
+
+        function clearScreen() {
+            expression = "";
+            document.getElementById("expression").innerText = "";
+            document.getElementById("result").value = "";
+        }
+    </script>
+
+</body>
+
+</html>
