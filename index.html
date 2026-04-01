@@ -269,16 +269,16 @@
 
       </div>
       <div class="contact-form-wrap">
-        <form id="contactForm" onsubmit="handleContact(event)">
+        <form id="contactForm">
           <div class="form-row-2">
-            <div class="form-group"><label>Full Name</label><input type="text" placeholder="John Smith" required></div>
-            <div class="form-group"><label>Email</label><input type="email" placeholder="john@company.com" required></div>
+            <div class="form-group"><label>Full Name</label><input type="text" name="user_name" placeholder="John Smith" required></div>
+            <div class="form-group"><label>Email</label><input type="email" name="user_email" placeholder="john@company.com" required></div>
           </div>
           <div class="form-row-2">
-            <div class="form-group"><label>Phone</label><input type="tel" placeholder="+91 9000000000"></div>
+            <div class="form-group"><label>Phone</label><input type="tel" name="user_phone" placeholder="+91 9000000000"></div>
             <div class="form-group">
               <label>Service</label>
-              <select>
+              <select name="service_type">
                 <option value="">Select a service...</option>
                 <option>Web Development</option>
                 <option>Cloud Solutions</option>
@@ -288,14 +288,23 @@
               </select>
             </div>
           </div>
-          <div class="form-group"><label>Message</label><textarea placeholder="Tell us about your project..." required></textarea></div>
-          <button type="submit" class="btn-primary w-full">Send Message &#8594;</button>
-          <p id="contactSuccess" style="display:none; color:var(--accent); text-align:center; margin-top:14px; font-weight:600;">&#10003; Message sent! We'll be in touch shortly.</p>
+          <div class="form-group"><label>Message</label><textarea name="message" placeholder="Tell us about your project..." required></textarea></div>
+          <button type="submit" id="submitBtn" class="btn-primary w-full">Send Message &#8594;</button>
+          <p id="contactSuccess" style="display:none; color:var(--accent2); text-align:center; margin-top:14px; font-weight:600;">&#10003; Message sent! We'll be in touch shortly.</p>
+          <p id="contactError" style="display:none; color:#ef4444; text-align:center; margin-top:14px; font-weight:600;">&#10007; Failed to send message. Please try again.</p>
         </form>
       </div>
     </div>
   </div>
 </section>
+
+<!-- EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript">
+  (function(){
+      emailjs.init("d7p6Li5EMWhr56g5c");
+  })();
+</script>
 
 <!-- FOOTER -->
 <footer class="site-footer">

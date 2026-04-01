@@ -284,9 +284,34 @@ $(document).ready(function () {
     $(this).css("border", "");
   });
 
-  // Form submit animation
-  $("#contactForm").submit(function () {
-    $("#contactSuccess").hide().fadeIn(800);
+  // Form submit animation & EmailJS
+  $("#contactForm").submit(function (e) {
+    e.preventDefault(); // Prevent default page refresh
+
+    const btn = $("#submitBtn");
+    const originalText = btn.html();
+    btn.html("Sending... &#8987;");
+    btn.prop("disabled", true);
+    $("#contactSuccess, #contactError").hide();
+
+    emailjs.sendForm('service_pcqzlcb', 'template_8tyn0yi', this)
+      .then(function() {
+          btn.html("Message Sent! &#10003;");
+          $("#contactSuccess").fadeIn(800);
+          $("#contactForm")[0].reset();
+          setTimeout(() => {
+            btn.html(originalText);
+            btn.prop("disabled", false);
+          }, 3000);
+      }, function(error) {
+          console.error("EmailJS Error:", error);
+          btn.html("Failed &#10007;");
+          $("#contactError").fadeIn(800);
+          setTimeout(() => {
+            btn.html(originalText);
+            btn.prop("disabled", false);
+          }, 3000);
+      });
   });
 
   // Smooth scroll

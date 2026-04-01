@@ -677,6 +677,7 @@
       margin-bottom: 18px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
+      line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
@@ -1123,6 +1124,70 @@
         flex-direction: column;
       }
     }
+
+    /* ================================
+       GITHUB PROFILE DASHBOARD
+    ================================ */
+    .profile-dashboard {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      backdrop-filter: blur(20px);
+    }
+    
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3px solid var(--accent2);
+      object-fit: cover;
+    }
+
+    .profile-info { flex: 1; }
+    .profile-name { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .profile-bio { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; max-width: 600px; }
+    
+    .profile-stats {
+      display: flex; gap: 20px;
+    }
+    .profile-stat { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text); }
+    .profile-stat-icon { color: var(--accent2); font-size: 16px; }
+
+    /* ================================
+       SKELETON LOADERS
+    ================================ */
+    .skeleton-card {
+      background: var(--input-bg);
+      border-radius: 20px;
+      padding: 32px 28px;
+      border: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .skeleton-line {
+      height: 14px;
+      background: rgba(129, 140, 248, 0.1);
+      border-radius: 8px;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+    
+    .skeleton-header { display: flex; gap: 16px; align-items: center; }
+    .skeleton-icon { width: 44px; height: 44px; border-radius: 12px; }
+    .skeleton-title { width: 60%; height: 20px; }
+    
+    @keyframes pulse {
+      0% { opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
   </style>
 </head>
 
@@ -1238,8 +1303,19 @@
     <div class="page-wrapper">
 
       <div class="section-header">
-        <div class="section-label">Our Stack</div>
-        <h2 class="section-heading">Built with the best.</h2>
+        <div class="section-label">GitHub Profile</div>
+        <h2 class="section-heading">The engineering behind Harbour Tech.</h2>
+      </div>
+
+      <!-- Profile Dashboard -->
+      <div class="profile-dashboard" id="githubProfile">
+        <!-- Rendered by JS -->
+        <div class="skeleton-icon" style="flex-shrink:0;"></div>
+        <div style="flex:1;">
+          <div class="skeleton-line" style="width: 200px; margin-bottom:12px; height: 28px;"></div>
+          <div class="skeleton-line" style="width: 80%; margin-bottom:12px;"></div>
+          <div class="skeleton-line" style="width: 40%;"></div>
+        </div>
       </div>
 
       <!-- Filter Tabs -->
@@ -1365,76 +1441,12 @@
     // REPOSITORY DATA
     // ================================
     const repos = [
-      {
-        owner: "microsoft",
-        repo: "TypeScript",
-        category: "frontend",
-        icon: "📘",
-        why: "TypeScript is our primary language for all large-scale applications. It provides type safety that catches bugs at compile-time, excellent IDE support, and makes refactoring much safer across our codebase."
-      },
-      {
-        owner: "facebook",
-        repo: "react",
-        category: "frontend",
-        icon: "⚛️",
-        why: "React's component-based architecture is the foundation of our UI development. It enables us to build reusable, testable interfaces that scale from simple widgets to complex enterprise dashboards."
-      },
-      {
-        owner: "vercel",
-        repo: "next.js",
-        category: "frontend",
-        icon: "▲",
-        why: "Next.js provides the perfect balance of developer experience and production performance. We use it for SSR, static generation, and API routes — all in one cohesive framework."
-      },
-      {
-        owner: "tailwindlabs",
-        repo: "tailwindcss",
-        category: "frontend",
-        icon: "🎨",
-        why: "Tailwind CSS revolutionized our styling workflow. Utility-first approach means faster development, smaller bundle sizes, and consistent design systems across all our projects."
-      },
-      {
-        owner: "nodejs",
-        repo: "node",
-        category: "backend",
-        icon: "💚",
-        why: "Node.js powers all our backend services. Its event-driven, non-blocking I/O model is perfect for building scalable APIs and real-time applications that handle thousands of concurrent connections."
-      },
-      {
-        owner: "expressjs",
-        repo: "express",
-        category: "backend",
-        icon: "🚂",
-        why: "Express remains our go-to framework for REST APIs. Its minimalist approach gives us full control while providing just enough structure to build robust, maintainable server applications."
-      },
-      {
-        owner: "docker",
-        repo: "compose",
-        category: "devops",
-        icon: "🐳",
-        why: "Docker Compose is essential to our development workflow. It ensures every team member runs identical environments and makes deploying multi-service applications straightforward."
-      },
-      {
-        owner: "kubernetes",
-        repo: "kubernetes",
-        category: "devops",
-        icon: "☸️",
-        why: "Kubernetes orchestrates our production workloads. Auto-scaling, self-healing, and declarative configuration make it indispensable for running mission-critical applications at scale."
-      },
-      {
-        owner: "postgres",
-        repo: "postgres",
-        category: "database",
-        icon: "🐘",
-        why: "PostgreSQL handles our relational data with enterprise-grade reliability. Its advanced features like JSONB, full-text search, and strong ACID compliance make it perfect for complex applications."
-      },
-      {
-        owner: "redis",
-        repo: "redis",
-        category: "database",
-        icon: "🔴",
-        why: "Redis provides lightning-fast caching and session storage. We use it to dramatically improve response times and reduce database load across all our applications."
-      }
+      { owner: "vercel", repo: "next.js", category: "frontend", icon: "▲", why: "Next.js is the React Production Framework. It powers our extremely fast static and server-rendered applications with incredible developer experience." },
+      { owner: "vercel", repo: "turbo", category: "devops", icon: "💨", why: "Turborepo is our high-performance build system for JavaScript and TypeScript codebases. It saves us countless hours in CI/CD pipeline runs." },
+      { owner: "vercel", repo: "swr", category: "frontend", icon: "🔄", why: "SWR powers our React frontend data fetching. It provides the best caching, revalidation, and state management for remote data out of the box." },
+      { owner: "vercel", repo: "hyper", category: "devops", icon: "⌨️", why: "Hyper is a terminal built on web technologies. We use it internally to customize and unify our engineering team's local development workflow." },
+      { owner: "vercel", repo: "pkg", category: "backend", icon: "📦", why: "We use pkg to package our Node.js microservices into standalone executable binaries for reliable cross-platform deployments without needing Node installed." },
+      { owner: "vercel", repo: "ms", category: "backend", icon: "⏱️", why: "A tiny but critical utility we use everywhere in our Node servers to convert time strings (like '2 days') into milliseconds for cache TTLs and rate limiting." }
     ];
 
     let dataCache = {};
@@ -1487,62 +1499,97 @@
     }
 
     // ================================
-    // FETCH REPOSITORIES
+    // FETCH REPOSITORIES & PROFILE
     // ================================
     async function fetchRepos() {
       const grid = document.getElementById('repoGrid');
+      const profile = document.getElementById('githubProfile');
       const loading = document.getElementById('loadingState');
 
-      loading.style.display = 'block';
+      if (loading) loading.style.display = 'none';
+
+      // Inject skeleton cards
+      grid.innerHTML = '';
+      for (let i = 0; i < 6; i++) {
+        grid.innerHTML += `
+          <div class="skeleton-card">
+            <div class="skeleton-header">
+              <div class="skeleton-line skeleton-icon"></div>
+              <div class="skeleton-line skeleton-title"></div>
+            </div>
+            <div class="skeleton-line" style="width: 100%"></div>
+            <div class="skeleton-line" style="width: 80%"></div>
+            <div class="skeleton-line" style="width: 40%; margin-top: 10px;"></div>
+          </div>
+        `;
+      }
+      profile.innerHTML = `
+        <div class="skeleton-icon" style="flex-shrink:0;"></div>
+        <div style="flex:1;">
+          <div class="skeleton-line" style="width: 200px; margin-bottom:12px; height: 28px;"></div>
+          <div class="skeleton-line" style="width: 80%; margin-bottom:12px;"></div>
+          <div class="skeleton-line" style="width: 40%;"></div>
+        </div>
+      `;
+
+      // Add artificial delay for premium skeleton feel before rendering cached/new data
+      await new Promise(r => setTimeout(r, 600));
+
       grid.innerHTML = '';
 
       try {
+        // Fetch Profile
+        const profRes = await fetch('https://api.github.com/users/vercel');
+        const profData = await profRes.json();
+        
+        if(profData.avatar_url) {
+          profile.innerHTML = `
+            <img src="${profData.avatar_url}" alt="Vercel Avatar" class="profile-avatar">
+            <div class="profile-info">
+              <div class="profile-name">${profData.name || 'Vercel'}</div>
+              <div class="profile-bio">${profData.bio || 'Developing the web framework of the future.'}</div>
+              <div class="profile-stats">
+                <span class="profile-stat"><span class="profile-stat-icon">👥</span> ${formatNum(profData.followers)} Followers</span>
+                <span class="profile-stat"><span class="profile-stat-icon">📁</span> ${profData.public_repos} Public Repos</span>
+              </div>
+            </div>
+          `;
+        }
+
         for (let i = 0; i < repos.length; i++) {
           const r = repos[i];
+          
+          let data;
+          if (dataCache[`${r.owner}/${r.repo}`]) {
+            data = dataCache[`${r.owner}/${r.repo}`];
+          } else {
+            const res = await fetch(`https://api.github.com/repos/${r.owner}/${r.repo}`);
+            data = await res.json();
+          }
 
-          // Fetch from GitHub API
-          const res = await fetch(`https://api.github.com/repos/${r.owner}/${r.repo}`);
-          const data = await res.json();
-
-          // Check if API returned an error
           if (data.message || !data.name) {
             console.warn(`Skipping ${r.owner}/${r.repo}: ${data.message || 'Invalid response'}`);
-
-            // Create card with fallback data
             createCard(grid, r, {
-              name: r.repo,
-              description: `Official ${r.repo} repository`,
-              language: 'Multiple',
-              stargazers_count: 0,
-              forks_count: 0,
-              watchers_count: 0,
-              open_issues_count: 0,
-              created_at: null,
-              updated_at: null,
-              license: null,
+              name: r.repo, description: `Official ${r.repo} repository`, language: 'Multiple',
+              stargazers_count: 0, forks_count: 0, watchers_count: 0,
               html_url: `https://github.com/${r.owner}/${r.repo}`,
               owner: { avatar_url: `https://github.com/${r.owner}.png` }
             }, i);
             continue;
           }
 
-          // Cache the data
           dataCache[`${r.owner}/${r.repo}`] = { ...data, ...r };
-
-          // Create card
-          createCard(grid, r, data, i);
+          createCard(grid, r, { ...data, ...r }, i);
         }
-
-        loading.style.display = 'none';
 
       } catch (err) {
         console.error('Fetch error:', err);
-        loading.innerHTML = `
-      <div style="color: #ef4444;">
-        <p style="font-size: 16px; margin-bottom: 12px;">⚠️ Failed to load repositories</p>
-        <button class="btn-primary" onclick="fetchRepos()">Try Again</button>
-      </div>
-    `;
+        grid.innerHTML = `
+          <div style="color: #ef4444; width:100%; text-align:center; padding: 40px;">
+            <p style="font-size: 16px; margin-bottom: 12px;">⚠️ API Rate Limit Exceeded or Network Error.</p>
+            <button class="btn-primary" onclick="fetchRepos()">Try Again Later</button>
+          </div>
+        `;
       }
     }
 
