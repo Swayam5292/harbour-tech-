@@ -1454,3 +1454,149 @@ body.dark-mode .status-badge.planning {
   border-radius: 50%;
   margin-bottom: 10px;
 }
+
+/* ================================
+   TECH STACK TABLE
+================================ */
+.projects-table-wrap {
+  background: var(--card-bg);
+  border: 1.5px solid var(--card-border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  margin-top: 30px;
+}
+
+.pro-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.pro-table th {
+  background: var(--bg-alt);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 20px 24px;
+  border-bottom: 1.5px solid var(--card-border);
+}
+
+.pro-table td {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--card-border);
+  font-size: 14px;
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+
+.repo-row:hover td {
+  background: var(--bg-alt);
+  color: var(--text);
+}
+
+.tech-icon-small {
+  width: 32px;
+  height: 32px;
+  background: var(--accent-glow);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.td-desc {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stat-mini {
+  font-weight: 700;
+  color: var(--accent2);
+}
+
+/* SKELETON ROW */
+.skeleton-row td {
+  background: transparent !important;
+}
+
+@media (max-width: 768px) {
+  .hide-mobile { display: none; }
+}
+
+.status-badge.frontend { color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
+.status-badge.backend { color: #10b981; background: rgba(16, 185, 129, 0.1); }
+.status-badge.devops { color: #8b5cf6; background: rgba(139, 92, 246, 0.1); }
+.status-badge.database { color: #f59e0b; background: rgba(245, 158, 11, 0.1); }
+
+
+.repo-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* GITHUB PROFILE DASHBOARD */
+.profile-dashboard {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  backdrop-filter: blur(20px);
+}
+
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid var(--accent2);
+  object-fit: cover;
+}
+
+.profile-info { flex: 1; }
+.profile-name { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.profile-bio { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; max-width: 600px; }
+.profile-stats { display: flex; gap: 20px; }
+.profile-stat { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text); }
+.profile-stat-icon { color: var(--accent2); font-size: 16px; }
+
+/* SKELETON LOADERS */
+.skeleton-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 32px 28px;
+  border: 1px solid var(--card-border);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skeleton-line {
+  height: 14px;
+  background: rgba(129, 140, 248, 0.1);
+  border-radius: 8px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-header { display: flex; gap: 16px; align-items: center; }
+.skeleton-icon { width: 44px; height: 44px; border-radius: 12px; }
+.skeleton-title { width: 60%; height: 20px; }
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}

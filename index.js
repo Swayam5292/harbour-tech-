@@ -62,145 +62,158 @@ function handleContact(e) {
 }
 
 // ================================
-// PROJECT DATA
+// TECH STACK CONFIGURATION
 // ================================
-const projects = {
-  P101: {
-    title: "Cloud Migration System",
-    status: "completed",
-    statusNote: "Successfully deployed",
-    description: "A comprehensive cloud migration project that moved legacy on-premise infrastructure to AWS. Included database migration, application containerization, and implementation of CI/CD pipelines for automated deployments.",
-    tech: ["AWS", "Docker", "Kubernetes", "Terraform", "PostgreSQL"],
-    startDate: "Jan 2024",
-    endDate: "Apr 2024",
-    teamSize: "8 Engineers",
-    client: "FinServe Corp",
-    progress: 100,
-    progressLabel: "Completed",
-    deliverables: [
-      "Full infrastructure migration to AWS",
-      "Containerized microservices architecture",
-      "Automated CI/CD pipeline setup",
-      "99.9% uptime SLA achieved",
-      "40% reduction in operational costs"
-    ]
-  },
-  P102: {
-    title: "AI Sales Analytics",
-    status: "in-progress",
-    statusNote: "On track for Q2 delivery",
-    description: "Building an AI-powered sales analytics platform that uses machine learning to predict customer behavior, optimize pricing strategies, and provide actionable insights for the sales team.",
-    tech: ["Python", "TensorFlow", "Power BI", "Azure ML", "FastAPI"],
-    startDate: "Feb 2024",
-    endDate: "Jul 2024",
-    teamSize: "6 Engineers",
-    client: "RetailMax Inc",
-    progress: 65,
-    progressLabel: "Development Phase",
-    deliverables: [
-      "ML model for sales prediction",
-      "Real-time analytics dashboard",
-      "Customer segmentation engine",
-      "Automated reporting system",
-      "API integration with existing CRM"
-    ]
-  },
-  P103: {
-    title: "Business ERP System",
-    status: "planning",
-    statusNote: "Requirements gathering",
-    description: "Enterprise resource planning system designed to streamline business operations including inventory management, HR, finance, and supply chain management in a unified platform.",
-    tech: ["React", "Node.js", "TypeScript", "MongoDB", "Redis"],
-    startDate: "May 2024",
-    endDate: "Dec 2024",
-    teamSize: "12 Engineers",
-    client: "GlobalTrade Ltd",
-    progress: 15,
-    progressLabel: "Planning Phase",
-    deliverables: [
-      "Inventory management module",
-      "HR & payroll system",
-      "Financial reporting dashboard",
-      "Supply chain tracking",
-      "Mobile app for field operations"
-    ]
-  },
-  P104: {
-    title: "Cyber Security Audit",
-    status: "completed",
-    statusNote: "All vulnerabilities patched",
-    description: "Comprehensive security audit including penetration testing, vulnerability assessment, and compliance verification. Delivered detailed remediation roadmap and implemented security hardening measures.",
-    tech: ["Kali Linux", "Burp Suite", "Nessus", "OWASP ZAP", "Splunk"],
-    startDate: "Dec 2023",
-    endDate: "Feb 2024",
-    teamSize: "4 Engineers",
-    client: "SecureBank",
-    progress: 100,
-    progressLabel: "Completed",
-    deliverables: [
-      "Full penetration testing report",
-      "Vulnerability assessment document",
-      "ISO 27001 compliance audit",
-      "Security hardening implementation",
-      "Employee security training"
-    ]
+const repos = [
+  { owner: "microsoft", repo: "TypeScript", category: "frontend", icon: "TS", why: "TypeScript is the foundation of our engineering. It ensures type safety and prevents errors across our entire stack, making our codebase robust and scalable." },
+  { owner: "microsoft", repo: "vscode", category: "devops", icon: "VS", why: "Visual Studio Code is our preferred development environment. Its huge ecosystem allows us to customize our workflow for maximum speed and efficiency." },
+  { owner: "microsoft", repo: "playwright", category: "devops", icon: "🎭", why: "We use Playwright for all our end-to-end testing. It ensures your application works perfectly across all modern browsers with incredible reliability." },
+  { owner: "microsoft", repo: "fluentui", category: "frontend", icon: "💎", why: "Fluent UI provides us with a suite of professional, accessible, and high-performance React components that align with modern design systems." },
+  { owner: "microsoft", repo: "monaco-editor", category: "frontend", icon: "📝", why: "The Monaco Editor powers the code experience in our custom internal tools, providing a rich and familiar interface for our engineers." },
+  { owner: "microsoft", repo: "terminal", category: "devops", icon: "🐚", why: "Windows Terminal is a core part of our local development setup, providing a fast and efficient way to manage our build processes and servers." }
+];
+
+let dataCache = {};
+
+// ================================
+// TECH STACK FETCHING
+// ================================
+async function fetchRepos() {
+  const tableBody = document.getElementById('repoBody');
+  const profile = document.getElementById('githubProfile');
+  if (!tableBody) return;
+
+  // Inject skeleton rows
+  tableBody.innerHTML = '';
+  for (let i = 0; i < 6; i++) {
+    tableBody.innerHTML += `
+      <tr class="skeleton-row">
+        <td><div class="skeleton-line" style="width: 120px;"></div></td>
+        <td><div class="skeleton-line" style="width: 80px;"></div></td>
+        <td class="hide-mobile"><div class="skeleton-line" style="width: 60px;"></div></td>
+        <td><div class="skeleton-line" style="width: 100%;"></div></td>
+        <td><div class="skeleton-line" style="width: 40px;"></div></td>
+      </tr>
+    `;
   }
-};
+
+  if (profile) {
+    profile.innerHTML = `
+      <div class="skeleton-icon" style="flex-shrink:0;"></div>
+      <div style="flex:1;">
+        <div class="skeleton-line" style="width: 200px; margin-bottom:12px; height: 28px;"></div>
+        <div class="skeleton-line" style="width: 80%; margin-bottom:12px;"></div>
+        <div class="skeleton-line" style="width: 40%;"></div>
+      </div>
+    `;
+  }
+
+  await new Promise(r => setTimeout(r, 600));
+  tableBody.innerHTML = '';
+
+  try {
+    const profRes = await fetch('https://api.github.com/users/microsoft');
+    const profData = await profRes.json();
+    
+    if (profile && profData.avatar_url) {
+      profile.innerHTML = `
+        <img src="${profData.avatar_url}" alt="Microsoft Avatar" class="profile-avatar">
+        <div class="profile-info">
+          <div class="profile-name">${profData.name || 'Microsoft'}</div>
+          <div class="profile-bio">${profData.bio || 'Developing technologies that empower every person on the planet.'}</div>
+          <div class="profile-stats">
+            <span class="profile-stat"><span class="profile-stat-icon">👥</span> ${formatNum(profData.followers)} Followers</span>
+            <span class="profile-stat"><span class="profile-stat-icon">📁</span> ${profData.public_repos} Public Repos</span>
+          </div>
+        </div>
+      `;
+    }
+
+    for (const r of repos) {
+        let data;
+        const cacheKey = `${r.owner}/${r.repo}`;
+        if (dataCache[cacheKey]) {
+          data = dataCache[cacheKey];
+        } else {
+          const res = await fetch(`https://api.github.com/repos/${r.owner}/${r.repo}`);
+          data = await res.json();
+        }
+
+        if (data.message || !data.name) continue;
+        const fullData = { ...data, ...r, githubOwner: data.owner };
+        dataCache[cacheKey] = fullData;
+        createRepoRow(tableBody, fullData);
+    }
+
+  } catch (err) {
+    console.error('Fetch error:', err);
+    tableBody.innerHTML = `<tr><td colspan="5" style="color:#ef4444; text-align:center; padding: 40px;">⚠️ API limit reached. Try again later.</td></tr>`;
+  }
+}
+
+function createRepoRow(tbody, data) {
+  const row = document.createElement('tr');
+  row.className = 'repo-row';
+  
+  row.innerHTML = `
+    <td class="td-tech">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span class="tech-icon-small">${data.icon}</span>
+        <strong style="color:var(--text);">${data.name}</strong>
+      </div>
+    </td>
+    <td class="td-type"><span class="status-badge ${data.category}">${data.category}</span></td>
+    <td class="td-stats hide-mobile">
+      <span class="stat-mini">⭐ ${formatNum(data.stargazers_count)}</span>
+    </td>
+    <td class="td-desc">${data.description || 'Enterprise-grade building block.'}</td>
+    <td class="td-action">
+      <button class="btn-view" onclick="openRepoModal('${data.owner}', '${data.repo}')">View</button>
+    </td>
+  `;
+  tbody.appendChild(row);
+}
+
+function formatNum(num) {
+  if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
+  return num;
+}
 
 // ================================
 // MODAL FUNCTIONS
 // ================================
-function openModal(id) {
-  const project = projects[id];
-  
-  if (!project) {
-    console.error('Project not found:', id);
-    return;
-  }
+function openRepoModal(owner, repoName) {
+  const data = dataCache[`${owner}/${repoName}`];
+  if (!data) return;
 
-  // Populate modal content
-  document.getElementById('mId').textContent = id;
-  document.getElementById('mTitle').textContent = project.title;
+  const modal = document.getElementById('repoModal');
+  if (!modal) return;
   
-  // Status badge
-  const statusEl = document.getElementById('mStatus');
-  statusEl.textContent = project.status.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
-  statusEl.className = 'status-badge ' + project.status;
-  
-  document.getElementById('mStatusNote').textContent = project.statusNote;
-  document.getElementById('mDesc').textContent = project.description;
-  
-  // Tech tags
-  const techContainer = document.getElementById('mTech');
-  techContainer.innerHTML = project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('');
-  
-  // Meta info
-  document.getElementById('mStart').textContent = project.startDate;
-  document.getElementById('mEnd').textContent = project.endDate;
-  document.getElementById('mTeam').textContent = project.teamSize;
-  document.getElementById('mClient').textContent = project.client;
-  
-  // Progress bar
-  document.getElementById('mProgressLabel').textContent = project.progressLabel;
-  document.getElementById('mProgressPct').textContent = project.progress + '%';
-  document.getElementById('mProgressFill').style.width = project.progress + '%';
-  
-  // Deliverables
-  const deliverablesList = document.getElementById('mDeliverables');
-  deliverablesList.innerHTML = project.deliverables.map(d => `<li>${d}</li>`).join('');
-  
-  // Show modal
-  document.getElementById('projectModal').classList.add('open');
+  document.getElementById('modalAvatar').src = data.githubOwner.avatar_url;
+  document.getElementById('modalAvatar').alt = data.name;
+  document.getElementById('modalName').textContent = data.name;
+  document.getElementById('modalOwner').textContent = `${owner}/${repoName}`;
+  document.getElementById('modalDesc').textContent = data.description || 'No description available.';
+  document.getElementById('modalWhy').textContent = data.why || 'Critical piece of our infrastructure.';
+  document.getElementById('modalStars').textContent = formatNum(data.stargazers_count);
+  document.getElementById('modalForks').textContent = formatNum(data.forks_count);
+  document.getElementById('modalIssues').textContent = formatNum(data.open_issues_count || 0);
+
+  document.getElementById('modalLink').href = data.html_url;
+  document.getElementById('modalIssuesLink').href = `${data.html_url}/issues`;
+
+  modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
-  document.getElementById('projectModal').classList.remove('open');
+  const repoModal = document.getElementById('repoModal');
+  if (repoModal) repoModal.style.display = 'none';
   document.body.style.overflow = 'auto';
 }
 
 function closeModalOutside(e) {
-  if (e.target.id === 'projectModal') {
+  if (e.target.id === 'repoModal') {
     closeModal();
   }
 }
@@ -223,6 +236,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const icon = document.querySelector('.theme-icon');
     if (icon) icon.innerText = '☀';
   }
+
+  // Initialize Tech Stack
+  fetchRepos();
 
   // Initialize AOS
   if (typeof AOS !== 'undefined') {
@@ -329,15 +345,5 @@ $(document).ready(function () {
 
   // Hero fade-in
   $(".hero-left").hide().fadeIn(1200);
-
-  // Project button effect
-  $(".btn-view").click(function () {
-    $(this).text("Opening...");
-    $(this).fadeOut(200).fadeIn(200);
-
-    setTimeout(() => {
-      $(this).text("View Details");
-    }, 800);
-  });
 
 });
