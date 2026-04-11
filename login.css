@@ -98,22 +98,54 @@ body::before {
 }
 
 .nav-brand {
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: center; gap: 12px;
   text-decoration: none; color: var(--text); font-weight: 700;
-  font-family: 'DM Sans', sans-serif; font-size: 15px;
-  letter-spacing: -0.3px;
+  font-family: 'DM Sans', sans-serif; font-size: 18px;
+  letter-spacing: -0.4px;
 }
 
-.nav-links { display: flex; align-items: center; gap: 4px; }
+.nav-links { display: flex; align-items: center; gap: 24px; margin: 0 auto; }
 
 .nav-links a {
   color: var(--text-muted); text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
   font-size: 14px; font-weight: 500;
-  padding: 6px 14px; border-radius: 8px; transition: all 0.2s;
+  padding: 10px 20px; border-radius: 12px; transition: all 0.2s;
 }
 
 .nav-links a:hover { color: var(--text); background: var(--input-bg); }
 .nav-links a.nav-active { color: var(--text); background: var(--accent-glow); }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 20px;
+}
+
+.btn-nav-outline {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.btn-nav-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-glow);
+  transform: translateY(-1px);
+}
 
 .nav-btn-logout {
   background: transparent;
@@ -125,8 +157,10 @@ body::before {
 .nav-btn-logout:hover { background: var(--input-bg); border-color: var(--accent); color: var(--accent); }
 
 #userDisplay {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
   color: var(--text);
-  font-size: 13px; font-weight: 600;
 }
 
 #theme-btn {
@@ -137,10 +171,105 @@ body::before {
   display: flex; align-items: center; justify-content: center;
   font-size: 15px; transition: all 0.2s;
   color: var(--text-muted);
-  margin-left: 8px;
 }
 
 #theme-btn:hover { background: var(--accent-glow); color: var(--accent); border-color: var(--accent); }
+
+/* User Dropdown */
+.profile-dropdown {
+  position: relative;
+}
+
+.profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--card-border);
+  padding: 8px 16px;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.profile-trigger:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.profile-avatar {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 220px;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.profile-dropdown.open .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  color: var(--text);
+  text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background: rgba(129, 140, 248, 0.1);
+  color: var(--accent);
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--card-border);
+  margin: 6px 0;
+}
+
 
 /* ==============================
    AUTH WRAPPER
