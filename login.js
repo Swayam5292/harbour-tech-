@@ -4,7 +4,7 @@
 // REDIRECT IF ALREADY LOGGED IN
 // ================================
 if (localStorage.getItem("loggedInUser")) {
-  window.location.href = "index.html";
+  window.location.href = "index.php";
 }
 
 // ================================
@@ -108,7 +108,7 @@ document.getElementById("registerForm").addEventListener("submit", function (e) 
   localStorage.setItem("user", JSON.stringify({ name, email, password }));
   localStorage.setItem("loggedInUser", name);
   alert("Account created successfully!");
-  window.location.href = "index.html";
+  window.location.href = "index.php";
 });
 
 // ================================
@@ -133,7 +133,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   if (stored && stored.email === email && stored.password === password) {
     localStorage.setItem("loggedInUser", stored.name);
     alert("Welcome back, " + stored.name + "!");
-    window.location.href = "index.html";
+    window.location.href = "index.php";
   } else {
     alert("Invalid email or password.");
   }

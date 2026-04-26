@@ -144,7 +144,7 @@
 
 <!-- NAVBAR -->
 <nav class="main-nav" id="main-nav">
-  <a class="nav-brand" href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+  <a class="nav-brand" href="index.php" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
     <svg width="34" height="40" viewBox="0 0 36 42" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
       <defs>
         <linearGradient id="navGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -160,7 +160,7 @@
     <span class="brand-name">Harbour Tech</span>
   </a>
   <div class="nav-links">
-    <a href="index.html" class="active">Home</a>
+    <a href="index.php" class="active">Home</a>
     <a href="#services">Services</a>
     <a href="#pricing">Pricing</a>
     <a href="#projects">Projects</a>
@@ -303,9 +303,9 @@
       <!-- Sort Controls -->
       <div class="sort-controls">
         <span class="sort-label">Sort by Name:</span>
-        <a href="index.html?sort_services=default#services" class="<?php echo $sort_order === 'default' ? 'active-sort' : ''; ?>">Default</a>
-        <a href="index.html?sort_services=asc#services" class="<?php echo $sort_order === 'asc' ? 'active-sort' : ''; ?>">A → Z</a>
-        <a href="index.html?sort_services=desc#services" class="<?php echo $sort_order === 'desc' ? 'active-sort' : ''; ?>">Z → A</a>
+        <a href="index.php?sort_services=default#services" class="<?php echo $sort_order === 'default' ? 'active-sort' : ''; ?>">Default</a>
+        <a href="index.php?sort_services=asc#services" class="<?php echo $sort_order === 'asc' ? 'active-sort' : ''; ?>">A → Z</a>
+        <a href="index.php?sort_services=desc#services" class="<?php echo $sort_order === 'desc' ? 'active-sort' : ''; ?>">Z → A</a>
       </div>
     </div>
     <div class="services-grid">
@@ -338,7 +338,7 @@
       <div class="section-label">Investment <span class="php-badge">&#9889; PHP array_merge()</span></div>
       <h2 class="section-heading">Transparent pricing.<br><span class="hero-accent">No surprises.</span></h2>
       <!-- Feature Search -->
-      <form method="GET" action="index.html#pricing" class="feature-search-bar">
+      <form method="GET" action="index.php#pricing" class="feature-search-bar">
         <input type="hidden" name="sort_services" value="<?php echo htmlspecialchars($sort_order); ?>">
         <input type="text" name="search_feature" placeholder="Search features (e.g. SEO, API, support)..." value="<?php echo htmlspecialchars($search_feature); ?>">
         <button type="submit" class="btn-primary" style="padding: 12px 24px;">Search</button>
@@ -519,7 +519,7 @@
         <h3 style="font-size: 24px; color: var(--text); margin-bottom: 8px; font-weight: 700; font-family: 'DM Sans', sans-serif;">Contact Us</h3>
         <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 28px;">Our PHP Validation Engine will format and verify your input server-side.</p>
         
-        <form method="POST" action="index.html#contact" id="contactForm">
+        <form method="POST" action="index.php#contact" id="contactForm">
           <input type="hidden" name="contact_php" value="1">
           
           <?php if ($contact_processed): ?>

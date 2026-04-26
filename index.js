@@ -888,8 +888,8 @@ function initScrollSpy() {
     navLinks.forEach(link => {
       link.classList.remove('active');
       const href = link.getAttribute('href');
-      // Fix for home / index.html
-      if (href === 'index.html' && (current === '' || current === 'home')) {
+      // Fix for home / index.php
+      if (href === 'index.php' && (current === '' || current === 'home')) {
         link.classList.add('active');
       } else if (href === '#' + current) {
         link.classList.add('active');
