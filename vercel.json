@@ -14,9 +14,9 @@
     { "src": "/(.*\\.ico)", "dest": "/$1" },
     { "src": "/(.*\\.woff2?)", "dest": "/$1" },
     { "src": "/(.*\\.bat)", "dest": "/$1" },
+    { "src": "/", "dest": "/index.html" },
     { "src": "/index.php", "dest": "/api/index.php" },
     { "src": "/process.php", "dest": "/api/process.php" },
-    { "src": "/", "dest": "/api/index.php" },
-    { "src": "/((?!api/).*)", "dest": "/api/index.php" }
+    { "src": "/((?!api/).*)", "dest": "/$1" }
   ]
 }
