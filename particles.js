@@ -1,4 +1,4 @@
-// particles.js — Harbour Tech — ULTRA Visibility Edition (Light Mode Focused)
+// particles.js — Harbour Tech — Neon Glow Edition (Dark Mode Optimized)
 (function () {
   const canvas = document.getElementById('particleCanvas');
   if (!canvas) return;
@@ -11,19 +11,18 @@
 
   // ── Particle Configuration ──────────────────────────────────
   const config = {
-    count: 140, 
-    minRadius: 2.5, // Much larger base radius
-    maxRadius: 6.0, // Much larger max radius
+    count: 100,
+    minRadius: 1.2,
+    maxRadius: 3.5,
     minSpeed: 0.2,
-    maxSpeed: 0.5,
-    maxLineDist: 180,
-    mouseDist: 250,
-    // Solid high-contrast colors for visibility on light backgrounds
+    maxSpeed: 0.6,
+    maxLineDist: 150,
+    mouseDist: 200,
+    // Neon colors that pop on dark backgrounds
     colors: [
-      { r: 49, g: 46, b: 129 },  // Indigo-900
-      { r: 30, g: 27, b: 75 },   // Indigo-950
-      { r: 8, g: 47, b: 73 },    // Sky-950
-      { r: 2, g: 132, b: 199 }   // Deep Sky-600
+      { r: 99, g: 102, b: 241 }, // Indigo
+      { r: 6, g: 182, b: 212 },  // Cyan
+      { r: 255, g: 255, b: 255 } // White
     ]
   };
 
@@ -64,8 +63,7 @@
 
       const colorIdx = Math.floor(Math.random() * config.colors.length);
       this.color = config.colors[colorIdx];
-      // Solid opacity (0.75 to 1.0) for maximum visibility
-      this.opacity = 0.75 + Math.random() * 0.25;
+      this.opacity = 0.5 + Math.random() * 0.5;
       this.pulse = Math.random() * Math.PI;
     }
 
@@ -82,13 +80,13 @@
     }
 
     draw() {
-      const pOpacity = this.opacity * (0.85 + 0.15 * Math.sin(this.pulse));
+      const pOpacity = this.opacity * (0.7 + 0.3 * Math.sin(this.pulse));
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
       
-      // Shadow for subtle "lift" effect
-      ctx.shadowBlur = 4;
-      ctx.shadowColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0.3)`;
+      // Stronger shadow for neon glow
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${pOpacity})`;
       
       ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${pOpacity})`;
       ctx.fill();
@@ -99,7 +97,7 @@
 
   function initParticles() {
     particles = [];
-    const count = Math.min(config.count, Math.floor((width * height) / 10000));
+    const count = Math.min(config.count, Math.floor((width * height) / 15000));
     for (let i = 0; i < count; i++) {
       particles.push(new Particle());
     }
@@ -114,18 +112,15 @@
         const p2 = particles[j];
         const dx = p1.x - p2.x;
         const dy = p1.y - p2.y;
-        const distSq = dx * dx + dy * dy;
-        const maxDistSq = config.maxLineDist * config.maxLineDist;
+        const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (distSq < maxDistSq) {
-          const dist = Math.sqrt(distSq);
-          // Darker, thicker lines (up to 0.5 opacity)
-          const opacity = (1 - dist / config.maxLineDist) * 0.5;
+        if (dist < config.maxLineDist) {
+          const opacity = (1 - dist / config.maxLineDist) * 0.3;
           ctx.beginPath();
           ctx.moveTo(p1.x, p1.y);
           ctx.lineTo(p2.x, p2.y);
-          ctx.strokeStyle = `rgba(49, 46, 129, ${opacity})`;
-          ctx.lineWidth = 1.2;
+          ctx.strokeStyle = `rgba(129, 140, 248, ${opacity})`;
+          ctx.lineWidth = 0.8;
           ctx.stroke();
         }
       }
@@ -133,17 +128,15 @@
       if (mouse.x !== null) {
         const dx = p1.x - mouse.x;
         const dy = p1.y - mouse.y;
-        const distSq = dx * dx + dy * dy;
-        const mouseDistSq = config.mouseDist * config.mouseDist;
+        const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (distSq < mouseDistSq) {
-          const dist = Math.sqrt(distSq);
-          const opacity = (1 - dist / config.mouseDist) * 0.7;
+        if (dist < config.mouseDist) {
+          const opacity = (1 - dist / config.mouseDist) * 0.5;
           ctx.beginPath();
           ctx.moveTo(p1.x, p1.y);
           ctx.lineTo(mouse.x, mouse.y);
-          ctx.strokeStyle = `rgba(2, 132, 212, ${opacity})`;
-          ctx.lineWidth = 2.0;
+          ctx.strokeStyle = `rgba(34, 211, 238, ${opacity})`;
+          ctx.lineWidth = 1.2;
           ctx.stroke();
         }
       }
