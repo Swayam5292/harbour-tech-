@@ -1,4 +1,4 @@
-// particles.js — Harbour Tech — Neon Glow Edition (Dark Mode Optimized)
+// particles.js — Harbour Tech — Ultra Smooth & Integrated
 (function () {
   const canvas = document.getElementById('particleCanvas');
   if (!canvas) return;
@@ -11,14 +11,13 @@
 
   // ── Particle Configuration ──────────────────────────────────
   const config = {
-    count: 100,
+    count: 80, // Slightly fewer for a cleaner look
     minRadius: 1.2,
     maxRadius: 3.5,
-    minSpeed: 0.2,
-    maxSpeed: 0.6,
+    minSpeed: 0.05, // Slower movement (was 0.2)
+    maxSpeed: 0.15, // Slower movement (was 0.6)
     maxLineDist: 150,
     mouseDist: 200,
-    // Neon colors that pop on dark backgrounds
     colors: [
       { r: 99, g: 102, b: 241 }, // Indigo
       { r: 6, g: 182, b: 212 },  // Cyan
@@ -27,18 +26,23 @@
   };
 
   function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
+    // If inside a container, use container dimensions
+    const parent = canvas.parentElement;
+    width = canvas.width = parent.clientWidth || window.innerWidth;
+    height = canvas.height = parent.clientHeight || window.innerHeight;
   }
+  
   window.addEventListener('resize', () => {
     resize();
     initParticles();
   });
   resize();
 
+  // Mouse tracking relative to the canvas if it's not fixed
   window.addEventListener('mousemove', e => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
   }, { passive: true });
 
   window.addEventListener('mouseleave', () => {
@@ -84,7 +88,6 @@
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
       
-      // Stronger shadow for neon glow
       ctx.shadowBlur = 12;
       ctx.shadowColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${pOpacity})`;
       
@@ -97,6 +100,7 @@
 
   function initParticles() {
     particles = [];
+    // Adjust density
     const count = Math.min(config.count, Math.floor((width * height) / 15000));
     for (let i = 0; i < count; i++) {
       particles.push(new Particle());
