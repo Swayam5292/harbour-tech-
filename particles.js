@@ -1,4 +1,4 @@
-// particles.js — Neo-Indigo 3D theme-aware particle network
+// particles.js — Harbour Tech — ULTRA Visibility Edition (Light Mode Focused)
 (function () {
   const canvas = document.getElementById('particleCanvas');
   if (!canvas) return;
@@ -9,130 +9,141 @@
 
   mouse = { x: null, y: null };
 
-  // Theme-aware colors — Neo-Indigo palette
-  function getColors() {
-    const dark = document.body.classList.contains('dark-mode');
-    return {
-      particle: dark
-        ? { r: 129, g: 140, b: 248 }   // Indigo on dark
-        : { r: 79, g: 70, b: 229 },     // Deep indigo on light
-      line: dark
-        ? { r: 99, g: 102, b: 241 }     // Indigo
-        : { r: 99, g: 102, b: 241 },
-      accent: dark
-        ? { r: 34, g: 211, b: 238 }     // Cyan glow
-        : { r: 6, g: 182, b: 212 },
-      particleOpacityRange: dark ? [0.06, 0.30] : [0.08, 0.25],
-      lineMaxOpacity: dark ? 0.08 : 0.06,
-      mouseLineMaxOpacity: dark ? 0.15 : 0.12,
-    };
-  }
+  // ── Particle Configuration ──────────────────────────────────
+  const config = {
+    count: 140, 
+    minRadius: 2.5, // Much larger base radius
+    maxRadius: 6.0, // Much larger max radius
+    minSpeed: 0.2,
+    maxSpeed: 0.5,
+    maxLineDist: 180,
+    mouseDist: 250,
+    // Solid high-contrast colors for visibility on light backgrounds
+    colors: [
+      { r: 49, g: 46, b: 129 },  // Indigo-900
+      { r: 30, g: 27, b: 75 },   // Indigo-950
+      { r: 8, g: 47, b: 73 },    // Sky-950
+      { r: 2, g: 132, b: 199 }   // Deep Sky-600
+    ]
+  };
 
   function resize() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
   }
-
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', () => {
+    resize();
+    initParticles();
+  });
   resize();
 
-  // Track mouse for interactive lines
-  window.addEventListener('mousemove', function (e) {
+  window.addEventListener('mousemove', e => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
-  });
-  window.addEventListener('mouseout', function () {
+  }, { passive: true });
+
+  window.addEventListener('mouseleave', () => {
     mouse.x = null;
     mouse.y = null;
   });
 
-  // Pause when tab is hidden
-  document.addEventListener('visibilitychange', function () {
-    if (document.hidden) {
-      isRunning = false;
-      cancelAnimationFrame(animId);
-    } else {
-      isRunning = true;
-      animate();
-    }
-  });
-
   class Particle {
     constructor() {
-      this.reset();
+      this.init();
     }
-    reset() {
+
+    init() {
       this.x = Math.random() * width;
       this.y = Math.random() * height;
-      this.vx = (Math.random() - 0.5) * 0.30;
-      this.vy = (Math.random() - 0.5) * 0.30;
-      this.radius = Math.random() * 2 + 0.5;
-      this.baseOpacity = Math.random();
-      // Some particles are "accent" colored
-      this.isAccent = Math.random() < 0.15;
+      this.radius = config.minRadius + Math.random() * (config.maxRadius - config.minRadius);
+      
+      const angle = Math.random() * Math.PI * 2;
+      const speed = config.minSpeed + Math.random() * (config.maxSpeed - config.minSpeed);
+      this.vx = Math.cos(angle) * speed;
+      this.vy = Math.sin(angle) * speed;
+
+      const colorIdx = Math.floor(Math.random() * config.colors.length);
+      this.color = config.colors[colorIdx];
+      // Solid opacity (0.75 to 1.0) for maximum visibility
+      this.opacity = 0.75 + Math.random() * 0.25;
+      this.pulse = Math.random() * Math.PI;
     }
+
     update() {
       this.x += this.vx;
       this.y += this.vy;
+
       if (this.x < 0) this.x = width;
-      if (this.x > width) this.x = 0;
+      else if (this.x > width) this.x = 0;
       if (this.y < 0) this.y = height;
-      if (this.y > height) this.y = 0;
+      else if (this.y > height) this.y = 0;
+
+      this.pulse += 0.02;
     }
-    draw(colors) {
-      const c = this.isAccent ? colors.accent : colors.particle;
-      const [minO, maxO] = colors.particleOpacityRange;
-      const opacity = minO + this.baseOpacity * (maxO - minO);
+
+    draw() {
+      const pOpacity = this.opacity * (0.85 + 0.15 * Math.sin(this.pulse));
       ctx.beginPath();
-      // REMOVED Expensive shadowBlur for better performance
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${c.r}, ${c.g}, ${c.b}, ${opacity})`;
+      
+      // Shadow for subtle "lift" effect
+      ctx.shadowBlur = 4;
+      ctx.shadowColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0.3)`;
+      
+      ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${pOpacity})`;
       ctx.fill();
+      
+      ctx.shadowBlur = 0;
     }
   }
 
-  // Adaptive particle count — slightly reduced density for performance
-  const count = Math.min(Math.floor((width * height) / 25000), 70);
-  particles = [];
-  for (let i = 0; i < count; i++) {
-    particles.push(new Particle());
+  function initParticles() {
+    particles = [];
+    const count = Math.min(config.count, Math.floor((width * height) / 10000));
+    for (let i = 0; i < count; i++) {
+      particles.push(new Particle());
+    }
   }
+  initParticles();
 
-  function drawLines(colors) {
-    const maxDist = 130;
-    const c = colors.line;
+  function drawLines() {
     for (let i = 0; i < particles.length; i++) {
+      const p1 = particles[i];
+
       for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
+        const p2 = particles[j];
+        const dx = p1.x - p2.x;
+        const dy = p1.y - p2.y;
         const distSq = dx * dx + dy * dy;
-        if (distSq < maxDist * maxDist) {
+        const maxDistSq = config.maxLineDist * config.maxLineDist;
+
+        if (distSq < maxDistSq) {
           const dist = Math.sqrt(distSq);
-          const opacity = (1 - dist / maxDist) * colors.lineMaxOpacity;
+          // Darker, thicker lines (up to 0.5 opacity)
+          const opacity = (1 - dist / config.maxLineDist) * 0.5;
           ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(${c.r}, ${c.g}, ${c.b}, ${opacity})`;
-          ctx.lineWidth = 0.5;
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = `rgba(49, 46, 129, ${opacity})`;
+          ctx.lineWidth = 1.2;
           ctx.stroke();
         }
       }
 
-      // Lines to mouse — with gradient effect
       if (mouse.x !== null) {
-        const dx = particles[i].x - mouse.x;
-        const dy = particles[i].y - mouse.y;
+        const dx = p1.x - mouse.x;
+        const dy = p1.y - mouse.y;
         const distSq = dx * dx + dy * dy;
-        const mouseRange = 200;
-        if (distSq < mouseRange * mouseRange) {
+        const mouseDistSq = config.mouseDist * config.mouseDist;
+
+        if (distSq < mouseDistSq) {
           const dist = Math.sqrt(distSq);
-          const opacity = (1 - dist / mouseRange) * colors.mouseLineMaxOpacity;
-          const ac = colors.accent;
+          const opacity = (1 - dist / config.mouseDist) * 0.7;
           ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.moveTo(p1.x, p1.y);
           ctx.lineTo(mouse.x, mouse.y);
-          ctx.strokeStyle = `rgba(${ac.r}, ${ac.g}, ${ac.b}, ${opacity})`;
-          ctx.lineWidth = 0.6;
+          ctx.strokeStyle = `rgba(2, 132, 212, ${opacity})`;
+          ctx.lineWidth = 2.0;
           ctx.stroke();
         }
       }
@@ -142,14 +153,20 @@
   function animate() {
     if (!isRunning) return;
     ctx.clearRect(0, 0, width, height);
-    const colors = getColors();
+
     particles.forEach(p => {
       p.update();
-      p.draw(colors);
+      p.draw();
     });
-    drawLines(colors);
+
+    drawLines();
     animId = requestAnimationFrame(animate);
   }
+
+  document.addEventListener('visibilitychange', () => {
+    isRunning = !document.hidden;
+    if (isRunning) animate();
+  });
 
   animate();
 })();

@@ -990,3 +990,294 @@ $(document).ready(function () {
   });
 
 });
+
+// ================================
+// SCROLL PROGRESS BAR
+// ================================
+window.addEventListener('scroll', function () {
+  const scrollProgress = document.getElementById('scrollProgress');
+  if (!scrollProgress) return;
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+  scrollProgress.style.width = progress + '%';
+
+  // Back to top visibility
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    if (scrollTop > 400) backToTop.classList.add('visible');
+    else backToTop.classList.remove('visible');
+  }
+}, { passive: true });
+
+// ================================
+// CURSOR GLOW EFFECT
+// ================================
+(function initCursorGlow() {
+  const glow = document.getElementById('cursorGlow');
+  if (!glow) return;
+  let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+  let cx = mx, cy = my;
+
+  document.addEventListener('mousemove', (e) => {
+    mx = e.clientX;
+    my = e.clientY;
+  }, { passive: true });
+
+  function animateGlow() {
+    cx += (mx - cx) * 0.08;
+    cy += (my - cy) * 0.08;
+    glow.style.left = cx + 'px';
+    glow.style.top = cy + 'px';
+    requestAnimationFrame(animateGlow);
+  }
+  animateGlow();
+})();
+
+// ================================
+// MOBILE MENU
+// ================================
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const hamburger = document.getElementById('hamburger');
+  if (!menu || !hamburger) return;
+  const isOpen = menu.style.display === 'flex';
+  menu.style.display = isOpen ? 'none' : 'flex';
+  hamburger.classList.toggle('open', !isOpen);
+}
+
+function closeMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const hamburger = document.getElementById('hamburger');
+  if (menu) menu.style.display = 'none';
+  if (hamburger) hamburger.classList.remove('open');
+}
+
+// Close mobile menu on outside click
+document.addEventListener('click', (e) => {
+  const menu = document.getElementById('mobileMenu');
+  const hamburger = document.getElementById('hamburger');
+  if (menu && hamburger && menu.style.display === 'flex') {
+    if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+      closeMobileMenu();
+    }
+  }
+});
+
+// ================================
+// TESTIMONIALS CAROUSEL
+// ================================
+let testimonialIndex = 0;
+let testimonialAutoplay;
+const TESTIMONIAL_VISIBLE = window.innerWidth <= 860 ? 1 : 3;
+
+function initTestimonials() {
+  const inner = document.getElementById('testimonialsInner');
+  const dotsContainer = document.getElementById('testimonialsDots');
+  if (!inner || !dotsContainer) return;
+
+  const cards = inner.querySelectorAll('.testimonial-card');
+  const total = cards.length;
+  const maxIndex = Math.max(0, total - (window.innerWidth <= 860 ? 1 : 3));
+
+  // Create dots
+  dotsContainer.innerHTML = '';
+  for (let i = 0; i <= maxIndex; i++) {
+    const dot = document.createElement('button');
+    dot.className = 't-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Testimonial ' + (i + 1));
+    dot.onclick = () => goToTestimonial(i);
+    dotsContainer.appendChild(dot);
+  }
+
+  startTestimonialAutoplay();
+}
+
+function goToTestimonial(idx) {
+  const inner = document.getElementById('testimonialsInner');
+  const dots = document.querySelectorAll('.t-dot');
+  if (!inner) return;
+
+  const cards = inner.querySelectorAll('.testimonial-card');
+  const total = cards.length;
+  const maxIndex = Math.max(0, total - (window.innerWidth <= 860 ? 1 : 3));
+  testimonialIndex = Math.max(0, Math.min(idx, maxIndex));
+
+  const cardWidth = inner.querySelectorAll('.testimonial-card')[0]?.offsetWidth || 0;
+  const gap = 28;
+  inner.style.transform = `translateX(-${testimonialIndex * (cardWidth + gap)}px)`;
+
+  dots.forEach((d, i) => d.classList.toggle('active', i === testimonialIndex));
+}
+
+function moveTestimonials(dir) {
+  const inner = document.getElementById('testimonialsInner');
+  if (!inner) return;
+  const cards = inner.querySelectorAll('.testimonial-card');
+  const total = cards.length;
+  const maxIndex = Math.max(0, total - (window.innerWidth <= 860 ? 1 : 3));
+  const newIdx = (testimonialIndex + dir + maxIndex + 1) % (maxIndex + 1);
+  goToTestimonial(newIdx);
+  restartTestimonialAutoplay();
+}
+
+function startTestimonialAutoplay() {
+  testimonialAutoplay = setInterval(() => moveTestimonials(1), 5000);
+}
+
+function restartTestimonialAutoplay() {
+  clearInterval(testimonialAutoplay);
+  startTestimonialAutoplay();
+}
+
+// ================================
+// FAQ ACCORDION
+// ================================
+function toggleFaq(questionEl) {
+  const item = questionEl.parentElement;
+  const isOpen = item.classList.contains('open');
+
+  // Close all
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+
+  // Open clicked if it was closed
+  if (!isOpen) item.classList.add('open');
+}
+
+// ================================
+// ANIMATED SKILL BARS
+// ================================
+function initSkillBars() {
+  const skillsGrid = document.getElementById('skillsGrid');
+  if (!skillsGrid) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const fills = skillsGrid.querySelectorAll('.skill-fill');
+        fills.forEach(fill => {
+          const pct = fill.getAttribute('data-pct');
+          setTimeout(() => { fill.style.width = pct + '%'; }, 100);
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  observer.observe(skillsGrid);
+}
+
+// ================================
+// COOKIE CONSENT
+// ================================
+function initCookieBanner() {
+  const banner = document.getElementById('cookieBanner');
+  if (!banner) return;
+  if (localStorage.getItem('ht_cookie_consent')) {
+    banner.style.display = 'none';
+  }
+}
+
+function acceptCookies() {
+  localStorage.setItem('ht_cookie_consent', 'accepted');
+  hideCookieBanner();
+}
+
+function declineCookies() {
+  localStorage.setItem('ht_cookie_consent', 'declined');
+  hideCookieBanner();
+}
+
+function hideCookieBanner() {
+  const banner = document.getElementById('cookieBanner');
+  if (!banner) return;
+  banner.style.opacity = '0';
+  banner.style.transform = 'translateY(20px)';
+  banner.style.transition = 'all 0.4s ease';
+  setTimeout(() => { banner.style.display = 'none'; }, 400);
+}
+
+// ================================
+// LIVE CHAT WIDGET
+// ================================
+let chatOpen = false;
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  const panel = document.getElementById('chatPanel');
+  const toggle = document.getElementById('chatToggle');
+  if (!panel || !toggle) return;
+  panel.classList.toggle('open', chatOpen);
+  toggle.innerHTML = chatOpen ? '✕ <span class="chat-badge"></span>' : '💬 <span class="chat-badge"></span>';
+  if (chatOpen) {
+    const input = document.getElementById('chatInput');
+    if (input) setTimeout(() => input.focus(), 300);
+  }
+}
+
+const chatResponses = {
+  'price': "Our plans start at ₹49,999 for the Starter package. Check out our Pricing section for full details! 💰",
+  'cost': "Our plans start at ₹49,999 for the Starter package. Check out our Pricing section for full details! 💰",
+  'pricing': "Our plans start at ₹49,999 for the Starter package. Check out our Pricing section for full details! 💰",
+  'time': "Timelines range from 2-4 weeks for simple sites to 3-5 months for enterprise platforms. Use our AI Estimator for a custom estimate! ⏱️",
+  'timeline': "Timelines range from 2-4 weeks for simple sites to 3-5 months for enterprise platforms. Use our AI Estimator for a custom estimate! ⏱️",
+  'service': "We offer Web & App Development, Cloud Infrastructure, AI & Analytics, and Cybersecurity. Head to our Services section for details! ⚙️",
+  'cloud': "We deploy on AWS, Azure, and GCP. We handle migrations, Kubernetes orchestration, and 24/7 monitoring. ☁️",
+  'ai': "We build custom ML models, data pipelines, and analytics dashboards using Python, TensorFlow, and Power BI. 🤖",
+  'contact': "You can reach us at support@harbourtech.com or fill out the contact form at the bottom of this page. We reply within 2 hours! 📩",
+  'support': "All our plans include post-launch support. Enterprise clients get 24/7 priority support with SLA guarantees. 🛡️",
+  'nda': "Yes, we always sign a mutual NDA before any discovery call. Your IP is 100% yours upon project completion. 🔒",
+  'hello': "Hey there! 👋 I'm here to help. Ask me about our services, pricing, timeline, or anything else!",
+  'hi': "Hey there! 👋 I'm here to help. Ask me about our services, pricing, timeline, or anything else!",
+  'thanks': "You're very welcome! 😊 Is there anything else I can help you with?",
+};
+
+function getBotResponse(msg) {
+  const lower = msg.toLowerCase();
+  for (const [key, response] of Object.entries(chatResponses)) {
+    if (lower.includes(key)) return response;
+  }
+  return "Great question! For detailed answers, I'd recommend filling out our contact form or using the AI Estimator above. Our team will get back to you within 2 hours! 🚀";
+}
+
+function sendChatMessage() {
+  const input = document.getElementById('chatInput');
+  const messages = document.getElementById('chatMessages');
+  if (!input || !messages) return;
+
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+
+  // User message
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg user';
+  userMsg.textContent = text;
+  messages.appendChild(userMsg);
+  messages.scrollTop = messages.scrollHeight;
+
+  // Typing indicator
+  const typing = document.createElement('div');
+  typing.className = 'chat-msg bot';
+  typing.innerHTML = '<span style="opacity:0.6;">Typing...</span>';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(() => {
+    typing.remove();
+    const botMsg = document.createElement('div');
+    botMsg.className = 'chat-msg bot';
+    botMsg.textContent = getBotResponse(text);
+    messages.appendChild(botMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 900);
+}
+
+// ================================
+// INIT ALL NEW FEATURES ON LOAD
+// ================================
+document.addEventListener('DOMContentLoaded', function () {
+  initCookieBanner();
+  initTestimonials();
+  initSkillBars();
+});
