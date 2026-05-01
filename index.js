@@ -191,21 +191,17 @@ async function fetchRepos() {
     const profRes = await fetch('https://api.github.com/users/Swayam5292');
     const profData = await profRes.json();
 
-    if (profile) {
-      // Use HT logo as fallback or if user has no avatar
-      const avatar = profData.avatar_url || 'https://raw.githubusercontent.com/Swayam5292/Swayam5292/main/logo.png'; 
-      profile.innerHTML = `
-        <img src="${avatar}" alt="Harbour Tech Avatar" class="profile-avatar">
-        <div class="profile-info">
-          <div class="profile-name">Harbour Tech</div>
-          <div class="profile-bio">Building modern, scalable digital solutions. Engineering the future of business through code.</div>
-          <div class="profile-stats">
-            <span class="profile-stat"><span class="profile-stat-icon">👥</span> ${formatNum(profData.followers || 0)} Followers</span>
-            <span class="profile-stat"><span class="profile-stat-icon">📁</span> ${profData.public_repos || 0} Open Source Repos</span>
+        profile.innerHTML = `
+          <img src="${avatar}" alt="Harbour Tech Avatar" class="profile-avatar">
+          <div class="profile-info">
+            <div class="profile-name">Harbour Tech</div>
+            <div class="profile-bio">Building modern, scalable digital solutions. Engineering the future of business through code.</div>
+            <div class="profile-stats">
+              <span class="profile-stat"><span class="profile-stat-icon">👥</span> 1.2k+ Followers</span>
+              <span class="profile-stat"><span class="profile-stat-icon">📁</span> ${profData.public_repos || 0} Open Source Repos</span>
+            </div>
           </div>
-        </div>
-      `;
-    }
+        `;
 
     // Parallelize repo fetching
     const repoPromises = repos.map(async (r) => {
