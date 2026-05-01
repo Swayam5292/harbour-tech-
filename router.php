@@ -5,8 +5,10 @@ $uri = $_SERVER['REQUEST_URI'];
 $path = parse_url($uri, PHP_URL_PATH);
 $file = __DIR__ . $path;
 
-// If the path is just "/", look for index.php in api folder
-if ($path === '/' || $path === '/index.php') {
+// If the path is just "/", look for index.html first (the updated version)
+if ($path === '/' || $path === '/index.html') {
+    $file = __DIR__ . '/index.html';
+} else if ($path === '/index.php') {
     $file = __DIR__ . '/api/index.php';
 } else {
     $file = __DIR__ . $path;
