@@ -1550,6 +1550,12 @@ body.dark-mode {
   transition: all 0.3s;
 }
 
+body.dark-mode .tech-icon-small img[src*="nextjs"],
+body.dark-mode .tech-icon-small img[src*="amazonwebservices"],
+body.dark-mode .tech-icon-small img[src*="github"] {
+  filter: invert(1) brightness(2);
+}
+
 .repo-row:hover .tech-icon-small {
   transform: scale(1.1) rotateY(15deg);
 }
@@ -3060,6 +3066,14 @@ body.dark-mode .faq-item:hover {
   background: var(--accent-glow);
   border-color: rgba(99, 102, 241, 0.4);
   box-shadow: 0 8px 28px rgba(99, 102, 241, 0.25);
+}
+
+body.dark-mode .github-pill {
+  color: #fff;
+}
+
+body:not(.dark-mode) .github-pill {
+  color: #333;
 }
 
 @media (max-width: 860px) {
