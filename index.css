@@ -2481,12 +2481,20 @@ body.dark-mode .status-badge.planning { background: #1e3a5f; color: #93c5fd; }
   gap: 24px;
 }
 
-/* Featured card spans 2 rows */
+/* Featured card — same size as others, just first */
 .review-card--featured {
-  grid-row: span 2;
+  border-color: rgba(99, 102, 241, 0.25);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.08);
 }
 
-/* Review Card Base */
+.review-card--featured .review-quote-mark {
+  font-size: 5rem;
+}
+
+.review-card--featured .review-text {
+  font-size: 14.5px;
+  line-height: 1.8;
+}
 .review-card {
   background: var(--card-bg);
   backdrop-filter: blur(var(--glass-blur));
@@ -2655,18 +2663,11 @@ body.dark-mode .review-card:hover {
   .reviews-grid {
     grid-template-columns: 1fr 1fr;
   }
-  .review-card--featured {
-    grid-column: span 2;
-    grid-row: span 1;
-  }
 }
 
 @media (max-width: 640px) {
   .reviews-grid {
     grid-template-columns: 1fr;
-  }
-  .review-card--featured {
-    grid-column: span 1;
   }
   .trust-bar {
     gap: 20px;
