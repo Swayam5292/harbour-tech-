@@ -36,8 +36,8 @@ function updateNavbar() {
           </button>
           <div class="dropdown-menu">
             <div style="padding: 12px 14px; margin-bottom: 4px;">
-              <div style="font-weight: 600; font-size: 14px; color: #fff;">${user}</div>
-              <div style="font-size: 12px; color: #94a3b8; margin-top: 2px;">${isAdmin ? 'Systems Administrator' : 'Access Level: Standard'}</div>
+              <div style="font-weight: 600; font-size: 14px; color: var(--text);">${user}</div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">${isAdmin ? 'Systems Administrator' : 'Access Level: Standard'}</div>
             </div>
             <div class="dropdown-divider"></div>`;
 
@@ -138,12 +138,15 @@ function animateCounters() {
 // TECH STACK CONFIGURATION
 // ================================
 const repos = [
-  { owner: "microsoft", repo: "TypeScript", category: "frontend", icon: "TS", why: "TypeScript is the foundation of our engineering. It ensures type safety and prevents errors across our entire stack, making our codebase robust and scalable." },
-  { owner: "microsoft", repo: "vscode", category: "devops", icon: "VS", why: "Visual Studio Code is our preferred development environment. Its huge ecosystem allows us to customize our workflow for maximum speed and efficiency." },
-  { owner: "microsoft", repo: "playwright", category: "devops", icon: "🎭", why: "We use Playwright for all our end-to-end testing. It ensures your application works perfectly across all modern browsers with incredible reliability." },
-  { owner: "microsoft", repo: "fluentui", category: "frontend", icon: "💎", why: "Fluent UI provides us with a suite of professional, accessible, and high-performance React components that align with modern design systems." },
-  { owner: "microsoft", repo: "monaco-editor", category: "frontend", icon: "📝", why: "The Monaco Editor powers the code experience in our custom internal tools, providing a rich and familiar interface for our engineers." },
-  { owner: "microsoft", repo: "terminal", category: "devops", icon: "🐚", why: "Windows Terminal is a core part of our local development setup, providing a fast and efficient way to manage our build processes and servers." }
+  { owner: "facebook", repo: "react", category: "frontend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", why: "React is our core library for building interactive user interfaces with extreme performance and modularity." },
+  { owner: "vercel", repo: "next.js", category: "frontend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", why: "Next.js powers our server-side rendering and static site generation, ensuring lightning-fast load times and SEO excellence." },
+  { owner: "python", repo: "cpython", category: "backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", why: "Python is our go-to for AI, Data Science, and rapid backend development with Django and FastAPI." },
+  { owner: "nodejs", repo: "node", category: "backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", why: "Node.js provides the scalable, event-driven architecture that powers our real-time APIs and backend services." },
+  { owner: "microsoft", repo: "TypeScript", category: "frontend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", why: "TypeScript ensures type safety across our entire stack, preventing entire classes of bugs before they even reach production." },
+  { owner: "postgresql", repo: "postgresql", category: "database", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg", why: "PostgreSQL is our standard for robust, relational data storage, offering unparalleled reliability and query performance." },
+  { owner: "aws", repo: "aws-sdk-js", category: "devops", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", why: "AWS powers our cloud infrastructure, providing global scalability and a vast ecosystem of managed services." },
+  { owner: "docker", repo: "docker-ce", category: "devops", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", why: "Docker enables us to containerize applications, ensuring consistent performance from local development to production servers." },
+  { owner: "graphql", repo: "graphql-js", category: "backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg", why: "GraphQL allows us to build efficient APIs where clients get exactly the data they need, nothing more, nothing less." }
 ];
 
 let dataCache = {};
@@ -158,7 +161,7 @@ async function fetchRepos() {
 
   // Inject skeleton rows
   tableBody.innerHTML = '';
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 9; i++) {
     tableBody.innerHTML += `
       <tr class="skeleton-row">
         <td><div class="skeleton-line" style="width: 120px;"></div></td>
@@ -185,18 +188,20 @@ async function fetchRepos() {
   tableBody.innerHTML = '';
 
   try {
-    const profRes = await fetch('https://api.github.com/users/microsoft');
+    const profRes = await fetch('https://api.github.com/users/Swayam5292');
     const profData = await profRes.json();
 
-    if (profile && profData.avatar_url) {
+    if (profile) {
+      // Use HT logo as fallback or if user has no avatar
+      const avatar = profData.avatar_url || 'https://raw.githubusercontent.com/Swayam5292/Swayam5292/main/logo.png'; 
       profile.innerHTML = `
-        <img src="${profData.avatar_url}" alt="Microsoft Avatar" class="profile-avatar">
+        <img src="${avatar}" alt="Harbour Tech Avatar" class="profile-avatar">
         <div class="profile-info">
-          <div class="profile-name">${profData.name || 'Microsoft'}</div>
-          <div class="profile-bio">${profData.bio || 'Developing technologies that empower every person on the planet.'}</div>
+          <div class="profile-name">Harbour Tech</div>
+          <div class="profile-bio">Building modern, scalable digital solutions. Engineering the future of business through code.</div>
           <div class="profile-stats">
-            <span class="profile-stat"><span class="profile-stat-icon">👥</span> ${formatNum(profData.followers)} Followers</span>
-            <span class="profile-stat"><span class="profile-stat-icon">📁</span> ${profData.public_repos} Public Repos</span>
+            <span class="profile-stat"><span class="profile-stat-icon">👥</span> ${formatNum(profData.followers || 0)} Followers</span>
+            <span class="profile-stat"><span class="profile-stat-icon">📁</span> ${profData.public_repos || 0} Open Source Repos</span>
           </div>
         </div>
       `;
@@ -236,7 +241,9 @@ function createRepoRow(tbody, data) {
   row.innerHTML = `
     <td class="td-tech">
       <div style="display:flex; align-items:center; gap:12px;">
-        <span class="tech-icon-small">${data.icon}</span>
+        <div class="tech-icon-small">
+          <img src="${data.icon}" alt="${data.name}" style="width:20px; height:20px; object-fit:contain;">
+        </div>
         <strong style="color:var(--text);">${data.name}</strong>
       </div>
     </td>
@@ -289,8 +296,9 @@ function openRepoModal(ownerName, repoName) {
   if (!modal) return;
 
   const avatar = document.getElementById('modalAvatar');
-  if (avatar && data.githubOwner && data.githubOwner.avatar_url) {
-    avatar.src = data.githubOwner.avatar_url;
+  if (avatar) {
+    // Priority: use the curated icon/logo, fallback to GitHub owner avatar
+    avatar.src = data.icon || (data.owner && data.owner.avatar_url);
     avatar.alt = data.name;
   }
   
@@ -1100,14 +1108,24 @@ function goToTestimonial(idx) {
 
   const cards = inner.querySelectorAll('.testimonial-card');
   const total = cards.length;
-  const maxIndex = Math.max(0, total - (window.innerWidth <= 860 ? 1 : 3));
+  const isMobile = window.innerWidth <= 860;
+  const maxIndex = Math.max(0, total - (isMobile ? 1 : 3));
   testimonialIndex = Math.max(0, Math.min(idx, maxIndex));
 
-  const cardWidth = inner.querySelectorAll('.testimonial-card')[0]?.offsetWidth || 0;
+  const cardWidth = cards[0]?.offsetWidth || 0;
   const gap = 28;
   inner.style.transform = `translateX(-${testimonialIndex * (cardWidth + gap)}px)`;
 
+  // Update dots
   dots.forEach((d, i) => d.classList.toggle('active', i === testimonialIndex));
+
+  // Update active card class for visual focus
+  cards.forEach((c, i) => {
+    c.classList.remove('active');
+    // On desktop, highlight the middle card of the 3 visible ones if possible
+    // Or just highlight the first one of the set
+    if (i === testimonialIndex) c.classList.add('active');
+  });
 }
 
 function moveTestimonials(dir) {

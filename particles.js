@@ -26,10 +26,8 @@
   };
 
   function resize() {
-    // If inside a container, use container dimensions
-    const parent = canvas.parentElement;
-    width = canvas.width = parent.clientWidth || window.innerWidth;
-    height = canvas.height = parent.clientHeight || window.innerHeight;
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
   }
   
   window.addEventListener('resize', () => {
@@ -38,11 +36,10 @@
   });
   resize();
 
-  // Mouse tracking relative to the canvas if it's not fixed
+  // Mouse tracking for fixed canvas
   window.addEventListener('mousemove', e => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
   }, { passive: true });
 
   window.addEventListener('mouseleave', () => {
