@@ -8,12 +8,7 @@ define('LARAVEL_START', microtime(true));
 // The Laravel application lives in harbour-manager/
 $appDir = __DIR__ . '/../harbour-manager';
 
-// On Vercel, copy .env.production to .env if .env doesn't exist
-$envFile   = $appDir . '/.env';
-$envProd   = $appDir . '/.env.production';
-if (!file_exists($envFile) && file_exists($envProd)) {
-    copy($envProd, $envFile);
-}
+// We will rely on Vercel Environment Variables or the committed .env.production
 
 // SQLite: create the database file in /tmp if it doesn't exist
 $dbPath = '/tmp/database.sqlite';
