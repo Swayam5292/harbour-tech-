@@ -13,6 +13,37 @@ $services = [
     ['num' => '04', 'icon' => '&#128274;', 'title' => 'Cybersecurity', 'desc' => 'Penetration testing, vulnerability assessments, and compliance audits to protect what matters most.', 'tags' => ['ISO 27001', 'Pen Testing', 'VAPT']],
 ];
 
+// ---- TESTIMONIALS DATA ----
+$reviews = [
+    [
+        'name' => 'Krrish Parrot',
+        'role' => 'CEO, ShopNova India',
+        'text' => 'Harbour Tech transformed our legacy e-commerce platform into a lightning-fast React app in just 8 weeks. Revenue increased <strong>34%</strong> in the first month post-launch. Absolutely exceptional team.',
+        'impact' => '📈 +34% Revenue in Month 1',
+        'avatar' => 'R',
+        'color' => 'indigo',
+        'featured' => true
+    ],
+    [
+        'name' => 'Akshay Parab',
+        'role' => 'CTO, FinBridge Solutions',
+        'text' => 'Their cloud migration project saved us <strong>₹18L/year</strong> in infrastructure costs. Zero downtime during the entire migration. Harbour Tech delivered what others said was impossible.',
+        'impact' => '☁️ ₹18L/year Saved',
+        'avatar' => 'P',
+        'color' => 'emerald',
+        'featured' => false
+    ],
+    [
+        'name' => 'Arjun Kapoor',
+        'role' => 'Operations Head, LogiTrack',
+        'text' => 'The AI analytics dashboard gives us insights we never had before. Our ops team catches anomalies <strong>72 hours earlier</strong>. Game-changer for our logistics chain.',
+        'impact' => '🤖 72hr Earlier Anomaly Detection',
+        'avatar' => 'A',
+        'color' => 'amber',
+        'featured' => false
+    ]
+];
+
 // PHP sort() / usort() — sort services by title
 $sort_order = isset($_GET['sort_services']) ? $_GET['sort_services'] : 'default';
 $sort_label = 'Default Order';

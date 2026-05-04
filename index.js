@@ -958,6 +958,12 @@ $(document).ready(function () {
 
   // Form submit animation & PHP integration
   $("#contactForm").submit(async function (e) {
+    // If the button clicked was specifically for PHP server-side validation, 
+    // allow the form to submit normally (page reload) to show PHP results.
+    if (document.activeElement && document.activeElement.innerText.includes("Server Validation")) {
+        return; 
+    }
+    
     e.preventDefault();
     
     const btn = $("#submitBtn");
