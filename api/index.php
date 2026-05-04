@@ -278,10 +278,10 @@
       </div>
     </div>
     <div class="services-grid">
-      <?php foreach ($services as $s): ?>
-      <div class="service-card" data-aos="fade-up" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.15">
+      <?php foreach ($services as $index => $s): ?>
+      <div class="service-card" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 100; ?>" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.15">
         <div class="service-num"><?php echo $s['num']; ?></div>
-        <div class="service-icon-wrap" style="font-size:32px;"><?php echo $s['icon']; ?></div>
+        <div class="service-icon-wrap"><?php echo $s['icon']; ?></div>
         <h3><?php echo $s['title']; ?></h3>
         <p><?php echo $s['desc']; ?></p>
         <div class="service-tags"><?php foreach ($s['tags'] as $t): ?><span><?php echo $t; ?></span><?php endforeach; ?></div>
@@ -367,7 +367,7 @@
           <div class="testimonial-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
           <p class="testimonial-text">"<?php echo $r['text']; ?>"</p>
           <div class="testimonial-author">
-            <div class="testimonial-avatar testimonial-avatar--<?php echo $r['color']; ?>"><?php echo $r['avatar']; ?></div>
+            <div class="testimonial-avatar" style="background: <?php echo $r['grad']; ?>;"><?php echo $r['avatar']; ?></div>
             <div style="flex:1;">
               <div class="testimonial-name"><?php echo $r['name']; ?> <span class="verified-badge">Verified</span></div>
               <div class="testimonial-role"><?php echo $r['role']; ?></div>
