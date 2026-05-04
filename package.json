@@ -2,6 +2,6 @@
   "name": "harbour-tech-root",
   "version": "1.0.0",
   "scripts": {
-    "build": "echo 'PHP project - no static build required'"
+    "build": "echo 'PHP project'"
   }
 }
