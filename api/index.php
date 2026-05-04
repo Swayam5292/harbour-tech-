@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // The Laravel application lives in harbour-manager/
 $appDir = __DIR__ . '/../harbour-manager';
 
@@ -21,8 +25,12 @@ if (file_exists($maintenance = $appDir . '/storage/framework/maintenance.php')) 
     require $maintenance;
 }
 
-// Use the vendor/ installed here by vercel-php's composer install
-require __DIR__ . '/vendor/autoload.php';
+// Use the vendor/ installed here
+$autoloader = __DIR__ . '/vendor/autoload.php';
+if (!file_exists($autoloader)) {
+    die("Autoloader not found at: " . $autoloader);
+}
+require $autoloader;
 
 // Change working directory so Laravel resolves relative paths correctly
 chdir($appDir);
