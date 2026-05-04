@@ -1,0 +1,12 @@
+{
+    "name": "harbour-tech/root",
+    "description": "Root proxy for Laravel on Vercel",
+    "require": {
+        "php": ">=8.1"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "cd harbour-manager && composer install --no-dev --optimize-autoloader"
+        ]
+    }
+}

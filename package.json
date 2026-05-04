@@ -1,0 +1,7 @@
+{
+  "name": "harbour-tech-root",
+  "version": "1.0.0",
+  "scripts": {
+    "vercel-build": "cd harbour-manager && composer install --no-dev --optimize-autoloader"
+  }
+}
