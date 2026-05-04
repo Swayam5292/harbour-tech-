@@ -732,8 +732,18 @@
       <div class="section-header" data-aos="fade-up">
         <div class="section-label">Live Portfolio</div>
         <h2 class="section-heading">Featured <span class="hero-accent">Client Projects.</span></h2>
-        <p style="color:var(--text-muted); font-size:15px; margin-top:16px;">Fetched live from our custom Laravel Content Management System.</p>
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top:16px;">
+        <p style="color:var(--text-muted); font-size:15px; margin: 0;">Fetched live from our custom Laravel Backend.</p>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <label style="color: var(--text-muted); font-size: 14px;">Sort by:</label>
+          <select id="projectSort" onchange="initLaravelProjects()" style="background: rgba(24, 24, 27, 0.8); color: white; border: 1px solid rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 6px; font-size: 14px; outline: none; cursor: pointer;">
+            <option value="likes">Most Popular</option>
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
+        </div>
       </div>
+    </div>
 
       <div class="projects-grid" id="laravelProjectsContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-top: 40px;" data-aos="fade-up" data-aos-delay="100">
         <!-- Projects will be injected here via JS -->

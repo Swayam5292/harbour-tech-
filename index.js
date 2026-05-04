@@ -1326,7 +1326,8 @@ async function initLaravelProjects() {
   container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted);">Loading projects...</div>';
 
   try {
-    const res = await fetch('http://127.0.0.1:8001/api/projects');
+    const sort = document.getElementById('projectSort')?.value || 'likes';
+    const res = await fetch(`http://127.0.0.1:8001/api/projects?sort=${sort}`);
     const projects = await res.json();
 
     if (projects.length === 0) {
@@ -1368,6 +1369,12 @@ async function initLaravelProjects() {
         live_url: 'https://example.com'
       }
     ];
+    const sort = document.getElementById('projectSort')?.value || 'likes';
+    if (sort === 'newest') {
+      fallbackProjects.reverse();
+    }
+    // (fallback has no 'likes' field currently, but it's just a demo fallback)
+    
     renderProjects(fallbackProjects, container);
     
     if (window.VanillaTilt) {

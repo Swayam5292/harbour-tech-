@@ -22,33 +22,51 @@
                     
                     <div class="mb-3">
                         <label for="title" class="form-label">Project Title</label>
-                        <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $project->title) }}" required>
+                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title', $project->title) }}">
+                        @error('title')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description" rows="4" required>{{ old('description', $project->description) }}</textarea>
+                        <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4">{{ old('description', $project->description) }}</textarea>
+                        @error('description')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="tech_stack" class="form-label">Tech Stack (comma separated)</label>
-                        <input type="text" class="form-control" id="tech_stack" name="tech_stack" value="{{ old('tech_stack', $project->tech_stack) }}" required>
+                        <input type="text" class="form-control @error('tech_stack') is-invalid @enderror" id="tech_stack" name="tech_stack" value="{{ old('tech_stack', $project->tech_stack) }}">
+                        @error('tech_stack')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="github_url" class="form-label">GitHub URL (Optional)</label>
-                            <input type="url" class="form-control" id="github_url" name="github_url" value="{{ old('github_url', $project->github_url) }}">
+                            <input type="url" class="form-control @error('github_url') is-invalid @enderror" id="github_url" name="github_url" value="{{ old('github_url', $project->github_url) }}">
+                            @error('github_url')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="live_url" class="form-label">Live URL (Optional)</label>
-                            <input type="url" class="form-control" id="live_url" name="live_url" value="{{ old('live_url', $project->live_url) }}">
+                            <input type="url" class="form-control @error('live_url') is-invalid @enderror" id="live_url" name="live_url" value="{{ old('live_url', $project->live_url) }}">
+                            @error('live_url')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="thumbnail_url" class="form-label">Thumbnail Image URL (Optional)</label>
-                        <input type="url" class="form-control" id="thumbnail_url" name="thumbnail_url" value="{{ old('thumbnail_url', $project->thumbnail_url) }}">
+                        <input type="url" class="form-control @error('thumbnail_url') is-invalid @enderror" id="thumbnail_url" name="thumbnail_url" value="{{ old('thumbnail_url', $project->thumbnail_url) }}">
+                        @error('thumbnail_url')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-4">

@@ -68,15 +68,22 @@ class ProjectController extends Controller
     }
 
     // --- API Endpoints for Main Website ---
-    public function apiIndex()
+    public function apiIndex(Request $request)
     {
-        // Return only active projects, sorted by likes and then newest
-        $projects = Project::where('status', 'active')
-            ->orderBy('likes', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->get();
-            
-        return response()->json($projects);
+        $sort = $request->query('sort', 'likes');
+        
+        $query = Project::where('status', 'active');
+        
+        if ($sort === 'newest') {
+            $query->orderBy('created_at', 'desc');
+        } elseif ($sort === 'oldest') {
+            $query->orderBy('created_at', 'asc');
+        } else {
+            // Default to likes
+            $query->orderBy('likes', 'desc')->orderBy('created_at', 'desc');
+        }
+
+        return response()->json($query->get());
     }
 
     public function apiLike(Project $project)
