@@ -1,28 +1,18 @@
 {
   "version": 2,
-  "framework": "laravel",
-  "builds": [
-    {
-      "src": "harbour-manager/public/index.php",
-      "use": "vercel-php@0.6.0"
-    },
-    {
-      "src": "harbour-manager/public/**",
-      "use": "@vercel/static"
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.6.0"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/(index.css|index.js|particles.js)",
-      "dest": "harbour-manager/public/$1"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "harbour-manager/public/index.php"
+      "dest": "/harbour-manager/public/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "harbour-manager/public/index.php"
+      "dest": "/api/index.php"
     }
   ]
 }
