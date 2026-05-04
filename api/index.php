@@ -289,6 +289,26 @@
     </div>
   </section>
 
+  <!-- FAQ SECTION (RESTORED) -->
+  <section class="section" id="faq">
+    <div class="page-wrapper">
+      <div class="section-header" data-aos="fade-up">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-heading">Frequently asked<br><span class="hero-accent">questions.</span></h2>
+      </div>
+      <div class="faq-list" data-aos="fade-up">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)"><span class="faq-q-text">How long does a typical project take?</span><span class="faq-chevron">▼</span></div>
+          <div class="faq-answer"><div class="faq-answer-inner">Timelines vary by complexity. Simple websites take 2-4 weeks. Full-stack applications typically take 6-12 weeks.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)"><span class="faq-q-text">Do you offer support after delivery?</span><span class="faq-chevron">▼</span></div>
+          <div class="faq-answer"><div class="faq-answer-inner">Yes. All plans include a post-launch support window (1-4 weeks depending on plan).</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTACT (With Detailed PHP Labels) -->
   <section class="section section--alt" id="contact">
     <div class="page-wrapper">
