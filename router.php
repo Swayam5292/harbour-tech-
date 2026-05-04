@@ -1,17 +1,17 @@
 <?php
 // Router for PHP built-in server
-// Makes .php files the primary entry point
+// Matches Vercel's behavior: maps root to api/index.php
 $uri = $_SERVER['REQUEST_URI'];
 $path = parse_url($uri, PHP_URL_PATH);
 
-// If the path is just "/", look for index.php first
-if ($path === '/' || $path === '/index.html') {
-    $file = __DIR__ . '/index.php';
+// If the path is just "/", or index.php/html, look in api/index.php
+if ($path === '/' || $path === '/index.html' || $path === '/index.php') {
+    $file = __DIR__ . '/api/index.php';
 } else {
     $file = __DIR__ . $path;
 }
 
-// If it's a PHP file and doesn't exist, let it fail or check api
+// Fallback for other PHP files in api/
 if (pathinfo($path, PATHINFO_EXTENSION) === 'php' && !file_exists($file)) {
     $file = __DIR__ . '/api' . $path;
 }
@@ -22,5 +22,5 @@ if (pathinfo($file, PATHINFO_EXTENSION) === 'php' && file_exists($file)) {
     return true;
 }
 
-// Let the built-in server handle everything else (css, js, images, etc.)
+// Let the built-in server handle everything else
 return false;
