@@ -138,15 +138,15 @@ function animateCounters() {
 // TECH STACK CONFIGURATION
 // ================================
 const repos = [
-  { owner: "facebook", repo: "react", category: "frontend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", why: "React is our core library for building interactive user interfaces with extreme performance and modularity." },
-  { owner: "vercel", repo: "next.js", category: "frontend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", why: "Next.js powers our server-side rendering and static site generation, ensuring lightning-fast load times and SEO excellence." },
-  { owner: "python", repo: "cpython", category: "backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", why: "Python is our go-to for AI, Data Science, and rapid backend development with Django and FastAPI." },
-  { owner: "nodejs", repo: "node", category: "backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", why: "Node.js provides the scalable, event-driven architecture that powers our real-time APIs and backend services." },
-  { owner: "microsoft", repo: "TypeScript", category: "frontend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", why: "TypeScript ensures type safety across our entire stack, preventing entire classes of bugs before they even reach production." },
-  { owner: "postgresql", repo: "postgresql", category: "database", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg", why: "PostgreSQL is our standard for robust, relational data storage, offering unparalleled reliability and query performance." },
-  { owner: "aws", repo: "aws-sdk-js", category: "devops", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", why: "AWS powers our cloud infrastructure, providing global scalability and a vast ecosystem of managed services." },
-  { owner: "docker", repo: "docker-ce", category: "devops", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", why: "Docker enables us to containerize applications, ensuring consistent performance from local development to production servers." },
-  { owner: "graphql", repo: "graphql-js", category: "backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg", why: "GraphQL allows us to build efficient APIs where clients get exactly the data they need, nothing more, nothing less." }
+  { owner: "facebook", repo: "react", category: "frontend", icon: "https://cdn.simpleicons.org/react/61DAFB", why: "React is our core library for building interactive user interfaces with extreme performance and modularity." },
+  { owner: "vercel", repo: "next.js", category: "frontend", icon: "https://cdn.simpleicons.org/nextdotjs/000000/white", why: "Next.js powers our server-side rendering and static site generation, ensuring lightning-fast load times and SEO excellence." },
+  { owner: "python", repo: "cpython", category: "backend", icon: "https://cdn.simpleicons.org/python/3776AB", why: "Python is our go-to for AI, Data Science, and rapid backend development with Django and FastAPI." },
+  { owner: "nodejs", repo: "node", category: "backend", icon: "https://cdn.simpleicons.org/nodedotjs/339933", why: "Node.js provides the scalable, event-driven architecture that powers our real-time APIs and backend services." },
+  { owner: "microsoft", repo: "TypeScript", category: "frontend", icon: "https://cdn.simpleicons.org/typescript/3178C6", why: "TypeScript ensures type safety across our entire stack, preventing entire classes of bugs before they even reach production." },
+  { owner: "postgresql", repo: "postgresql", category: "database", icon: "https://cdn.simpleicons.org/postgresql/4169E1", why: "PostgreSQL is our standard for robust, relational data storage, offering unparalleled reliability and query performance." },
+  { owner: "aws", repo: "aws-sdk-js", category: "devops", icon: "https://cdn.simpleicons.org/amazonwebservices/232F3E/white", why: "AWS powers our cloud infrastructure, providing global scalability and a vast ecosystem of managed services." },
+  { owner: "docker", repo: "docker-ce", category: "devops", icon: "https://cdn.simpleicons.org/docker/2496ED", why: "Docker enables us to containerize applications, ensuring consistent performance from local development to production servers." },
+  { owner: "graphql", repo: "graphql-js", category: "backend", icon: "https://cdn.simpleicons.org/graphql/E10098", why: "GraphQL allows us to build efficient APIs where clients get exactly the data they need, nothing more, nothing less." }
 ];
 
 let dataCache = {};
@@ -257,7 +257,7 @@ function createRepoRow(tbody, data) {
     <td class="td-tech">
       <div style="display:flex; align-items:center; gap:12px;">
         <div class="tech-icon-small">
-          <img src="${data.icon}" alt="${data.name}" style="width:20px; height:20px; object-fit:contain;">
+          <img src="${data.icon}" alt="${data.name}" style="width:20px; height:20px; object-fit:contain;" onerror="this.src='https://cdn.simpleicons.org/github/6366f1'">
         </div>
         <strong style="color:var(--text);">${data.name}</strong>
       </div>
