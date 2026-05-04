@@ -956,47 +956,64 @@ $(document).ready(function () {
     $(this).parent().removeClass('input-focused');
   });
 
-  // Form submit animation & EmailJS
-  $("#contactForm").submit(function (e) {
-    const isPhp = $(this).find('input[name="contact_php"]').length > 0;
+  // Form submit animation & PHP integration
+  $("#contactForm").submit(async function (e) {
+    e.preventDefault();
     
     const btn = $("#submitBtn");
     const originalText = btn.html();
     
-    const formData = new FormData(this);
-    saveLead(formData); // Persistent Save for Admin
-
-    if (isPhp) {
-      // Let the browser perform the standard POST request for PHP processing
-      btn.html("Processing Server Side... &#8987;");
-      btn.prop("disabled", true);
-      return true; 
-    }
-
-    // Standard EmailJS path if not PHP-integrated
-    e.preventDefault();
     btn.html("Sending... &#8987;");
     btn.prop("disabled", true);
     $("#contactSuccess, #contactError").hide();
 
-    emailjs.sendForm('service_pcqzlcb', 'template_8tyn0yi', this)
-      .then(function () {
-        btn.html("Message Sent! &#10003;");
-        $("#contactSuccess").fadeIn(800);
-        $("#contactForm")[0].reset();
-        setTimeout(() => {
-          btn.html(originalText);
-          btn.prop("disabled", false);
-        }, 3000);
-      }, function (error) {
-        console.error("EmailJS Error:", error);
-        btn.html("Failed &#10007;");
-        $("#contactError").fadeIn(800);
-        setTimeout(() => {
-          btn.html(originalText);
-          btn.prop("disabled", false);
-        }, 3000);
+    const formData = new FormData(this);
+    saveLead(formData); // Persistent Save for Admin
+    
+    const payload = {
+        name: formData.get('user_name'),
+        email: formData.get('user_email'),
+        phone: formData.get('user_phone'),
+        message: formData.get('message'),
+        budget: 'Not specified' // Can be modified if added to form
+    };
+
+    try {
+      // Fetch the PHP backend processing script
+      const response = await fetch('http://localhost:8000/api/process_contact.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
       });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        btn.html("Message Sent! &#10003;");
+        $("#contactSuccess").html(`&#10003; ${result.message}`).fadeIn(800);
+        $("#contactForm")[0].reset();
+        
+        setTimeout(() => {
+          btn.html(originalText);
+          btn.prop("disabled", false);
+        }, 5000);
+      } else {
+        throw new Error(result.errors.join('<br>'));
+      }
+    } catch (error) {
+      console.error("PHP Error:", error);
+      btn.html("Failed &#10007;");
+      
+      let errorMsg = error.message || "Failed to send message. Please try again.";
+      $("#contactError").html(`&#10007; ${errorMsg}`).fadeIn(800);
+      
+      setTimeout(() => {
+        btn.html(originalText);
+        btn.prop("disabled", false);
+      }, 5000);
+    }
   });
 
   // Smooth scroll
