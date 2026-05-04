@@ -1,4 +1,4 @@
-// index.js — Harbour Tech Solutions
+﻿// index.js — Harbour Tech Solutions
 // Fixed modal logic, 3D effects, Razorpay, AI Estimator, counter animation
 
 let darkMode = false;
@@ -956,42 +956,58 @@ $(document).ready(function () {
     $(this).parent().removeClass('input-focused');
   });
 
-  // Form submit animation & PHP integration
+  // Form submit - EmailJS (primary) + Laravel API fallback
   $("#contactForm").submit(async function (e) {
-    // If the button clicked was specifically for PHP server-side validation, 
-    // allow the form to submit normally (page reload) to show PHP results.
-    if (document.activeElement && document.activeElement.innerText.includes("Server Validation")) {
-        return; 
-    }
-    
     e.preventDefault();
-    
+
     const btn = $("#submitBtn");
     const originalText = btn.html();
-    
-    btn.html("Sending... &#8987;");
+    btn.html("Sending... &#9203;");
     btn.prop("disabled", true);
     $("#contactSuccess, #contactError").hide();
 
     const formData = new FormData(this);
-    saveLead(formData); // Persistent Save for Admin
-    
-    const payload = {
-        name: formData.get('user_name'),
-        email: formData.get('user_email'),
-        phone: formData.get('user_phone'),
-        message: formData.get('message'),
-        budget: 'Not specified' // Can be modified if added to form
+    saveLead(formData);
+
+    const templateParams = {
+      from_name:  formData.get("user_name")    || "Unknown",
+      from_email: formData.get("user_email")   || "",
+      phone:      formData.get("user_phone")   || "Not provided",
+      service:    formData.get("service_type") || "General Inquiry",
+      message:    formData.get("message")      || "",
     };
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
+      if (typeof emailjs === "undefined") throw new Error("EmailJS not loaded");
+      const ejsResult = await emailjs.send("service_harbourtech", "template_contact", templateParams);
+      if (ejsResult.status === 200) {
+        btn.html("Message Sent! &#10003;");
+        $("#contactSuccess").html("&#10003; Message sent! We'll be in touch shortly.").fadeIn(800);
+        $("#contactForm")[0].reset();
+        setTimeout(() => { btn.html(originalText); btn.prop("disabled", false); }, 5000);
+      } else { throw new Error("EmailJS status " + ejsResult.status); }
+    } catch (emailErr) {
+      console.warn("EmailJS failed, trying Laravel API:", emailErr.message);
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: formData.get("user_name"), email: formData.get("user_email"), phone: formData.get("user_phone"), message: formData.get("message") })
+        });
+        const res = await response.json();
+        if (res.success) {
+          btn.html("Message Sent! &#10003;");
+          $("#contactSuccess").html("&#10003; Message sent! We'll be in touch shortly.").fadeIn(800);
+          $("#contactForm")[0].reset();
+          setTimeout(() => { btn.html(originalText); btn.prop("disabled", false); }, 5000);
+        } else { throw new Error((res.errors || ["Submission failed."]).join("<br>")); }
+      } catch (apiErr) {
+        btn.html("Failed &#10007;");
+        $("#contactError").html("&#10007; " + (apiErr.message || "Failed to send. Email us at support@harbourtech.com")).fadeIn(800);
+        setTimeout(() => { btn.html(originalText); btn.prop("disabled", false); }, 5000);
+      }
+    }
+  });
       
       const result = await response.json();
       
