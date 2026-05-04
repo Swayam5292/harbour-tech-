@@ -1,12 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\AuthController;
 
-Route::get('/', function () {
-    return redirect()->route('projects.index');
-});
+Route::get('/', [LandingController::class, 'index'])->name('home');
 
 // Login Routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');

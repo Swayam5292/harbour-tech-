@@ -70,6 +70,10 @@ class ProjectController extends Controller
     // --- API Endpoints for Main Website ---
     public function apiIndex(Request $request)
     {
+        $request->validate([
+            'sort' => 'nullable|in:likes,newest,oldest',
+        ]);
+
         $sort = $request->query('sort', 'likes');
         
         $query = Project::where('status', 'active');
@@ -78,9 +82,11 @@ class ProjectController extends Controller
             $query->orderBy('created_at', 'desc');
         } elseif ($sort === 'oldest') {
             $query->orderBy('created_at', 'asc');
-        } else {
-            // Default to likes
+        } elseif ($sort === 'likes') {
             $query->orderBy('likes', 'desc')->orderBy('created_at', 'desc');
+        } else {
+            // Default fallback
+            $query->orderBy('likes', 'desc');
         }
 
         return response()->json($query->get());
