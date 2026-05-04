@@ -979,7 +979,7 @@ $(document).ready(function () {
 
     try {
       if (typeof emailjs === "undefined") throw new Error("EmailJS not loaded");
-      const ejsResult = await emailjs.send("service_harbourtech", "template_contact", templateParams);
+      const ejsResult = await emailjs.send("service_pcqzlcb", "template_8tyn0yi", templateParams);
       if (ejsResult.status === 200) {
         btn.html("Message Sent! &#10003;");
         $("#contactSuccess").html("&#10003; Message sent! We'll be in touch shortly.").fadeIn(800);
