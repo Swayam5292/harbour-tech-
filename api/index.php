@@ -8,12 +8,25 @@ define('LARAVEL_START', microtime(true));
 // The Laravel application lives in harbour-manager/
 $appDir = __DIR__ . '/../harbour-manager';
 
+// On Vercel, copy .env.production to .env if .env doesn't exist
+$envFile   = $appDir . '/.env';
+$envProd   = $appDir . '/.env.production';
+if (!file_exists($envFile) && file_exists($envProd)) {
+    copy($envProd, $envFile);
+}
+
+// SQLite: create the database file in /tmp if it doesn't exist
+$dbPath = '/tmp/database.sqlite';
+if (!file_exists($dbPath)) {
+    touch($dbPath);
+}
+
 // Maintenance mode check
 if (file_exists($maintenance = $appDir . '/storage/framework/maintenance.php')) {
     require $maintenance;
 }
 
-// Use the vendor/ installed HERE (api/vendor/) by vercel-php's composer install
+// Use the vendor/ installed here by vercel-php's composer install
 require __DIR__ . '/vendor/autoload.php';
 
 // Change working directory so Laravel resolves relative paths correctly
