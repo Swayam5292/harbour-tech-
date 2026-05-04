@@ -290,11 +290,15 @@
       <a href="#" class="nav-item" onclick="switchView('tasks')">
         <i>📋</i> Tasks & Ops
       </a>
+      <a href="#" class="nav-item" onclick="switchView('manager')">
+        <i>🚀</i> Harbour Manager
+      </a>
     </nav>
 
     <div class="nav-label" style="margin-top: auto;">System</div>
     <nav class="nav-menu" style="flex: 0;">
-      <a href="index.php" class="nav-item"><i>🌐</i> Live Site</a>
+      <a href="http://127.0.0.1:8001/projects" target="_blank" class="nav-item"><i>🚀</i> Harbour Manager</a>
+      <a href="index.html" class="nav-item"><i>🌐</i> Live Site</a>
       <a href="#" class="nav-item" onclick="logoutAdmin()" style="color: #f87171;"><i>⏻</i> Logout Session</a>
     </nav>
   </aside>
@@ -409,6 +413,11 @@
           <div id="tk-done"></div>
         </div>
       </div>
+
+    <!-- 5. HARBOUR MANAGER VIEW (IFRAME) -->
+    <div id="view-manager" class="panel" style="padding: 0; overflow: hidden; height: 80vh;">
+      <iframe src="http://localhost:8001/projects" style="width: 100%; height: 100%; border: none; border-radius: 20px;"></iframe>
+    </div>
     </div>
 
   </main>

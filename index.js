@@ -1313,4 +1313,104 @@ document.addEventListener('DOMContentLoaded', function () {
   initCookieBanner();
   initTestimonials();
   initSkillBars();
-});
+  initLaravelProjects();
+});
+
+// ================================
+// LARAVEL INTEGRATION
+// ================================
+async function initLaravelProjects() {
+  const container = document.getElementById('laravelProjectsContainer');
+  if (!container) return;
+
+  container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted);">Loading projects...</div>';
+
+  try {
+    const res = await fetch('http://127.0.0.1:8001/api/projects');
+    const projects = await res.json();
+
+    if (projects.length === 0) {
+      container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted);">No live projects to show right now.</div>';
+      return;
+    }
+
+    container.innerHTML = projects.map(p => `
+      <div class="service-card project-card" style="padding: 24px; position: relative; cursor: pointer; transition: all 0.3s;" onclick="toggleProjectExpand(this)" data-tilt data-tilt-max="3">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+          <h3 style="margin:0; font-size: 19px; color: white;">${p.title}</h3>
+          <div style="background: var(--accent-glow); color: var(--accent); padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase;">View Details</div>
+        </div>
+        
+        <div class="project-brief" style="font-size: 14px; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 16px;">
+          ${p.description}
+        </div>
+
+        <div class="project-details" style="display: none; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; animation: slideDown 0.3s ease;">
+          <p style="font-size: 14px; color: #cbd5e1; margin-bottom: 16px; line-height: 1.6;">${p.description}</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
+            ${p.tech_stack.split(',').map(tech => `<span style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); color: #818cf8; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;">${tech.trim()}</span>`).join('')}
+          </div>
+          <div style="display: flex; gap: 15px;">
+            ${p.github_url ? `<a href="${p.github_url}" target="_blank" style="font-size: 13px; color: var(--text-muted); text-decoration: none; border-bottom: 1px solid transparent;" onmouseover="this.style.borderColor='var(--text-muted)'" onmouseout="this.style.borderColor='transparent'">GitHub Repo</a>` : ''}
+            ${p.live_url ? `<a href="${p.live_url}" target="_blank" style="font-size: 13px; color: var(--hero-accent); text-decoration: none; border-bottom: 1px solid transparent;" onmouseover="this.style.borderColor='var(--hero-accent)'" onmouseout="this.style.borderColor='transparent'">Live Demo →</a>` : ''}
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .project-card.expanded {
+        grid-column: 1 / -1;
+        z-index: 10;
+        background: rgba(24, 24, 27, 0.95) !important;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      }
+    `;
+    document.head.appendChild(style);
+
+    if (window.VanillaTilt) {
+      VanillaTilt.init(document.querySelectorAll('#laravelProjectsContainer .service-card'));
+    }
+
+  } catch (error) {
+    container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted);">Failed to load projects. Make sure Laravel backend is running.</div>';
+  }
+}
+
+function toggleProjectExpand(card) {
+  const details = card.querySelector('.project-details');
+  const brief = card.querySelector('.project-brief');
+  const badge = card.querySelector('div[style*="background"]');
+  
+  const isExpanded = card.classList.contains('expanded');
+  
+  // Close others
+  document.querySelectorAll('.project-card.expanded').forEach(c => {
+    if (c !== card) {
+      c.classList.remove('expanded');
+      c.querySelector('.project-details').style.display = 'none';
+      c.querySelector('.project-brief').style.display = '-webkit-box';
+      c.querySelector('div[style*="background"]').innerText = 'View Details';
+    }
+  });
+
+  if (isExpanded) {
+    card.classList.remove('expanded');
+    details.style.display = 'none';
+    brief.style.display = '-webkit-box';
+    badge.innerText = 'View Details';
+  } else {
+    card.classList.add('expanded');
+    details.style.display = 'block';
+    brief.style.display = 'none';
+    badge.innerText = 'Close';
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+
