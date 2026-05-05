@@ -1,1 +1,11 @@
 .vercel
+vendor/
+.env
+.env.production
+composer.phar
+*.sqlite
+/api/vendor/
+/harbour-manager/vendor/
+node_modules/
+.tempmediaStorage/
+.gemini/
