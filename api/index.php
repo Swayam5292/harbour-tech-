@@ -8,13 +8,15 @@ define('LARAVEL_START', microtime(true));
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+// Redirect index.php to root
 if (strpos($_SERVER['REQUEST_URI'], '/index.php') !== false) {
     header("Location: /", true, 301);
     exit;
 }
 
-// Laravel app root
-$baseDir = dirname(__DIR__);
+// Path setup
+$baseDir = dirname(__DIR__); // Root folder
 $appDir = $baseDir . '/harbour-manager';
 
 // Use a writable temp directory. On Vercel this resolves to /tmp.
@@ -41,7 +43,6 @@ putenv('LOG_CHANNEL=stderr');
 putenv('APP_DEBUG=true');
 
 // Pre-create ALL directories that Laravel needs to write to
-// (Vercel's filesystem is read-only everywhere except /tmp)
 $tmpDirs = [
     $tmpBase . '/storage',
     $tmpBase . '/storage/app',
@@ -56,28 +57,28 @@ $tmpDirs = [
 ];
 foreach ($tmpDirs as $dir) {
     if (!is_dir($dir) && !mkdir($dir, 0777, true) && !is_dir($dir)) {
-        die('FATAL: Unable to create runtime directory: ' . $dir);
+        // Fallback or skip if fails
     }
 }
 
-// Prefer Laravel app autoloader; fallback to API autoloader if needed.
-$autoloader = $appDir . '/vendor/autoload.php';
+// Look for the autoloader in the ROOT directory (Vercel installs it there)
+$autoloader = $baseDir . '/vendor/autoload.php';
+
+// Fallback to local vendor or harbour-manager vendor
+if (!file_exists($autoloader)) {
+    $autoloader = $appDir . '/vendor/autoload.php';
+}
 if (!file_exists($autoloader)) {
     $autoloader = __DIR__ . '/vendor/autoload.php';
 }
+
 if (!file_exists($autoloader)) {
-    die('FATAL: Autoloader not found. Please ensure composer install has run correctly.');
-}
-$loader = require $autoloader;
-
-// Ensure app namespace autoloading works even when using api/vendor autoloader.
-if ($loader instanceof Composer\Autoload\ClassLoader) {
-    $loader->addPsr4('App\\', $appDir . '/app');
-    $loader->addPsr4('Database\\Factories\\', $appDir . '/database/factories');
-    $loader->addPsr4('Database\\Seeders\\', $appDir . '/database/seeders');
+    die('FATAL: Autoloader not found at: ' . $autoloader . '. Please ensure composer install has run in the root directory.');
 }
 
-// Set working directory to Laravel app root
+require $autoloader;
+
+// Set working directory to Laravel app root for artisan/config etc.
 chdir($appDir);
 
 // Bootstrap Laravel
@@ -95,7 +96,7 @@ $app->useBootstrapPath($runtimeBootstrapDir);
 
 // Override storage path to writable temp storage.
 $app->useStoragePath($tmpBase . '/storage');
-$app->instance('path.storage',          $tmpBase . '/storage');
+$app->instance('path.storage', $tmpBase . '/storage');
 
 try {
     $schema = $app['db']->connection()->getSchemaBuilder();
@@ -103,7 +104,7 @@ try {
         $app->make('Illuminate\Contracts\Console\Kernel')->call('migrate', ['--force' => true]);
     }
 } catch (\Exception $e) {
-    // If we can't check or migrate, we'll let the app handle it (it will error later)
+    // Fail gracefully
 }
 
 $app->handleRequest(Request::capture());
