@@ -16,7 +16,7 @@
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <link href="{{ asset('index.css') }}" rel="stylesheet">
+  <link href="/style.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
@@ -64,13 +64,14 @@
       <a href="#pricing">Pricing</a>
       <a href="#testimonials">Reviews</a>
       <a href="#contact">Contact</a>
-      <a href="{{ route('login') }}" id="loginLink" class="btn-nav-outline">Log In</a>
+      <a href="/login.html" id="loginLink" class="btn-nav-outline">Log In</a>
     </div>
     <div class="nav-actions">
       <span id="userDisplay"></span>
       <button id="logoutBtn" onclick="logout()" style="display:none;" class="btn-nav-outline">Logout</button>
       <button id="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
-        <span class="theme-icon">&#9790;</span>
+        <svg class="theme-icon sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg class="theme-icon moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
       </button>
       <!-- Mobile Hamburger -->
       <button class="hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMobileMenu()">
@@ -89,7 +90,7 @@
     <a href="#estimator" onclick="closeMobileMenu()">🤖 Estimator</a>
     <a href="#contact" onclick="closeMobileMenu()">📩 Contact</a>
     <div class="mobile-menu-cta">
-      <a href="{{ route('login') }}" class="btn-nav-outline" style="display:block; text-align:center;">Log In →</a>
+      <a href="/login.html" class="btn-nav-outline" style="display:block; text-align:center;">Log In →</a>
     </div>
   </nav>
 
@@ -643,6 +644,16 @@
       <div class="section-header" data-aos="fade-up">
         <div class="section-label">Technical Mastery</div>
         <h2 class="section-heading">Built with the best.<br><span class="hero-accent">Live from GitHub.</span></h2>
+        <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <label style="color: var(--text-muted); font-size: 14px;">Sort by:</label>
+            <select id="techSort" onchange="fetchRepos()" style="background: rgba(24, 24, 27, 0.8); color: white; border: 1px solid rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 6px; font-size: 14px; outline: none; cursor: pointer;">
+              <option value="stars">Most Stars</option>
+              <option value="name">Name (A-Z)</option>
+              <option value="category">Category</option>
+            </select>
+          </div>
+        </div>
       </div>
 
       <!-- GitHub Profile Banner -->
@@ -948,8 +959,8 @@
           <a href="#about">About Us</a>
           <a href="#projects">Projects</a>
           <a href="#pricing">Pricing</a>
-          <a href="{{ route('login') }}" style="opacity: 0.6; font-size: 12px; margin-top: 12px;">Admin Portal</a>
-          <a href="{{ route('login') }}">Login</a>
+          <a href="{{ route('projects.index') }}" style="opacity: 0.6; font-size: 12px; margin-top: 12px;">Admin Portal</a>
+          <a href="/login.html">Admin Login</a>
           <a href="#">Privacy Policy</a>
         </div>
       </div>
@@ -999,7 +1010,7 @@
     </div>
   </div>
 
-  <script src="{{ asset('particles.js') }}"></script>
+  <script src="/particles.js"></script>
 
   <!-- BACK TO TOP BUTTON -->
   <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
@@ -1098,7 +1109,7 @@
     </div>
   </div>
 
-  <script src="{{ asset('index.js') }}"></script>
+  <script src="/script.js"></script>
 </body>
 
 </html>

@@ -18,15 +18,15 @@ class AuthController extends Controller
 
         if ($request->password === $adminPassword) {
             session(['is_admin' => true]);
-            return redirect()->route('projects.index');
+            return redirect('/admin_dashboard.html');
         }
 
-        return back()->withErrors(['password' => 'Invalid password']);
+        return redirect('/login.html?error=1');
     }
 
     public function logout()
     {
         session()->forget('is_admin');
-        return redirect()->route('login');
+        return redirect('/login.html');
     }
 }

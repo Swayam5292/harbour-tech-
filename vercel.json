@@ -1,21 +1,19 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "outputDirectory": ".",
   "functions": {
     "api/index.php": {
-      "runtime": "vercel-php@0.8.0",
-      "excludeFiles": "{api/vendor/**,harbour-manager/vendor/**,scratch/**,.git/**,Composer-Setup.exe,composer.phar,composer-setup.php,admin_dashboard.html,index_backup.html,lab-6.html,login.html,login.js,login.css,privacy.html,github.html}"
+      "runtime": "vercel-php@0.8.0"
     }
   },
   "routes": [
     {
-      "src": "/(index.css|index.js|particles.js|favicon.ico|robots.txt)",
-      "dest": "/harbour-manager/public/$1"
+      "src": "/(style.css|script.js|particles.js|login.html|login.css|login.js|admin_dashboard.html|favicon.ico|robots.txt)",
+      "dest": "/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/api/index"
+      "dest": "/api/index.php"
     }
   ]
 }

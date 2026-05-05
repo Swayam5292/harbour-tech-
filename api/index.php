@@ -8,26 +8,37 @@ define('LARAVEL_START', microtime(true));
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+if (strpos($_SERVER['REQUEST_URI'], '/index.php') !== false) {
+    header("Location: /", true, 301);
+    exit;
+}
 
 // Laravel app root
-$appDir = realpath(__DIR__ . '/../harbour-manager');
+$baseDir = dirname(__DIR__);
+$appDir = $baseDir . '/harbour-manager';
 
 // Use a writable temp directory. On Vercel this resolves to /tmp.
 $tmpBase = is_writable('/tmp') ? '/tmp' : rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR);
 
 // SQLite database in temp directory (writable location on Vercel)
 $dbPath = $tmpBase . '/database.sqlite';
-if (!file_exists($dbPath)) {
-    touch($dbPath);
+$runMigrations = false;
+if (!file_exists($dbPath) || filesize($dbPath) === 0) {
+    if (!file_exists($dbPath)) {
+        touch($dbPath);
+    }
+    $runMigrations = true;
 }
 
 // Enforce writable runtime defaults for serverless environments.
 putenv('DB_CONNECTION=sqlite');
 putenv('DB_DATABASE=' . $dbPath);
-putenv('SESSION_DRIVER=file');
-putenv('CACHE_STORE=file');
+putenv('SESSION_DRIVER=cookie');
+putenv('CACHE_STORE=array');
 putenv('QUEUE_CONNECTION=sync');
+putenv('APP_KEY=base64:Jcfaxs/O3z269myM/CqTWJsusALqDUQqRKfYtSBvF+o=');
 putenv('LOG_CHANNEL=stderr');
+putenv('APP_DEBUG=true');
 
 // Pre-create ALL directories that Laravel needs to write to
 // (Vercel's filesystem is read-only everywhere except /tmp)
@@ -55,7 +66,7 @@ if (!file_exists($autoloader)) {
     $autoloader = __DIR__ . '/vendor/autoload.php';
 }
 if (!file_exists($autoloader)) {
-    die('FATAL: Autoloader not found at ' . $autoloader . '. Vendor directory is missing.');
+    die('FATAL: Autoloader not found. Please ensure composer install has run correctly.');
 }
 $loader = require $autoloader;
 
@@ -85,5 +96,14 @@ $app->useBootstrapPath($runtimeBootstrapDir);
 // Override storage path to writable temp storage.
 $app->useStoragePath($tmpBase . '/storage');
 $app->instance('path.storage',          $tmpBase . '/storage');
+
+try {
+    $schema = $app['db']->connection()->getSchemaBuilder();
+    if ($runMigrations || !$schema->hasTable('projects')) {
+        $app->make('Illuminate\Contracts\Console\Kernel')->call('migrate', ['--force' => true]);
+    }
+} catch (\Exception $e) {
+    // If we can't check or migrate, we'll let the app handle it (it will error later)
+}
 
 $app->handleRequest(Request::capture());

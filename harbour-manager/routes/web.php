@@ -14,5 +14,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Protected Admin Routes
 Route::middleware(['admin'])->group(function () {
+    Route::get('/admin_dashboard.html', function() {
+        return file_get_contents(base_path('../admin_dashboard.html'));
+    });
     Route::resource('projects', ProjectController::class)->except(['show']);
 });
