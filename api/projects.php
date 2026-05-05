@@ -16,6 +16,21 @@ $db->exec("CREATE TABLE IF NOT EXISTS projects (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 )");
 
+// SEED DATA: If table is empty, add realistic portfolio items
+$count = $db->query("SELECT COUNT(*) FROM projects")->fetchColumn();
+if ($count == 0) {
+    $seeds = [
+        ['Global Logistics SaaS', 'BlueDart Enterprise', 'Cloud-based tracking and fleet management system with real-time AI analytics.', 'Done'],
+        ['FinTech Wallet App', 'Zenith Bank', 'Secure mobile banking solution with multi-currency support and biometric auth.', 'Progress'],
+        ['E-commerce Platform', 'LuxStore India', 'Next-gen fashion marketplace with AI-driven personalized recommendations.', 'New'],
+        ['Smart City Analytics', 'Metropolis Corp', 'Visualizing urban data streams for traffic optimization and waste management.', 'Progress']
+    ];
+    $stmt = $db->prepare("INSERT INTO projects (title, client_name, description, status) VALUES (?, ?, ?, ?)");
+    foreach ($seeds as $s) {
+        $stmt->execute($s);
+    }
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 $path = $_SERVER['REQUEST_URI'];
 

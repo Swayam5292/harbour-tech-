@@ -380,6 +380,29 @@
     }
 
     function render() {
+      // SEED DEMO DATA IF EMPTY
+      if (!localStorage.getItem('ht_leads')) {
+        const demoLeads = [
+          { name: "Rahul Sharma", email: "rahul@technova.in", service: "Enterprise SaaS", date: new Date().toISOString() },
+          { name: "Sneha Gupta", email: "sneha@luxstore.co", service: "E-commerce AI", date: new Date().toISOString() },
+          { name: "Mark Wilson", email: "m.wilson@globaltrack.com", service: "Mobile App Dev", date: new Date().toISOString() }
+        ];
+        localStorage.setItem('ht_leads', JSON.stringify(demoLeads));
+      }
+
+      if (!localStorage.getItem('ht_payments')) {
+        const demoPayments = [
+          { id: "TXN-7821", customer: "TechNova", amount: 125000, status: "Success" },
+          { id: "TXN-7822", customer: "LuxStore", amount: 45000, status: "Success" },
+          { id: "TXN-7823", customer: "GlobalTrack", amount: 89000, status: "Pending" }
+        ];
+        localStorage.setItem('ht_payments', JSON.stringify(demoPayments));
+      }
+
+      if (!localStorage.getItem('ht_estimates_count')) {
+        localStorage.setItem('ht_estimates_count', '142');
+      }
+
       const leads = JSON.parse(localStorage.getItem('ht_leads') || '[]');
       const payments = JSON.parse(localStorage.getItem('ht_payments') || '[]');
       const estimates = parseInt(localStorage.getItem('ht_estimates_count') || '0');
@@ -387,28 +410,25 @@
       document.getElementById('stRev').innerText = '₹' + payments.reduce((s, p) => s + p.amount, 0).toLocaleString();
       document.getElementById('stLeads').innerText = leads.length;
       document.getElementById('stEst').innerText = estimates;
+      document.getElementById('stTasks').innerText = '5';
       
       const ov = document.getElementById('overviewTable');
-      if (leads.length === 0) {
-        ov.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#64748b; padding:40px;">No active leads found.</td></tr>';
-      } else {
-        ov.innerHTML = leads.map(l => `
-          <tr>
-            <td><strong>${l.name}</strong></td>
-            <td>${l.service}</td>
-            <td>TBD</td>
-            <td><span class="badge new">Active</span></td>
-          </tr>
-        `).join('');
-      }
+      ov.innerHTML = leads.map(l => `
+        <tr>
+          <td><strong>${l.name}</strong></td>
+          <td>${l.service}</td>
+          <td>₹${Math.floor(Math.random() * 50000 + 20000).toLocaleString()}</td>
+          <td><span class="badge new">Active</span></td>
+        </tr>
+      `).join('');
 
       const lt = document.getElementById('leadsTable');
       lt.innerHTML = leads.map((l, i) => `
         <tr>
-          <td>${i+1}</td>
+          <td>#${100+i}</td>
           <td><strong>${l.name}</strong><br><small>${l.email}</small></td>
           <td>${l.service}</td>
-          <td>${new Date().toLocaleDateString()}</td>
+          <td>${new Date(l.date).toLocaleDateString()}</td>
           <td><span class="badge new">New</span></td>
           <td>
             <button class="action-btn">👁</button>
@@ -416,6 +436,24 @@
           </td>
         </tr>
       `).join('');
+
+      const pt = document.getElementById('paymentsTable');
+      pt.innerHTML = payments.map(p => `
+        <tr>
+          <td><code>${p.id}</code></td>
+          <td>${p.customer}</td>
+          <td>Service Milestone</td>
+          <td><strong>₹${p.amount.toLocaleString()}</strong></td>
+          <td><span class="badge ${p.status === 'Success' ? 'resolved' : 'progress'}">${p.status}</span></td>
+        </tr>
+      `).join('');
+
+      const tb = document.getElementById('tk-board');
+      tb.innerHTML = `
+        <div class="task-col"><h3>To Do</h3><div class="task-card"><h4>Review Wireframes</h4><div class="task-meta"><span>Urgent</span><span>👤 SM</span></div></div></div>
+        <div class="task-col"><h3>Doing</h3><div class="task-card"><h4>API Integration</h4><div class="task-meta"><span>Active</span><span>👤 AS</span></div></div></div>
+        <div class="task-col"><h3>Done</h3><div class="task-card"><h4>Security Audit</h4><div class="task-meta"><span>Verified</span><span>👤 HT</span></div></div></div>
+      `;
     }
 
     function deleteLead(i) {
