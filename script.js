@@ -1374,25 +1374,33 @@ async function initLaravelProjects() {
     const fallbackProjects = [
       {
         id: 'fallback-1',
-        title: 'Nexus Cloud Infrastructure',
-        description: 'A high-availability cloud migration for a global fintech client, reducing latency by 45% using AWS Lambda and Terraform.',
-        tech_stack: 'AWS, Terraform, Go, Docker',
+        title: 'Global Logistics SaaS',
+        description: 'Client: BlueDart Enterprise - A comprehensive logistics and supply chain management platform with real-time tracking.',
+        tech_stack: 'React, Node.js, PostgreSQL',
         github_url: 'https://github.com',
         live_url: 'https://example.com'
       },
       {
         id: 'fallback-2',
-        title: 'Sentient AI Dashboard',
-        description: 'Real-time predictive analytics platform that identifies market anomalies using LSTM neural networks and Python.',
-        tech_stack: 'Python, TensorFlow, React, FastAPI',
+        title: 'FinTech Wallet App',
+        description: 'Client: Zenith Bank - Secure mobile wallet application featuring instant peer-to-peer transfers and biometric authentication.',
+        tech_stack: 'React Native, Node.js, MongoDB',
         github_url: 'https://github.com',
         live_url: 'https://example.com'
       },
       {
         id: 'fallback-3',
-        title: 'ShieldVault Cybersecurity',
-        description: 'Enterprise-grade zero-trust security framework implementation with automated penetration testing pipelines.',
-        tech_stack: 'Python, Bash, Kubernetes, Azure',
+        title: 'E-commerce Platform',
+        description: 'Client: LuxStore India - Scalable e-commerce solution with advanced search, personalized recommendations, and seamless checkout.',
+        tech_stack: 'Next.js, TailwindCSS, Stripe',
+        github_url: 'https://github.com',
+        live_url: 'https://example.com'
+      },
+      {
+        id: 'fallback-4',
+        title: 'Smart City Analytics',
+        description: 'Client: Metropolis Corp - Data visualization dashboard aggregating real-time IoT sensor data for urban planning.',
+        tech_stack: 'Vue.js, Python, Django',
         github_url: 'https://github.com',
         live_url: 'https://example.com'
       }
