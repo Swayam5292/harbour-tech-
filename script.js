@@ -209,7 +209,7 @@ async function fetchRepos() {
           <div class="profile-name">Harbour Tech</div>
           <div class="profile-bio">Building modern, scalable digital solutions. Engineering the future of business through code.</div>
           <div class="profile-stats">
-            <span class="profile-stat"><span class="profile-stat-icon">ðŸ‘¥</span> 1.2k+ Followers</span>
+            <span class="profile-stat"><span class="profile-stat-icon">&#128101;</span> 1.2k+ Followers</span>
             <span class="profile-stat"><span class="profile-stat-icon">ðŸ“</span> ${profData.public_repos || 42} Open Source Repos</span>
           </div>
         </div>
