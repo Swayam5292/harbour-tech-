@@ -1,5 +1,5 @@
-// DEPLOYMENT V2.0 â€” ROOT ASSETS
-// index.js â€” Harbour Tech Solutions
+// DEPLOYMENT V2.0 -- ROOT ASSETS
+// index.js -- Harbour Tech Solutions
 // Fixed modal logic, 3D effects, Razorpay, AI Estimator, counter animation
 
 let darkMode = false;
@@ -282,7 +282,7 @@ function createRepoRow(tbody, data) {
     </td>
     <td class="td-type"><span class="status-badge ${data.category}">${data.category}</span></td>
     <td class="td-stats hide-mobile">
-      <span class="stat-mini">â­ ${formatNum(data.stargazers_count)}</span>
+      <span class="stat-mini">&#9733; ${formatNum(data.stargazers_count)}</span>
     </td>
     <td class="td-desc">${data.description || 'Enterprise-grade building block.'}</td>
     <td class="td-action">
@@ -310,7 +310,7 @@ function formatNum(num) {
 }
 
 // ================================
-// MODAL FUNCTIONS â€” FIXED
+// MODAL FUNCTIONS -- FIXED
 // ================================
 function openRepoModal(ownerName, repoName) {
   if (!localStorage.getItem("loggedInUser")) {
@@ -393,7 +393,7 @@ document.addEventListener('keydown', function (e) {
 // ================================
 // RAZORPAY PAYMENT INTEGRATION
 // ================================
-// âœ… SET YOUR RAZORPAY KEY HERE (get it from https://dashboard.razorpay.com/app/keys)
+// &#10003; SET YOUR RAZORPAY KEY HERE (get it from https://dashboard.razorpay.com/app/keys)
 // Leave as empty string '' to use the built-in demo checkout modal.
 const RAZORPAY_KEY = '';
 
@@ -416,10 +416,10 @@ function initiatePayment(planName, amount) {
     amount: amount * 100,
     currency: 'INR',
     name: 'Harbour Tech Solutions',
-    description: `${planName} Plan â€” Project Retainer`,
+    description: `${planName} Plan -- Project Retainer`,
     handler: function (response) {
       const txnId = response.razorpay_payment_id;
-      showToast('âœ…', `Payment successful! ID: ${txnId}`);
+      showToast('&#10003;', `Payment successful! ID: ${txnId}`);
       
       savePayment({
         txnId: txnId,
@@ -439,7 +439,7 @@ function initiatePayment(planName, amount) {
     theme: { color: '#6366f1' },
     modal: {
       ondismiss: function () {
-        showToast('â„¹ï¸', 'Payment cancelled. No charges applied.');
+        showToast('&#8505;', 'Payment cancelled. No charges applied.');
       }
     }
   };
@@ -477,13 +477,13 @@ function openDemoCheckout(planName, amount) {
       <div style="padding:36px;">
         <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:28px;">
           <div style="display:flex; align-items:center; gap:14px;">
-            <div style="width:48px; height:48px; background:var(--accent-glow); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px;">ðŸ’³</div>
+            <div style="width:48px; height:48px; background:var(--accent-glow); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px;">&#128179;</div>
             <div>
               <div style="font-size:18px; font-weight:700; color:var(--text); font-family:'DM Sans',sans-serif;">Checkout</div>
               <div style="font-size:12px; color:var(--text-muted);">${planName} Plan</div>
             </div>
           </div>
-          <button class="modal-close" onclick="closeDemoCheckout()">âœ•</button>
+          <button class="modal-close" onclick="closeDemoCheckout()">&#10005;</button>
         </div>
 
         <div style="background:var(--bg-alt); border-radius:16px; padding:24px; margin-bottom:24px; border:1px solid var(--card-border);">
@@ -493,15 +493,15 @@ function openDemoCheckout(planName, amount) {
           </div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
             <span style="font-size:14px; color:var(--text-muted);">Retainer Amount</span>
-            <span style="font-size:14px; font-weight:600; color:var(--text);">â‚¹${formattedAmount}</span>
+            <span style="font-size:14px; font-weight:600; color:var(--text);">&#8377;${formattedAmount}</span>
           </div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
             <span style="font-size:14px; color:var(--text-muted);">GST (18%)</span>
-            <span style="font-size:14px; font-weight:600; color:var(--text);">â‚¹${Math.round(amount * 0.18).toLocaleString('en-IN')}</span>
+            <span style="font-size:14px; font-weight:600; color:var(--text);">&#8377;${Math.round(amount * 0.18).toLocaleString('en-IN')}</span>
           </div>
           <div style="border-top:1px solid var(--card-border); padding-top:12px; display:flex; justify-content:space-between; align-items:center;">
             <span style="font-size:15px; font-weight:700; color:var(--text);">Total</span>
-            <span style="font-size:20px; font-weight:700; background:var(--accent-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">â‚¹${Math.round(amount * 1.18).toLocaleString('en-IN')}</span>
+            <span style="font-size:20px; font-weight:700; background:var(--accent-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">&#8377;${Math.round(amount * 1.18).toLocaleString('en-IN')}</span>
           </div>
         </div>
 
@@ -519,11 +519,11 @@ function openDemoCheckout(planName, amount) {
         </div>
 
         <button class="btn-primary w-full" id="demoPayBtn" onclick="processDemoPayment('${planName}', ${amount})" style="font-size:15px; padding:16px;">
-          Pay â‚¹${Math.round(amount * 1.18).toLocaleString('en-IN')} â†’
+          Pay &#8377;${Math.round(amount * 1.18).toLocaleString('en-IN')} &#8594;
         </button>
 
         <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-top:16px; font-size:12px; color:var(--text-light);">
-          <span>ðŸ”’</span> Secured by Razorpay Â· 256-bit SSL
+          <span>&#128274;</span> Secured by Razorpay &middot; 256-bit SSL
         </div>
       </div>
     </div>
@@ -569,7 +569,7 @@ function processDemoPayment(planName, amount) {
       <div class="modal-box" style="max-width:440px; text-align:center;">
         <div class="modal-top-bar" style="background:linear-gradient(90deg, #10b981, #06b6d4);"></div>
         <div style="padding:48px 36px;">
-          <div style="width:72px; height:72px; background:rgba(16,185,129,0.12); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 24px; font-size:36px;">âœ…</div>
+          <div style="width:72px; height:72px; background:rgba(16,185,129,0.12); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 24px; font-size:36px;">&#10003;</div>
           <h3 style="font-size:24px; color:var(--text); margin-bottom:8px; font-family:'DM Sans',sans-serif;">Payment Successful!</h3>
           <p style="font-size:14px; color:var(--text-muted); margin-bottom:24px; line-height:1.6;">Your ${planName} plan retainer has been received.<br>Our team will reach out within 2 hours.</p>
           <div style="background:var(--bg-alt); border-radius:12px; padding:16px; margin-bottom:24px; border:1px solid var(--card-border);">
@@ -595,7 +595,7 @@ function processDemoPayment(planName, amount) {
     });
 
     document.body.appendChild(successOverlay);
-    showToast('âœ…', `Payment of â‚¹${Math.round(amount * 1.18).toLocaleString('en-IN')} confirmed!`);
+    showToast('&#10003;', `Payment of &#8377;${Math.round(amount * 1.18).toLocaleString('en-IN')} confirmed!`);
   }, 2000);
 }
 
@@ -636,7 +636,7 @@ function generateEstimate() {
     </div>
   `;
 
-  // Smart estimation engine (rule-based for now â€” can be replaced with OpenAI API)
+  // Smart estimation engine (rule-based for now -- can be replaced with OpenAI API)
   setTimeout(() => {
     const estimateResult = generateSmartEstimate(desc, industry, budget, features);
     lastEstimateData = estimateResult;
@@ -653,17 +653,17 @@ function generateEstimate() {
         <div class="estimate-cta-title">Ready to get started?</div>
         <div class="estimate-cta-buttons">
           <button class="btn-primary estimate-cta-btn" onclick="proceedFromEstimate()">
-            ðŸ’³ Proceed to Payment
+            &#128179; Proceed to Payment
           </button>
           <button class="btn-ghost estimate-cta-btn" onclick="bookConsultationFromEstimate()">
-            ðŸ“ž Book Free Consultation
+            &#128222; Book Free Consultation
           </button>
         </div>
         <div class="estimate-cta-note">Pay a retainer to kick off your project, or book a free call to discuss further.</div>
       </div>
     `;
     btn.disabled = false;
-    btn.innerHTML = 'âš¡ Generate AI Estimate';
+    btn.innerHTML = '&#9889; Generate AI Estimate';
   }, 2500);
 }
 
@@ -676,7 +676,7 @@ function proceedFromEstimate() {
   initiatePayment(plan.name + ' (from AI Estimate)', plan.amount);
 }
 
-// CTA: Book consultation â€” pre-fill contact form with project details
+// CTA: Book consultation -- pre-fill contact form with project details
 function bookConsultationFromEstimate() {
   if (!lastEstimateData) {
     document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
@@ -712,7 +712,7 @@ function bookConsultationFromEstimate() {
     }
 
     if (nameInput && !nameInput.value) nameInput.focus();
-    showToast('âœ…', 'Contact form pre-filled with your estimate details!');
+    showToast('&#10003;', 'Contact form pre-filled with your estimate details!');
   }, 800);
 }
 
@@ -736,7 +736,7 @@ function generateSmartEstimate(desc, industry, budget, features) {
   const complexityLabels = { 1: 'Low', 2: 'Medium', 3: 'High' };
   const timelineMap = { 1: '2-4 weeks', 2: '6-10 weeks', 3: '12-20 weeks' };
   const teamMap = { 1: '1-2 developers', 2: '3-4 developers', 3: '5-8 developers + PM' };
-  const costMap = { 1: 'â‚¹30,000 - â‚¹75,000', 2: 'â‚¹1,00,000 - â‚¹3,00,000', 3: 'â‚¹3,50,000 - â‚¹10,00,000+' };
+  const costMap = { 1: '&#8377;30,000 - &#8377;75,000', 2: '&#8377;1,00,000 - &#8377;3,00,000', 3: '&#8377;3,50,000 - &#8377;10,00,000+' };
 
   // Suggest tech stack
   let techStack = ['HTML/CSS', 'JavaScript'];
@@ -748,17 +748,17 @@ function generateSmartEstimate(desc, industry, budget, features) {
 
   // Build report
   let report = '';
-  report += `<strong>ðŸ“Š Project Complexity:</strong> ${complexityLabels[complexity]}\n\n`;
+  report += `<strong>&#128202; Project Complexity:</strong> ${complexityLabels[complexity]}\n\n`;
   report += `<strong>â±ï¸ Estimated Timeline:</strong> ${timelineMap[complexity]}\n\n`;
-  report += `<strong>ðŸ‘¥ Recommended Team:</strong> ${teamMap[complexity]}\n\n`;
-  report += `<strong>ðŸ’° Estimated Investment:</strong> ${costMap[complexity]}\n\n`;
-  report += `<strong>ðŸ› ï¸ Recommended Tech Stack:</strong>\n${techStack.map(t => `  â€¢ ${t}`).join('\n')}\n\n`;
+  report += `<strong>&#128101; Recommended Team:</strong> ${teamMap[complexity]}\n\n`;
+  report += `<strong>&#128176; Estimated Investment:</strong> ${costMap[complexity]}\n\n`;
+  report += `<strong>&#128295; Recommended Tech Stack:</strong>\n${techStack.map(t => `  &bull; ${t}`).join('\n')}\n\n`;
 
   if (featureList.length > 0) {
-    report += `<strong>âœ… Feature Breakdown:</strong>\n`;
+    report += `<strong>&#10003; Feature Breakdown:</strong>\n`;
     featureList.forEach((f, i) => {
       const days = complexity <= 1 ? '2-3 days' : complexity === 2 ? '4-7 days' : '7-14 days';
-      report += `  ${i + 1}. ${f} â€” ~${days}\n`;
+      report += `  ${i + 1}. ${f} -- ~${days}\n`;
     });
     report += '\n';
   }
@@ -843,7 +843,7 @@ function showToast(icon, message) {
 }
 
 // ================================
-// 3D PARALLAX â€” Hero Mouse Tracking
+// 3D PARALLAX -- Hero Mouse Tracking
 // ================================
 function init3DParallax() {
   const heroRight = document.querySelector('.hero-right');
@@ -872,7 +872,7 @@ document.addEventListener("DOMContentLoaded", function () {
     darkMode = true;
     document.body.classList.add("dark-mode");
     const icon = document.querySelector('.theme-icon');
-    if (icon) icon.innerText = 'â˜€';
+    if (icon) icon.innerText = '&#9728;';
   }
 
   // Initialize Tech Stack
@@ -888,7 +888,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Counter animation â€” trigger when metrics bar is in view
+  // Counter animation -- trigger when metrics bar is in view
   const metricsBar = document.querySelector('.metrics-bar');
   if (metricsBar) {
     const observer = new IntersectionObserver((entries) => {
@@ -1269,7 +1269,7 @@ function toggleChat() {
   const toggle = document.getElementById('chatToggle');
   if (!panel || !toggle) return;
   panel.classList.toggle('open', chatOpen);
-  toggle.innerHTML = chatOpen ? 'âœ• <span class="chat-badge"></span>' : 'ðŸ’¬ <span class="chat-badge"></span>';
+  toggle.innerHTML = chatOpen ? '&#10005; <span class="chat-badge"></span>' : '&#128172; <span class="chat-badge"></span>';
   if (chatOpen) {
     const input = document.getElementById('chatInput');
     if (input) setTimeout(() => input.focus(), 300);
@@ -1277,9 +1277,9 @@ function toggleChat() {
 }
 
 const chatResponses = {
-  'price': "Our plans start at â‚¹49,999 for the Starter package. Check out our Pricing section for full details! ðŸ’°",
-  'cost': "Our plans start at â‚¹49,999 for the Starter package. Check out our Pricing section for full details! ðŸ’°",
-  'pricing': "Our plans start at â‚¹49,999 for the Starter package. Check out our Pricing section for full details! ðŸ’°",
+  'price': "Our plans start at &#8377;49,999 for the Starter package. Check out our Pricing section for full details! &#128176;",
+  'cost': "Our plans start at &#8377;49,999 for the Starter package. Check out our Pricing section for full details! &#128176;",
+  'pricing': "Our plans start at &#8377;49,999 for the Starter package. Check out our Pricing section for full details! &#128176;",
   'time': "Timelines range from 2-4 weeks for simple sites to 3-5 months for enterprise platforms. Use our AI Estimator for a custom estimate! â±ï¸",
   'timeline': "Timelines range from 2-4 weeks for simple sites to 3-5 months for enterprise platforms. Use our AI Estimator for a custom estimate! â±ï¸",
   'service': "We offer Web & App Development, Cloud Infrastructure, AI & Analytics, and Cybersecurity. Head to our Services section for details! âš™ï¸",
@@ -1287,7 +1287,7 @@ const chatResponses = {
   'ai': "We build custom ML models, data pipelines, and analytics dashboards using Python, TensorFlow, and Power BI. ðŸ¤–",
   'contact': "You can reach us at support@harbourtech.com or fill out the contact form at the bottom of this page. We reply within 2 hours! ðŸ“©",
   'support': "All our plans include post-launch support. Enterprise clients get 24/7 priority support with SLA guarantees. ðŸ›¡ï¸",
-  'nda': "Yes, we always sign a mutual NDA before any discovery call. Your IP is 100% yours upon project completion. ðŸ”’",
+  'nda': "Yes, we always sign a mutual NDA before any discovery call. Your IP is 100% yours upon project completion. &#128274;",
   'hello': "Hey there! ðŸ‘‹ I'm here to help. Ask me about our services, pricing, timeline, or anything else!",
   'hi': "Hey there! ðŸ‘‹ I'm here to help. Ask me about our services, pricing, timeline, or anything else!",
   'thanks': "You're very welcome! ðŸ˜Š Is there anything else I can help you with?",
@@ -1438,7 +1438,7 @@ function renderProjects(projects, container) {
         </div>
         <div style="display: flex; gap: 15px;">
           ${p.github_url ? `<a href="${p.github_url}" target="_blank" style="font-size: 13px; color: var(--text-muted); text-decoration: none; border-bottom: 1px solid transparent;" onmouseover="this.style.borderColor='var(--text-muted)'" onmouseout="this.style.borderColor='transparent'">GitHub Repo</a>` : ''}
-          ${p.live_url ? `<a href="${p.live_url}" target="_blank" style="font-size: 13px; color: var(--hero-accent); text-decoration: none; border-bottom: 1px solid transparent;" onmouseover="this.style.borderColor='var(--hero-accent)'" onmouseout="this.style.borderColor='transparent'">Live Demo â†’</a>` : ''}
+          ${p.live_url ? `<a href="${p.live_url}" target="_blank" style="font-size: 13px; color: var(--hero-accent); text-decoration: none; border-bottom: 1px solid transparent;" onmouseover="this.style.borderColor='var(--hero-accent)'" onmouseout="this.style.borderColor='transparent'">Live Demo &#8594;</a>` : ''}
         </div>
       </div>
     </div>
